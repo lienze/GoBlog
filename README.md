@@ -1,2 +1,2 @@
 # GoBlog
-a blog system write for myself
+a blog system for myself
