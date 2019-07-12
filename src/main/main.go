@@ -2,8 +2,21 @@ package main
 
 import (
 	"fmt"
+	"net/http"
+	"html/template"
 )
 
-func main() {
-	fmt.Println("Hello GoBlog!")
+func rootPage(w http.ResponseWriter, r *http.Request) {
+	t, _ := template.ParseFiles("html/index.html")
+	t.Execute(w, "Hello World")
 }
+
+func main() {
+	server := http.Server{
+		Addr:"10.0.2.15:8080",
+	}
+	http.HandleFunc("/",rootPage)
+	fmt.Println("GoBlog is running...")
+	server.ListenAndServe()
+}
+

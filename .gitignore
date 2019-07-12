@@ -15,3 +15,6 @@
 cscope.files
 tags
 
+# ignore vim swp
+*.swp
+
