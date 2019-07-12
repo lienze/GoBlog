@@ -1,10 +1,10 @@
 #!/bin/bash
 this_dir=`pwd`
-echo $this_dir
-if [ ! -d "$this_dir/dist" ];then
-	mkdir "$this_dir/dist"
-else
-	rm -rf "$this_dir/dist"
-	mkdir "$this_dir/dist"
+dist_dir="$this_dir/dist"
+# echo $this_dir
+if [ -d $dist_dir ];then
+	rm -rf $dist_dir
 fi
-cp -rf "$this_dir/html" "$this_dir/dist"
+mkdir $dist_dir
+cp -rf "$this_dir/html" $dist_dir
+
