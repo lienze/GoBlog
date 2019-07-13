@@ -17,6 +17,9 @@ func main() {
 	}
 	http.HandleFunc("/",rootPage)
 	fmt.Println("GoBlog is running...")
-	server.ListenAndServe()
+	err := server.ListenAndServe()
+	if err != nil {
+		fmt.Println(err)
+	}
 }
 
