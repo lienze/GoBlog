@@ -18,3 +18,6 @@ tags
 # ignore vim swp files
 *.swp
 
+# ignore files and folders
+/bin/dist
+/bin/main
