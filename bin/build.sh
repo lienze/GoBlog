@@ -1,2 +1,2 @@
 #!/bin/bash
-go build -gcflags "-N -l" -i -o ./main ../src/main/main.go
+go build -gcflags "-N -l" -i -o ./main ../main.go
