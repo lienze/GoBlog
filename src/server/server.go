@@ -1,6 +1,7 @@
 package server
 
 import (
+	"GoBlog/src/file"
 	"GoBlog/src/router"
 	"fmt"
 	"github.com/lienze/go2db/dao"
@@ -17,6 +18,10 @@ func NewServer() error {
 		return err
 	}
 	dao.InitDB("mytest")
+	err = file.InitFiles()
+	if err != nil {
+		return err
+	}
 	fmt.Println("GoBlog is running...")
 	err = server.ListenAndServe()
 	if err != nil {
