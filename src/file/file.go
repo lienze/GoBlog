@@ -9,9 +9,12 @@ import (
 
 func InitFiles() error {
 	//fmt.Println("InitFiles...")
-
+	postPath := "../src/post/"
+	files, _ := ioutil.ReadDir(postPath)
+	for _, f := range files {
+		ReadFile(postPath + f.Name())
+	}
 	var bInit bool = true
-	ReadFile("../src/post/20190722_HelloWorld.md")
 	if bInit == true {
 		return nil
 	} else {
