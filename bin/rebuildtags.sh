@@ -1,5 +1,5 @@
 #!/bin/bash
-cd ../src
+cd ../
 if [ -f cscope* ];then
 	rm cscope*
 fi

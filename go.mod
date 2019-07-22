@@ -1,4 +1,4 @@
-module github.com/lienze/GoBlog
+module GoBlog
 
 go 1.12
 
