@@ -6,10 +6,9 @@ import (
 	"strings"
 )
 
-func InitFiles() (map[string]string, error) {
+func InitFiles(postPath string) (map[string]string, error) {
 	//fmt.Println("InitFiles...")
 	retMapFileContent := make(map[string]string)
-	postPath := "./post/"
 	files, errDir := ioutil.ReadDir(postPath)
 	if errDir != nil {
 		return nil, errDir

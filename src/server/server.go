@@ -1,6 +1,7 @@
 package server
 
 import (
+	"GoBlog/src/config"
 	"GoBlog/src/file"
 	"GoBlog/src/router"
 	"fmt"
@@ -10,8 +11,12 @@ import (
 
 func NewServer() error {
 	var err error
+	config.InitConfig()
+	//fmt.Printf("%s:%d\n", config.GConfig.DB.Server, config.GConfig.DB.Port)
+	addr4Server := fmt.Sprintf("%s:%d", config.GConfig.DB.Server, config.GConfig.DB.Port)
 	server := http.Server{
-		Addr: "10.0.2.15:8080",
+		//Addr: "10.0.2.15:8080",
+		Addr: addr4Server,
 	}
 	err = router.InitRouter()
 	if err != nil {
@@ -19,11 +24,10 @@ func NewServer() error {
 	}
 	dao.InitDB("mytest")
 	var mapFiles map[string]string
-	mapFiles, err = file.InitFiles()
+	mapFiles, err = file.InitFiles(config.GConfig.PostPath)
 	if err != nil {
 		return err
 	}
-	fmt.Println(len(mapFiles))
 	for key, val := range mapFiles {
 		fmt.Println(key, " ", val)
 	}
