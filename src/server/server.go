@@ -18,9 +18,14 @@ func NewServer() error {
 		return err
 	}
 	dao.InitDB("mytest")
-	err = file.InitFiles()
+	var mapFiles map[string]string
+	mapFiles, err = file.InitFiles()
 	if err != nil {
 		return err
+	}
+	fmt.Println(len(mapFiles))
+	for key, val := range mapFiles {
+		fmt.Println(key, " ", val)
 	}
 	fmt.Println("GoBlog is running...")
 	err = server.ListenAndServe()

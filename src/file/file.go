@@ -1,33 +1,36 @@
 package file
 
 import (
-	"errors"
 	"fmt"
 	"io/ioutil"
 	"strings"
 )
 
-func InitFiles() error {
+func InitFiles() (map[string]string, error) {
 	//fmt.Println("InitFiles...")
+	retMapFileContent := make(map[string]string)
 	postPath := "../src/post/"
-	files, _ := ioutil.ReadDir(postPath)
+	files, errDir := ioutil.ReadDir(postPath)
+	if errDir != nil {
+		return nil, errDir
+	}
 	for _, f := range files {
-		ReadFile(postPath + f.Name())
+		fileFullPath := postPath + f.Name()
+		if retContent, err := ReadFile(fileFullPath); err == nil {
+			retMapFileContent[fileFullPath] = retContent
+		}
 	}
-	var bInit bool = true
-	if bInit == true {
-		return nil
-	} else {
-		return errors.New("InitFiles error")
-	}
+	return retMapFileContent, nil
 }
 
-func ReadFile(name string) {
+func ReadFile(name string) (string, error) {
 	fmt.Println("Start ReadFile", name)
 	if contents, err := ioutil.ReadFile(name); err == nil {
 		result := strings.Replace(string(contents), "\n", "", 1)
 		fmt.Println("content:", string(result))
+		return result, nil
 	} else {
 		fmt.Println(err)
+		return "", err
 	}
 }
