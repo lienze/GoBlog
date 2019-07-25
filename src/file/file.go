@@ -9,7 +9,7 @@ import (
 func InitFiles() (map[string]string, error) {
 	//fmt.Println("InitFiles...")
 	retMapFileContent := make(map[string]string)
-	postPath := "../src/post/"
+	postPath := "./post/"
 	files, errDir := ioutil.ReadDir(postPath)
 	if errDir != nil {
 		return nil, errDir
