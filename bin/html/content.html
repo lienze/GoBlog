@@ -3,13 +3,28 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>Welcome to 265lab</title>
+		<script type="text/javascript" src="https://cdn.bootcss.com/showdown/1.3.0/showdown.min.js"></script>
 	</head>
 	<body>
 		<ul>
 		{{ range . }}
 		<li>{{ . }}</li>
 		{{ end }}
+		<li id="content"># Hello World</li>
 		</ul>
+		<button onclick="compile();">Click</button>
+		<div id="result">Good</div>
+		<script type="text/javascript">
+		function compile(){
+			var text = document.getElementById("content").value;
+			text = "# Hello World"
+			//alert(text)
+			var converter = new showdown.Converter();
+			alert(converter)
+			var html = converter.makeHtml(text);
+			document.getElementById("result").innerHTML = html;
+		}
+		</script>
 	</body>
 </html>
 

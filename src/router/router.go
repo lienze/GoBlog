@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-var DaysOfWeek []string = []string{}
+var ContentShow []string = []string{}
 
 func rootPage(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("html/index.html")
@@ -19,7 +19,7 @@ func loginPage(w http.ResponseWriter, r *http.Request) {
 
 func contentPage(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("html/content.html")
-	t.Execute(w, DaysOfWeek)
+	t.Execute(w, ContentShow)
 }
 
 func InitRouter() error {

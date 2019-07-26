@@ -34,7 +34,7 @@ func NewServer() error {
 	}
 	for key, val := range mapFiles {
 		fmt.Println(key, " ", val)
-		router.DaysOfWeek = append(router.DaysOfWeek, key)
+		router.ContentShow = append(router.ContentShow, val)
 	}
 
 	fmt.Println("GoBlog is running...")
