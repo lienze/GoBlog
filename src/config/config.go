@@ -1,8 +1,6 @@
 package config
 
 import (
-	"fmt"
-
 	"github.com/BurntSushi/toml"
 )
 
@@ -23,5 +21,5 @@ func InitConfig() {
 	if _, err := toml.DecodeFile(filePath, &GConfig); err != nil {
 		panic(err)
 	}
-	fmt.Println(GConfig)
+	//fmt.Println(GConfig)
 }

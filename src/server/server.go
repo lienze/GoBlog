@@ -18,11 +18,15 @@ func NewServer() error {
 		//Addr: "10.0.2.15:8080",
 		Addr: addr4Server,
 	}
+	fmt.Println("Listen:", addr4Server)
+
 	err = router.InitRouter()
 	if err != nil {
 		return err
 	}
+
 	dao.InitDB("mytest")
+
 	var mapFiles map[string]string
 	mapFiles, err = file.InitFiles(config.GConfig.PostPath)
 	if err != nil {
@@ -30,7 +34,9 @@ func NewServer() error {
 	}
 	for key, val := range mapFiles {
 		fmt.Println(key, " ", val)
+		router.DaysOfWeek = append(router.DaysOfWeek, key)
 	}
+
 	fmt.Println("GoBlog is running...")
 	err = server.ListenAndServe()
 	if err != nil {
