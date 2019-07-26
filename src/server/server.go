@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"github.com/lienze/go2db/dao"
 	"net/http"
+	"runtime"
 )
 
 func NewServer() error {
@@ -14,6 +15,10 @@ func NewServer() error {
 	config.InitConfig()
 	//fmt.Printf("%s:%d\n", config.GConfig.DB.Server, config.GConfig.DB.Port)
 	addr4Server := fmt.Sprintf("%s:%d", config.GConfig.DB.Server, config.GConfig.DB.Port)
+	if runtime.GOOS == "darwin" {
+		fmt.Println("darwin")
+		addr4Server = fmt.Sprintf("127.0.0.1:8080")
+	}
 	server := http.Server{
 		//Addr: "10.0.2.15:8080",
 		Addr: addr4Server,
