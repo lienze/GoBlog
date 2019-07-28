@@ -26,7 +26,7 @@ func ReadFile(name string) (string, error) {
 	fmt.Println("Start ReadFile", name)
 	if contents, err := ioutil.ReadFile(name); err == nil {
 		result := strings.Replace(string(contents), "\n", "", 1)
-		fmt.Println("content:", string(result))
+		//fmt.Println("content:", string(result))
 		return result, nil
 	} else {
 		fmt.Println(err)

@@ -16,7 +16,7 @@ func NewServer() error {
 	//fmt.Printf("%s:%d\n", config.GConfig.DB.Server, config.GConfig.DB.Port)
 	addr4Server := fmt.Sprintf("%s:%d", config.GConfig.DB.Server, config.GConfig.DB.Port)
 	if runtime.GOOS == "darwin" {
-		fmt.Println("darwin")
+		fmt.Println("darwin platform")
 		addr4Server = fmt.Sprintf("127.0.0.1:8080")
 	}
 	server := http.Server{

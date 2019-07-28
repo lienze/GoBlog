@@ -1,6 +1,7 @@
 package router
 
 import (
+	"GoBlog/src/file"
 	"html/template"
 	"net/http"
 )
@@ -22,9 +23,16 @@ func contentPage(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, ContentShow)
 }
 
+// temporary solution
+func getShowDownJS(w http.ResponseWriter, r *http.Request) {
+	fileContent, _ := file.ReadFile("./html/showdown.min.js")
+	w.Write([]byte(fileContent))
+}
+
 func InitRouter() error {
 	http.HandleFunc("/", rootPage)
 	http.HandleFunc("/login", loginPage)
 	http.HandleFunc("/content", contentPage)
+	http.HandleFunc("/showdown.min.js", getShowDownJS)
 	return nil
 }
