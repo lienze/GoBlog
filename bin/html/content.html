@@ -3,27 +3,32 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>Welcome to 265lab</title>
-		<!-- <script type="text/javascript" src="https://cdn.bootcss.com/showdown/1.3.0/showdown.min.js"></script> -->
 		<script type="text/javascript" src="/static/html/showdown.min.js"></script>
 	</head>
-	<body>
+	<body onload="setindex()">
 		<ul>
 		{{ range . }}
+		<hr>
 		<li>{{ . }}</li>
 		{{ end }}
-		<li id="content"># Hello World</li>
+		<!-- <li id="content"># Hello World</li> -->
 		</ul>
-		<button onclick="compile();">Click</button>
-		<div id="result">Good</div>
+		<!-- <button onclick="setindex();">Click</button> -->
 		<script type="text/javascript">
-		function compile(){
-			var text = document.getElementById("content").value;
-			text = "# Hello World"
-			//alert(text)
+		function setindex(){
+			var list = document.getElementsByTagName("li");
+			for(var i=0; i < list.length; i++){
+				//alert(list[i].innerHTML);
+				compile(list[i])
+			}
+		}
+		function compile(elem){
+			// text = "# Hello World"
+			//alert(elem.innerHTML)
 			var converter = new showdown.Converter();
-			alert(converter)
-			var html = converter.makeHtml(text);
-			document.getElementById("result").innerHTML = html;
+			// alert(converter)
+			var html = converter.makeHtml(elem.innerHTML);
+			elem.innerHTML = html;
 		}
 		</script>
 	</body>
