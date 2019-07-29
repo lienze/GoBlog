@@ -37,8 +37,8 @@ func NewServer() error {
 	if err != nil {
 		return err
 	}
-	for key, val := range mapFiles {
-		fmt.Println(key, " ", val)
+	for _, val := range mapFiles {
+		//fmt.Println(key, " ", val)
 		router.ContentShow = append(router.ContentShow, val)
 	}
 
