@@ -20,6 +20,8 @@ if [ -f "$this_dir/main" ];then
 fi
 mkdir $dist_dir
 cp -rf "$this_dir/html" $dist_dir
+cp -rf "$this_dir/post" $dist_dir
+cp -rf "$this_dir/config" $dist_dir
 source "$this_dir/build.sh"
 if [ -f "$this_dir/main" ];then
 	cp -f "$this_dir/main" $dist_dir
