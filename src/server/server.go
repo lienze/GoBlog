@@ -48,7 +48,7 @@ func NewServer() error {
 		mapkeys = append(mapkeys, k)
 	}
 	//fmt.Println(mapkeys)
-	sort.Strings(mapkeys)
+	sort.Sort(sort.Reverse(sort.StringSlice(mapkeys)))
 	for _, val := range mapkeys {
 		//fmt.Println(key, " ", val)
 		router.ContentShow = append(router.ContentShow, mapFiles[val])
