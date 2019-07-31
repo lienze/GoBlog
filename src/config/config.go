@@ -6,12 +6,18 @@ import (
 
 type tomlConfig struct {
 	PostPath string
+	Host     hostsvr
 	DB       database
 }
 
-type database struct {
+type hostsvr struct {
 	Server string
 	Port   int
+}
+
+type database struct {
+	DBAble bool
+	DBName string
 }
 
 var GConfig tomlConfig

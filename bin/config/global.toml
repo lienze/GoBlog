@@ -1,5 +1,9 @@
 postPath = "./post/"
 
-[db]
+[host]
 server = "10.0.2.15"
 port = 8080
+
+[db]
+dbable = false
+dbname = "mytest"
