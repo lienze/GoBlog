@@ -32,7 +32,7 @@ func NewServer() error {
 		return err
 	}
 
-	if config.GConfig.DB.DBAble == true {
+	if config.GConfig.DB.Enable == true {
 		fmt.Println("InitDB...", config.GConfig.DB.DBName)
 		//dao.InitDB("mytest")
 		dao.InitDB(config.GConfig.DB.DBName)
