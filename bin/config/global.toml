@@ -7,3 +7,7 @@ port = 8080
 [db]
 dbable = false
 dbname = "mytest"
+
+[filecfg]
+autorefresh = true
+refreshfreq = 5

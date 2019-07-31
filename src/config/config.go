@@ -8,6 +8,7 @@ type tomlConfig struct {
 	PostPath string
 	Host     hostsvr
 	DB       database
+	FileCfg  filecfg
 }
 
 type hostsvr struct {
@@ -18,6 +19,11 @@ type hostsvr struct {
 type database struct {
 	Enable bool
 	DBName string
+}
+
+type filecfg struct {
+	AutoRefresh bool
+	RefreshFreq int //seconds
 }
 
 var GConfig tomlConfig

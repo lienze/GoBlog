@@ -16,7 +16,10 @@ func NewServer() error {
 	var err error
 	config.InitConfig()
 	//fmt.Printf("%s:%d\n", config.GConfig.DB.Server, config.GConfig.DB.Port)
-	addr4Server := fmt.Sprintf("%s:%d", config.GConfig.Host.Server, config.GConfig.Host.Port)
+	addr4Server := fmt.Sprintf("%s:%d",
+		config.GConfig.Host.Server,
+		config.GConfig.Host.Port)
+
 	if runtime.GOOS == "darwin" {
 		fmt.Println("darwin platform")
 		addr4Server = fmt.Sprintf("127.0.0.1:8080")
@@ -43,6 +46,8 @@ func NewServer() error {
 	if err != nil {
 		return err
 	}
+	// new gorountine for scanning folder when there is new posts appear
+	go file.ScanFolder(config.GConfig.PostPath)
 	var mapkeys []string
 	for k := range mapFiles {
 		mapkeys = append(mapkeys, k)
