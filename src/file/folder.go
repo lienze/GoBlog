@@ -10,6 +10,7 @@ func ScanFolder(postPath string) {
 		freq := config.GConfig.FileCfg.RefreshFreq
 		for {
 			time.Sleep(time.Duration(freq) * time.Second)
+
 		}
 	}
 

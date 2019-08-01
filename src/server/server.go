@@ -6,8 +6,11 @@ import (
 	"GoBlog/src/router"
 	"fmt"
 	"net/http"
+	"os"
+	"os/signal"
 	"runtime"
 	"sort"
+	"syscall"
 
 	"github.com/lienze/go2db/dao"
 )
@@ -59,10 +62,35 @@ func NewServer() error {
 		router.ContentShow = append(router.ContentShow, mapFiles[val])
 	}
 
+	//catch signal
+	go HandleSignal()
+
 	fmt.Println("GoBlog is running...")
 	err = server.ListenAndServe()
 	if err != nil {
 		return err
 	}
 	return nil
+}
+
+func HandleSignal() {
+	c := make(chan os.Signal)
+	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
+
+	select {
+	case sig := <-c:
+		fmt.Printf("Get [%s] signal\n", sig)
+		handSignal(sig)
+		os.Exit(0)
+	}
+}
+
+func handSignal(sig os.Signal) {
+	if sig == syscall.SIGTERM {
+		fmt.Println("hand SIGTREM")
+	} else if sig == os.Interrupt {
+		fmt.Println("hand Interrupt")
+	} else {
+		fmt.Printf("hand [%s]\n", sig)
+	}
 }
