@@ -11,3 +11,4 @@ dbname = "mytest"
 [filecfg]
 autorefresh = true
 refreshfreq = 5
+ignorefile  = ["swp","tmp"]

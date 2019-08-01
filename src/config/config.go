@@ -24,6 +24,7 @@ type database struct {
 type filecfg struct {
 	AutoRefresh bool
 	RefreshFreq int //seconds
+	IgnoreFile  []string
 }
 
 var GConfig tomlConfig
