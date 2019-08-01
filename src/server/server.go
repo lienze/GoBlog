@@ -2,6 +2,7 @@ package server
 
 import (
 	"GoBlog/src/config"
+	"GoBlog/src/db"
 	"GoBlog/src/file"
 	"GoBlog/src/router"
 	"fmt"
@@ -11,8 +12,6 @@ import (
 	"runtime"
 	"sort"
 	"syscall"
-
-	"github.com/lienze/go2db/dao"
 )
 
 func NewServer() error {
@@ -39,9 +38,9 @@ func NewServer() error {
 	}
 
 	if config.GConfig.DB.Enable == true {
-		fmt.Println("InitDB...", config.GConfig.DB.DBName)
-		//dao.InitDB("mytest")
-		dao.InitDB(config.GConfig.DB.DBName)
+		if err := db.InitDB(); err != nil {
+			panic(err)
+		}
 	}
 
 	var mapFiles map[string]string
@@ -74,7 +73,7 @@ func NewServer() error {
 }
 
 func HandleSignal() {
-	c := make(chan os.Signal)
+	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
 
 	select {
@@ -86,11 +85,12 @@ func HandleSignal() {
 }
 
 func handSignal(sig os.Signal) {
-	if sig == syscall.SIGTERM {
-		fmt.Println("hand SIGTREM")
-	} else if sig == os.Interrupt {
+	switch sig {
+	case syscall.SIGTERM:
+		fmt.Println("hand SIGTERM")
+	case os.Interrupt:
 		fmt.Println("hand Interrupt")
-	} else {
+	default:
 		fmt.Printf("hand [%s]\n", sig)
 	}
 }

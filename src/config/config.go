@@ -18,6 +18,7 @@ type hostsvr struct {
 
 type database struct {
 	Enable bool
+	DBType string
 	DBName string
 }
 
