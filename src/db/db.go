@@ -10,11 +10,10 @@ func InitDB() error {
 	dbtype := config.GConfig.DB.DBType
 	switch dbtype {
 	case "mongodb":
-		InitMongo()
+		return InitMongo()
 	case "redis":
-		InitRedis()
+		return InitRedis()
 	default:
 		return fmt.Errorf("Can not init DB Type %s", dbtype)
 	}
-	return nil
 }

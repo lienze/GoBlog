@@ -2,6 +2,7 @@ package db
 
 import "fmt"
 
-func InitRedis() {
+func InitRedis() error {
 	fmt.Println("Init Redis...")
+	return nil
 }
