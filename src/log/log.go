@@ -2,6 +2,7 @@ package log
 
 import (
 	"GoBlog/src/config"
+	"GoBlog/src/gtime"
 	"fmt"
 )
 
@@ -29,27 +30,27 @@ func Listen4Log() {
 	select {
 	case recvStr = <-logchan:
 		if bShowInConsole {
-			fmt.Println(recvStr)
+			fmt.Println(gtime.GetCurTime(gtime.BASIC_MILL) + recvStr)
 		}
 	}
 }
 
 func Normal(rawinfo string) {
-	if bEnableLog {
+	if !bEnableLog {
 		return
 	}
 	wlog(NORMAL + rawinfo)
 }
 
 func Warning(rawinfo string) {
-	if bEnableLog {
+	if !bEnableLog {
 		return
 	}
 	wlog(WARNING + rawinfo)
 }
 
 func Error(rawinfo string) {
-	if bEnableLog {
+	if !bEnableLog {
 		return
 	}
 	wlog(ERROR + rawinfo)
