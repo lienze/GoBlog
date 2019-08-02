@@ -29,8 +29,9 @@ func Listen4Log() {
 	var recvStr string
 	select {
 	case recvStr = <-logchan:
+		logType := recvStr[0:1]
 		if bShowInConsole {
-			fmt.Println(gtime.GetCurTime(gtime.BASIC_MILL) + recvStr)
+			fmt.Printf("[%s][%s] %s\n", gtime.GetCurTime(gtime.BASIC_MILL), logType, recvStr[1:])
 		}
 	}
 }
