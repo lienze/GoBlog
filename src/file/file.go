@@ -4,6 +4,7 @@ import (
 	"GoBlog/src/config"
 	"fmt"
 	"io/ioutil"
+	"os"
 	"strings"
 )
 
@@ -54,6 +55,19 @@ func SaveFile(filename string, content string) error {
 	err := ioutil.WriteFile(filename, data, 0644)
 	if err != nil {
 		fmt.Println(err)
+		return err
+	}
+	return nil
+}
+
+func AddContent2File(filename string, content string) error {
+	fmt.Println("Start Add Content 2 File")
+	fileObj, err := os.OpenFile(filename, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0644)
+	if err != nil {
+		return err
+	}
+	defer fileObj.Close()
+	if _, err = fileObj.WriteString(content); err != nil {
 		return err
 	}
 	return nil

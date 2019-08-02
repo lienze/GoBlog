@@ -51,7 +51,8 @@ func Listen4Log() {
 			fmt.Printf("[%s][%s] %s\n",
 				gtime.GetCurTime(gtime.BASIC_MILL), arrLogType[iType], recvStr[1:])
 		}
-		file.SaveFile(logPath+"firstFile", "Hello World")
+		//file.SaveFile(logPath+"firstFile", "Hello World")
+		file.AddContent2File(logPath+"firstFile", "Hello World")
 	}
 }
 
