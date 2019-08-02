@@ -4,6 +4,7 @@ import (
 	"GoBlog/src/config"
 	"GoBlog/src/db"
 	"GoBlog/src/file"
+	"GoBlog/src/log"
 	"GoBlog/src/router"
 	"fmt"
 	"net/http"
@@ -43,6 +44,10 @@ func NewServer() error {
 		}
 	}
 
+	if config.GConfig.LogCfg.Enable == true {
+		log.InitLog()
+	}
+
 	var mapFiles map[string]string
 	mapFiles, err = file.InitFiles(config.GConfig.PostPath)
 	if err != nil {
@@ -63,6 +68,8 @@ func NewServer() error {
 
 	//catch signal
 	go HandleSignal()
+
+	log.Normal("Hello World!")
 
 	fmt.Println("GoBlog is running...")
 	err = server.ListenAndServe()

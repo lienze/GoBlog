@@ -5,7 +5,7 @@ server = "10.0.2.15"
 port = 8080
 
 [db]
-enable = true
+enable = false
 dbtype = "mongodb"
 dbname = "mytest"
 
@@ -13,3 +13,8 @@ dbname = "mytest"
 autorefresh = true
 refreshfreq = 5
 ignorefile  = ["swp","tmp"]
+
+[logcfg]
+enable        = true
+showinconsole = true
+logpath       = "./log/"

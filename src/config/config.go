@@ -4,30 +4,6 @@ import (
 	"github.com/BurntSushi/toml"
 )
 
-type tomlConfig struct {
-	PostPath string
-	Host     hostsvr
-	DB       database
-	FileCfg  filecfg
-}
-
-type hostsvr struct {
-	Server string
-	Port   int
-}
-
-type database struct {
-	Enable bool
-	DBType string
-	DBName string
-}
-
-type filecfg struct {
-	AutoRefresh bool
-	RefreshFreq int //seconds
-	IgnoreFile  []string
-}
-
 var GConfig tomlConfig
 
 func InitConfig() {
