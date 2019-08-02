@@ -44,7 +44,6 @@ func NewServer() error {
 		}
 	}
 
-	fmt.Println(config.GConfig.LogCfg)
 	if config.GConfig.LogCfg.Enable == true {
 		log.InitLog()
 	}
