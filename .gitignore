@@ -21,3 +21,4 @@ tags
 # ignore files and folders
 /bin/dist
 /bin/main
+/bin/html/result
