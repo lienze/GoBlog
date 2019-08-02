@@ -2,6 +2,7 @@ package log
 
 import (
 	"GoBlog/src/config"
+	"GoBlog/src/file"
 	"GoBlog/src/gtime"
 	"fmt"
 	"strconv"
@@ -12,6 +13,7 @@ var (
 	logchan        chan string
 	bShowInConsole bool = false
 	arrLogType          = [...]string{"normal", "warning", "error"}
+	logPath        string
 )
 
 func InitLog() {
@@ -20,6 +22,13 @@ func InitLog() {
 	logchan = make(chan string, 1024)
 	bShowInConsole = config.GConfig.LogCfg.ShowInConsole
 	fmt.Println("Log path from config file:" + config.GConfig.LogCfg.LogPath)
+	logPath = config.GConfig.LogCfg.LogPath
+	//check if the logPath exists
+	if err := file.FolderExists(logPath); err != nil {
+		if err = file.CreateFolder(logPath); err != nil {
+			panic(err)
+		}
+	}
 	go Listen4Log()
 }
 
@@ -42,6 +51,7 @@ func Listen4Log() {
 			fmt.Printf("[%s][%s] %s\n",
 				gtime.GetCurTime(gtime.BASIC_MILL), arrLogType[iType], recvStr[1:])
 		}
+		file.SaveFile(logPath+"firstFile", "Hello World")
 	}
 }
 

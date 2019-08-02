@@ -48,6 +48,17 @@ func ReadFile(name string) (string, error) {
 	}
 }
 
+func SaveFile(filename string, content string) error {
+	fmt.Println("Start SaveFile", filename)
+	data := []byte(content)
+	err := ioutil.WriteFile(filename, data, 0644)
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+	return nil
+}
+
 // private function
 func getFileExt(filename string) string {
 	idx := strings.LastIndex(filename, ".")
