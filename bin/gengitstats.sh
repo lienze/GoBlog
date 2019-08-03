@@ -1,2 +1,6 @@
 #!/bin/bash
-gitstats ../../GoBlog ./html/result/
+if [ -d ./html/result ];then
+	rm -rf ./html/result
+fi
+mkdir ./html/result
+gitstats ../../GoBlog ./html/result
