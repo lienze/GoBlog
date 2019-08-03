@@ -23,6 +23,7 @@ type filecfg struct {
 	AutoRefresh bool
 	RefreshFreq int //seconds
 	IgnoreFile  []string
+	UseFilePool bool
 }
 
 type logcfg struct {

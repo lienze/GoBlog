@@ -8,6 +8,11 @@ import (
 	"strings"
 )
 
+var (
+	bUseFilePool bool = false
+	mapFilePool  map[string]*os.File
+)
+
 func InitFiles(postPath string) (map[string]string, error) {
 	//fmt.Println("InitFiles...")
 	retMapFileContent := make(map[string]string)
@@ -15,7 +20,9 @@ func InitFiles(postPath string) (map[string]string, error) {
 	if errDir != nil {
 		return nil, errDir
 	}
-	//fmt.Println(config.GConfig.FileCfg.IgnoreFile)
+	bUseFilePool = config.GConfig.FileCfg.UseFilePool
+	mapFilePool = make(map[string]*os.File)
+	//fmt.Println(config.GConfig.FileCfg)
 	ignoreFileArr := config.GConfig.FileCfg.IgnoreFile
 	for _, f := range files {
 		fileFullPath := postPath + f.Name()
@@ -62,11 +69,26 @@ func SaveFile(filename string, content string) error {
 
 func AddContent2File(filename string, content string) error {
 	//fmt.Println("Start Add Content 2 File")
-	fileObj, err := os.OpenFile(filename, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0644)
-	if err != nil {
-		return err
+	bNewFile := true
+	var fileObj *os.File = nil
+	var bKeyExist bool = false
+	var err error
+	if bUseFilePool {
+		if fileObj, bKeyExist = mapFilePool[filename]; bKeyExist == true {
+			bNewFile = false
+		}
 	}
-	defer fileObj.Close()
+	if bNewFile == true {
+		fileObj, err = os.OpenFile(filename, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0644)
+		if err != nil {
+			return err
+		}
+	}
+	if bUseFilePool == true {
+		// do not close file obj when use file pool option
+	} else {
+		defer fileObj.Close()
+	}
 	if _, err = fileObj.WriteString(content); err != nil {
 		return err
 	}

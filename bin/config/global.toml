@@ -13,6 +13,7 @@ dbname = "mytest"
 autorefresh = true
 refreshfreq = 5
 ignorefile  = ["swp","tmp"]
+usefilepool = true
 
 [logcfg]
 enable        = true
