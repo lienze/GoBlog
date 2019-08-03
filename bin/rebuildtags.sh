@@ -16,5 +16,5 @@ if [ -f tags ];then
 fi
 find ./ -name "*.go" > ./cscope.files
 cscope -Rbq
-ctags -R
+gotags -R ./ > tags
 echo "rebuild succeed!"
