@@ -11,8 +11,9 @@ import (
 var (
 	bEnableLog     bool = false
 	logchan        chan string
-	bShowInConsole bool = false
-	arrLogType          = [...]string{"normal", "warning", "error"}
+	bShowInConsole bool           = false
+	arrLogType                    = [...]string{"normal", "warning", "error"}
+	mapLogPath     map[int]string = make(map[int]string)
 	logPath        string
 )
 
@@ -23,15 +24,20 @@ func InitLog() {
 	bShowInConsole = config.GConfig.LogCfg.ShowInConsole
 	fmt.Println("Log path from config file:" + config.GConfig.LogCfg.LogPath)
 	logPath = config.GConfig.LogCfg.LogPath
-	//check if the logPath exists
-	if err := file.FolderExists(logPath); err != nil {
-		if err = file.CreateFolder(logPath); err != nil {
-			panic(err)
-		}
+	for key, val := range arrLogType {
+		checkAndCreateFolder(logPath+"/"+val+"/", key)
 	}
 	go Listen4Log()
 }
 
+func checkAndCreateFolder(path string, pos int) {
+	if err := file.FolderExists(path); err != nil {
+		if err = file.CreateFolder(path); err != nil {
+			panic(err)
+		}
+	}
+	mapLogPath[pos] = path
+}
 func wlog(info string) {
 	logchan <- info
 }
@@ -43,16 +49,17 @@ func Listen4Log() {
 	select {
 	case recvStr = <-logchan:
 		logType := recvStr[0:1]
+		rawContent := recvStr[1:]
 		if iType, err = strconv.Atoi(logType); err != nil {
 			iType = 0
 			fmt.Printf("error logType in Listen4Log [%s]\n", logType)
 		}
 		if bShowInConsole {
 			fmt.Printf("[%s][%s] %s\n",
-				gtime.GetCurTime(gtime.BASIC_MILL), arrLogType[iType], recvStr[1:])
+				gtime.GetCurTime(gtime.BASIC_MILL), arrLogType[iType], rawContent)
 		}
-		//file.SaveFile(logPath+"firstFile", "Hello World")
-		file.AddContent2File(logPath+"firstFile", "Hello World")
+		filePath := mapLogPath[iType] + gtime.GetCurDate(gtime.STYLE1)
+		file.AddContent2File(filePath, rawContent+"\n")
 	}
 }
 

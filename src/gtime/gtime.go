@@ -8,6 +8,9 @@ const (
 	BASIC_NANO = 3
 	BASIC_FULL = 4
 )
+const (
+	STYLE1 = 1
+)
 
 func GetCurTime(iType int8) string {
 	switch iType {
@@ -23,4 +26,13 @@ func GetCurTime(iType int8) string {
 		time.Now().Format("2006-1-2 15:04:05")
 	}
 	return time.Now().Format("2006-1-2 15:04:05")
+}
+
+func GetCurDate(iType int8) string {
+	switch iType {
+	case STYLE1:
+		return time.Now().Format("20060102")
+	default:
+		return time.Now().Format("20060102")
+	}
 }

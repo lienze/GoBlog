@@ -61,7 +61,7 @@ func SaveFile(filename string, content string) error {
 }
 
 func AddContent2File(filename string, content string) error {
-	fmt.Println("Start Add Content 2 File")
+	//fmt.Println("Start Add Content 2 File")
 	fileObj, err := os.OpenFile(filename, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0644)
 	if err != nil {
 		return err
