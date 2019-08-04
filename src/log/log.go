@@ -25,7 +25,7 @@ func InitLog() {
 	fmt.Println("Log path from config file:" + config.GConfig.LogCfg.LogPath)
 	logPath = config.GConfig.LogCfg.LogPath
 	for key, val := range arrLogType {
-		checkAndCreateFolder(logPath+"/"+val+"/", key)
+		checkAndCreateFolder(logPath+val+"/", key)
 	}
 	go Listen4Log()
 }
