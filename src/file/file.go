@@ -86,6 +86,19 @@ func AddContent2File(filename string, content string) error {
 	}
 	if bUseFilePool == true {
 		// do not close file obj when use file pool option
+		if bNewFile == true {
+			// close the same type log before
+			slist := strings.Split(filename, "/")
+			//example: filename is "./log/normal/20190804"
+			logType := slist[2]
+			for key, _ := range mapFilePool {
+				if strings.Contains(key, logType) {
+					delete(mapFilePool, key)
+				}
+			}
+			mapFilePool[filename] = fileObj
+			fmt.Printf("mapFilePool:%s %s\n", logType, filename)
+		}
 	} else {
 		defer fileObj.Close()
 	}
@@ -95,7 +108,6 @@ func AddContent2File(filename string, content string) error {
 	return nil
 }
 
-// private function
 func getFileExt(filename string) string {
 	idx := strings.LastIndex(filename, ".")
 	//fmt.Println(filename[idx:])
