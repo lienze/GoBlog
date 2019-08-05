@@ -11,7 +11,7 @@ dbname = "mytest"
 
 [filecfg]
 autorefresh = true
-refreshfreq = 5
+refreshfreq = 5    # the frequency of refreshing the fold which is postPath(unit:second)
 ignorefile  = ["swp","tmp"]
 usefilepool = true
 

@@ -11,17 +11,24 @@ import (
 var (
 	bUseFilePool bool = false
 	mapFilePool  map[string]*os.File
+	MapFiles     map[string]string // the whole data
 )
 
 func InitFiles(postPath string) (map[string]string, error) {
 	//fmt.Println("InitFiles...")
+	// init options
+	bUseFilePool = config.GConfig.FileCfg.UseFilePool
+	MapFiles = make(map[string]string)
+	mapFilePool = make(map[string]*os.File)
+	return LoadFiles(postPath)
+}
+
+func LoadFiles(postPath string) (map[string]string, error) {
 	retMapFileContent := make(map[string]string)
 	files, errDir := ioutil.ReadDir(postPath)
 	if errDir != nil {
 		return nil, errDir
 	}
-	bUseFilePool = config.GConfig.FileCfg.UseFilePool
-	mapFilePool = make(map[string]*os.File)
 	//fmt.Println(config.GConfig.FileCfg)
 	ignoreFileArr := config.GConfig.FileCfg.IgnoreFile
 	for _, f := range files {
@@ -89,7 +96,7 @@ func AddContent2File(filename string, content string) error {
 		if bNewFile == true {
 			// close the same type log before
 			slist := strings.Split(filename, "/")
-			//example: filename is "./log/normal/20190804"
+			// example: filename is "./log/normal/20190804"
 			logType := slist[2]
 			for key, _ := range mapFilePool {
 				if strings.Contains(key, logType) {

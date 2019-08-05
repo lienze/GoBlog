@@ -3,6 +3,7 @@ package router
 import (
 	"html/template"
 	"net/http"
+	"sort"
 )
 
 var ContentShow []string = []string{}
@@ -38,4 +39,18 @@ func InitRouter() error {
 	files := http.FileServer(http.Dir("./"))
 	http.Handle("/static/", http.StripPrefix("/static/", files))
 	return nil
+}
+
+func RefreshContentShow(mapFiles map[string]string) {
+	var mapkeys []string
+	for k := range mapFiles {
+		mapkeys = append(mapkeys, k)
+	}
+	//fmt.Println(mapkeys)
+	sort.Sort(sort.Reverse(sort.StringSlice(mapkeys)))
+	ContentShow = make([]string, 0)
+	for _, val := range mapkeys {
+		//fmt.Println(key, " ", val)
+		ContentShow = append(ContentShow, mapFiles[val])
+	}
 }

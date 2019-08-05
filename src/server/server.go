@@ -11,7 +11,6 @@ import (
 	"os"
 	"os/signal"
 	"runtime"
-	"sort"
 	"syscall"
 )
 
@@ -48,23 +47,15 @@ func NewServer() error {
 		log.InitLog()
 	}
 
-	var mapFiles map[string]string
-	mapFiles, err = file.InitFiles(config.GConfig.PostPath)
+	file.MapFiles, err = file.InitFiles(config.GConfig.PostPath)
 	if err != nil {
 		return err
 	}
-	// new gorountine for scanning folder when there is new posts appear
+	router.RefreshContentShow(file.MapFiles)
+
+	// new gorountine for scanning folder that we could refresh page
+	// when there is new post appear
 	go file.ScanFolder(config.GConfig.PostPath)
-	var mapkeys []string
-	for k := range mapFiles {
-		mapkeys = append(mapkeys, k)
-	}
-	//fmt.Println(mapkeys)
-	sort.Sort(sort.Reverse(sort.StringSlice(mapkeys)))
-	for _, val := range mapkeys {
-		//fmt.Println(key, " ", val)
-		router.ContentShow = append(router.ContentShow, mapFiles[val])
-	}
 
 	//catch signal
 	go HandleSignal()
