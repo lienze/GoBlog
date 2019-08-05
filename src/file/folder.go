@@ -20,7 +20,12 @@ func ScanFolder(postPath string) {
 				fmt.Println(errDir)
 			}
 			if len(filesInfo) != len(MapFiles) {
-				// update mapFilePool
+				// files in postPath folder have been changed
+				// update right now
+				// FIXME: there seem to have a bug then we add a file and remove
+				//        a file at the same time, files have been changed but
+				//        the process could not find the difference, so no refresh
+				//        happened.We may use MD5 to compare.
 				MapFiles = make(map[string]string)
 				MapFiles, err = LoadFiles(config.GConfig.PostPath)
 				if err == nil {
@@ -29,7 +34,7 @@ func ScanFolder(postPath string) {
 					fmt.Println("ScanFolder...", err)
 				}
 			}
-			fmt.Println("ScanFolder:", len(filesInfo), len(MapFiles))
+			//fmt.Println("ScanFolder:", len(filesInfo), len(MapFiles))
 		}
 	}
 }
