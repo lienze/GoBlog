@@ -24,6 +24,7 @@ func InitFiles(postPath string) (map[string]string, error) {
 }
 
 func LoadFiles(postPath string) (map[string]string, error) {
+	fmt.Println("Start Loading Files...")
 	retMapFileContent := make(map[string]string)
 	files, errDir := ioutil.ReadDir(postPath)
 	if errDir != nil {
@@ -104,7 +105,7 @@ func AddContent2File(filename string, content string) error {
 				}
 			}
 			mapFilePool[filename] = fileObj
-			fmt.Printf("mapFilePool:%s %s\n", logType, filename)
+			fmt.Printf("added fileObj to mapFilePool:[%s] %s\n", logType, filename)
 		}
 	} else {
 		defer fileObj.Close()

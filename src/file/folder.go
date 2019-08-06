@@ -15,7 +15,7 @@ func ScanFolder(postPath string) {
 		freq := config.GConfig.FileCfg.RefreshFreq
 		for {
 			time.Sleep(time.Duration(freq) * time.Second)
-			filesInfo, errDir := ioutil.ReadDir(postPath)
+			filesInfo, errDir := ReadFolder(postPath, config.GConfig.FileCfg.IgnoreFile)
 			if errDir != nil {
 				fmt.Println(errDir)
 			}
@@ -29,6 +29,7 @@ func ScanFolder(postPath string) {
 				MapFiles = make(map[string]string)
 				MapFiles, err = LoadFiles(config.GConfig.PostPath)
 				if err == nil {
+					fmt.Println("Finished LoadFiles")
 					router.RefreshContentShow(MapFiles)
 				} else {
 					fmt.Println("ScanFolder...", err)
@@ -37,6 +38,27 @@ func ScanFolder(postPath string) {
 			//fmt.Println("ScanFolder:", len(filesInfo), len(MapFiles))
 		}
 	}
+}
+
+func ReadFolder(postPath string, ignoreExt []string) ([]os.FileInfo, error) {
+	var retFilesInfo []os.FileInfo
+	filesInfo, errDir := ioutil.ReadDir(postPath)
+	for _, f := range filesInfo {
+		fileFullPath := postPath + f.Name()
+		//check ignore file
+		ext := getFileExt(fileFullPath)
+		bIgnore := false
+		for _, val := range ignoreExt {
+			if ext == val {
+				bIgnore = true
+				break
+			}
+		}
+		if !bIgnore {
+			retFilesInfo = append(retFilesInfo, f)
+		}
+	}
+	return retFilesInfo, errDir
 }
 
 func FolderExists(folderPath string) error {
