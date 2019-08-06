@@ -6,6 +6,7 @@ type tomlConfig struct {
 	DB       database
 	FileCfg  filecfg
 	LogCfg   logcfg
+	PageCfg  pagecfg
 }
 
 type hostsvr struct {
@@ -33,5 +34,5 @@ type logcfg struct {
 }
 
 type pagecfg struct {
-	MaxPerPage int
+	MaxItemPerPage int
 }

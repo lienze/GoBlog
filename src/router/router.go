@@ -1,9 +1,11 @@
 package router
 
 import (
+	"GoBlog/src/config"
 	"html/template"
 	"net/http"
 	"sort"
+	"strconv"
 )
 
 //var ContentShow []string = []string{}
@@ -28,7 +30,13 @@ func loginPage(w http.ResponseWriter, r *http.Request) {
 
 func contentPage(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("html/content.html")
-	t.Execute(w, ContentPage)
+	r.ParseForm()
+	//fmt.Println("contentPage:", r.Form["page"])
+	iCurPage, err := strconv.Atoi(r.Form["page"][0])
+	if err == nil {
+		ContentPage.CurPage = iCurPage
+		t.Execute(w, ContentPage)
+	}
 }
 
 // temporary solution
@@ -61,6 +69,10 @@ func RefreshContentShow(mapFiles map[string]string) {
 		//fmt.Println(key, " ", val)
 		ContentPage.ContentShow = append(ContentPage.ContentShow, mapFiles[val])
 	}
-	ContentPage.MaxPage = 5
+	iMaxPage := len(mapkeys) / config.GConfig.PageCfg.MaxItemPerPage
+	if iMaxPage <= 0 {
+		iMaxPage = 1
+	}
+	ContentPage.MaxPage = iMaxPage
 	ContentPage.CurPage = 1
 }
