@@ -57,7 +57,7 @@ func NewServer() error {
 	// when there is new post appear
 	go file.ScanFolder(config.GConfig.PostPath)
 
-	//catch signal
+	// catch signal
 	go HandleSignal()
 
 	log.Normal("Hello World!")

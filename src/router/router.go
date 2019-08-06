@@ -32,11 +32,17 @@ func contentPage(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("html/content.html")
 	r.ParseForm()
 	//fmt.Println("contentPage:", r.Form["page"])
-	iCurPage, err := strconv.Atoi(r.Form["page"][0])
-	if err == nil {
-		ContentPage.CurPage = iCurPage
-		t.Execute(w, ContentPage)
+	// the para page may null, check it before use
+	if r.Form["page"] == nil {
+		//fmt.Println("contentPage page nil")
+		ContentPage.CurPage = 1
+	} else {
+		iCurPage, err := strconv.Atoi(r.Form["page"][0])
+		if err == nil {
+			ContentPage.CurPage = iCurPage
+		}
 	}
+	t.Execute(w, ContentPage)
 }
 
 // temporary solution
@@ -70,6 +76,9 @@ func RefreshContentShow(mapFiles map[string]string) {
 		ContentPage.ContentShow = append(ContentPage.ContentShow, mapFiles[val])
 	}
 	iMaxPage := len(mapkeys) / config.GConfig.PageCfg.MaxItemPerPage
+	if len(mapkeys)%config.GConfig.PageCfg.MaxItemPerPage != 0 {
+		iMaxPage++
+	}
 	if iMaxPage <= 0 {
 		iMaxPage = 1
 	}

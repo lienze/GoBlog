@@ -48,15 +48,23 @@
 		}
 		function prepage(){
 			var iCurPage = GetQueryString("page");
-			if(iCurPage > 1){
-				alert(iCurPage);
+			if(iCurPage == null){
+				iCurPage = 1;
+			}else{
+				iCurPage--;
 			}
+			var pageAddr = "content?page=" + iCurPage;
+			window.location.href = pageAddr;
 		}
 		function nextpage(){
 			var iCurPage = GetQueryString("page");
-			if(iCurPage < 10){
-				alert(iCurPage);
+			if(iCurPage == null){
+				iCurPage = 1;
+			}else{
+				iCurPage++;
 			}
+			var pageAddr = "content?page=" + iCurPage;
+			window.location.href = pageAddr;
 		}
 		function convert2md(){
 			var list = document.getElementsByTagName("li");
