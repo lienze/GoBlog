@@ -6,7 +6,15 @@ import (
 	"sort"
 )
 
-var ContentShow []string = []string{}
+//var ContentShow []string = []string{}
+
+type ContentStruct struct {
+	ContentShow []string
+	MaxPage     int
+	CurPage     int
+}
+
+var ContentPage ContentStruct
 
 func rootPage(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("html/index.html")
@@ -20,7 +28,7 @@ func loginPage(w http.ResponseWriter, r *http.Request) {
 
 func contentPage(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("html/content.html")
-	t.Execute(w, ContentShow)
+	t.Execute(w, ContentPage)
 }
 
 // temporary solution
@@ -48,9 +56,11 @@ func RefreshContentShow(mapFiles map[string]string) {
 	}
 	//fmt.Println(mapkeys)
 	sort.Sort(sort.Reverse(sort.StringSlice(mapkeys)))
-	ContentShow = make([]string, 0)
+	ContentPage.ContentShow = make([]string, 0)
 	for _, val := range mapkeys {
 		//fmt.Println(key, " ", val)
-		ContentShow = append(ContentShow, mapFiles[val])
+		ContentPage.ContentShow = append(ContentPage.ContentShow, mapFiles[val])
 	}
+	ContentPage.MaxPage = 5
+	ContentPage.CurPage = 1
 }

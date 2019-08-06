@@ -31,3 +31,7 @@ type logcfg struct {
 	ShowInConsole bool
 	LogPath       string
 }
+
+type pagecfg struct {
+	MaxPerPage int
+}

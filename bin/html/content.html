@@ -25,18 +25,40 @@
 		padding: 0;
 	}
 	</style>-->
-	<body onload="setindex()">
-		<ul>
-		{{ range . }}
+	<body onload="convert2md()">
+				<ul>
+		{{ range .ContentShow }}
 		<hr>
 		<li>{{ . }}</li>
 		{{ end }}
 		<!-- <li id="content"># Hello World</li> -->
 		<hr>
 		</ul>
-		<!-- <button onclick="setindex();">Click</button> -->
+		<div align="center">
+			<button onclick="prepage();"  >←</button>
+			[{{ .CurPage }}]...{{ .MaxPage }}
+			<button onclick="nextpage();" >→</button>
+		</div>
 		<script type="text/javascript">
-		function setindex(){
+		var iMaxPageNum = 0;
+		function GetQueryString(name){
+			var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+			var r = window.location.search.substr(1).match(reg);
+			if(r!=null)return  unescape(r[2]); return null;
+		}
+		function prepage(){
+			var iCurPage = GetQueryString("page");
+			if(iCurPage > 1){
+				alert(iCurPage);
+			}
+		}
+		function nextpage(){
+			var iCurPage = GetQueryString("page");
+			if(iCurPage < 10){
+				alert(iCurPage);
+			}
+		}
+		function convert2md(){
 			var list = document.getElementsByTagName("li");
 			for(var i=0; i < list.length; i++){
 				//alert(list[i].innerHTML);
