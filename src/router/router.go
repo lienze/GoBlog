@@ -32,17 +32,20 @@ func loginPage(w http.ResponseWriter, r *http.Request) {
 func contentPage(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("html/content.html")
 	r.ParseForm()
-	//fmt.Println("contentPage:", r.Form["page"])
 	var iCurPage int = 0
 	var err error
 	// the para page may null, check it before use
 	if r.Form["page"] == nil {
-		//fmt.Println("contentPage page nil")
 		iCurPage = 1
 	} else {
 		iCurPage, err = strconv.Atoi(r.Form["page"][0])
 		if err != nil {
 			iCurPage = 1
+		}
+		if iCurPage <= 0 {
+			iCurPage = 1
+		} else if iCurPage >= AllPageData.MaxPage {
+			iCurPage = AllPageData.MaxPage
 		}
 	}
 	CurPageData.CurPage = iCurPage
