@@ -16,7 +16,8 @@ type ContentStruct struct {
 	CurPage     int
 }
 
-var ContentPage ContentStruct
+var CurPageData ContentStruct
+var AllPageData ContentStruct
 
 func rootPage(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("html/index.html")
@@ -35,14 +36,20 @@ func contentPage(w http.ResponseWriter, r *http.Request) {
 	// the para page may null, check it before use
 	if r.Form["page"] == nil {
 		//fmt.Println("contentPage page nil")
-		ContentPage.CurPage = 1
+		CurPageData.CurPage = 1
 	} else {
 		iCurPage, err := strconv.Atoi(r.Form["page"][0])
 		if err == nil {
-			ContentPage.CurPage = iCurPage
+			CurPageData.CurPage = iCurPage
 		}
 	}
-	t.Execute(w, ContentPage)
+	// insert current page
+	CurPageData.ContentShow = make([]string, 0)
+	for i := 0; i < 3; i++ {
+		CurPageData.ContentShow = append(CurPageData.ContentShow, AllPageData.ContentShow[i])
+	}
+	CurPageData.MaxPage = AllPageData.MaxPage
+	t.Execute(w, CurPageData)
 }
 
 // temporary solution
@@ -70,10 +77,10 @@ func RefreshContentShow(mapFiles map[string]string) {
 	}
 	//fmt.Println(mapkeys)
 	sort.Sort(sort.Reverse(sort.StringSlice(mapkeys)))
-	ContentPage.ContentShow = make([]string, 0)
+	AllPageData.ContentShow = make([]string, 0)
 	for _, val := range mapkeys {
 		//fmt.Println(key, " ", val)
-		ContentPage.ContentShow = append(ContentPage.ContentShow, mapFiles[val])
+		AllPageData.ContentShow = append(AllPageData.ContentShow, mapFiles[val])
 	}
 	iMaxPage := len(mapkeys) / config.GConfig.PageCfg.MaxItemPerPage
 	if len(mapkeys)%config.GConfig.PageCfg.MaxItemPerPage != 0 {
@@ -82,6 +89,6 @@ func RefreshContentShow(mapFiles map[string]string) {
 	if iMaxPage <= 0 {
 		iMaxPage = 1
 	}
-	ContentPage.MaxPage = iMaxPage
-	ContentPage.CurPage = 1
+	AllPageData.MaxPage = iMaxPage
+	AllPageData.CurPage = 1
 }
