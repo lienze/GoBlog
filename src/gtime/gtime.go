@@ -2,11 +2,16 @@ package gtime
 
 import "time"
 
+// DAT means Date And Time
+// T mean Time
 const (
-	BASIC      = 1
-	BASIC_MILL = 2
-	BASIC_NANO = 3
-	BASIC_FULL = 4
+	DAT      = 1
+	DAT_MILL = 2
+	DAT_NANO = 3
+	DAT_FULL = 4
+	T        = 5
+	T_MILL   = 6
+	T_NANO   = 7
 )
 const (
 	STYLE1 = 1
@@ -14,14 +19,20 @@ const (
 
 func GetCurTime(iType int8) string {
 	switch iType {
-	case BASIC:
+	case DAT:
 		return time.Now().Format("2006-1-2 15:04:05")
-	case BASIC_MILL:
+	case DAT_MILL:
 		return time.Now().Format("2006-1-2 15:04:05.000")
-	case BASIC_NANO:
+	case DAT_NANO:
 		return time.Now().Format("2006-1-2 15:04:05.0000000")
-	case BASIC_FULL:
+	case DAT_FULL:
 		return time.Now().Local().String()
+	case T:
+		return time.Now().Format("15:04:05")
+	case T_MILL:
+		return time.Now().Format("15:04:05.000")
+	case T_NANO:
+		return time.Now().Format("15:04:05.0000000")
 	default:
 		time.Now().Format("2006-1-2 15:04:05")
 	}

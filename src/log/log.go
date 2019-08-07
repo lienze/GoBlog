@@ -56,10 +56,10 @@ func Listen4Log() {
 		}
 		if bShowInConsole {
 			fmt.Printf("[%s][%s] %s\n",
-				gtime.GetCurTime(gtime.BASIC_MILL), arrLogType[iType], rawContent)
+				gtime.GetCurTime(gtime.DAT_MILL), arrLogType[iType], rawContent)
 		}
 		filePath := mapLogPath[iType] + gtime.GetCurDate(gtime.STYLE1)
-		fileContent := fmt.Sprintf("[%s]%s\n", gtime.GetCurTime(gtime.BASIC_MILL), rawContent)
+		fileContent := fmt.Sprintf("[%s]%s\n", gtime.GetCurTime(gtime.T_MILL), rawContent)
 		file.AddContent2File(filePath, fileContent)
 	}
 }
