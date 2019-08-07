@@ -33,22 +33,26 @@ func contentPage(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("html/content.html")
 	r.ParseForm()
 	//fmt.Println("contentPage:", r.Form["page"])
+	var iCurPage int = 0
+	var err error
 	// the para page may null, check it before use
 	if r.Form["page"] == nil {
 		//fmt.Println("contentPage page nil")
-		CurPageData.CurPage = 1
+		iCurPage = 1
 	} else {
-		iCurPage, err := strconv.Atoi(r.Form["page"][0])
-		if err == nil {
-			CurPageData.CurPage = iCurPage
+		iCurPage, err = strconv.Atoi(r.Form["page"][0])
+		if err != nil {
+			iCurPage = 1
 		}
 	}
+	CurPageData.CurPage = iCurPage
+	CurPageData.MaxPage = AllPageData.MaxPage
 	// insert current page
 	CurPageData.ContentShow = make([]string, 0)
-	for i := 0; i < 3; i++ {
+	allDataLen := len(AllPageData.ContentShow)
+	for i := (iCurPage - 1) * 3; i < iCurPage*3 && i < allDataLen; i++ {
 		CurPageData.ContentShow = append(CurPageData.ContentShow, AllPageData.ContentShow[i])
 	}
-	CurPageData.MaxPage = AllPageData.MaxPage
 	t.Execute(w, CurPageData)
 }
 
