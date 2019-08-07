@@ -53,7 +53,8 @@ func contentPage(w http.ResponseWriter, r *http.Request) {
 	// insert current page
 	CurPageData.ContentShow = make([]string, 0)
 	allDataLen := len(AllPageData.ContentShow)
-	for i := (iCurPage - 1) * 3; i < iCurPage*3 && i < allDataLen; i++ {
+	iPerPage := config.GConfig.PageCfg.MaxItemPerPage
+	for i := (iCurPage - 1) * iPerPage; i < iCurPage*iPerPage && i < allDataLen; i++ {
 		CurPageData.ContentShow = append(CurPageData.ContentShow, AllPageData.ContentShow[i])
 	}
 	t.Execute(w, CurPageData)
