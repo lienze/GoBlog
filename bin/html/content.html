@@ -26,10 +26,10 @@
 	}
 	</style>-->
 	<body onload="initpage()">
-				<ul>
+		<ul>
 		{{ range .ContentShow }}
 		<hr>
-		<li>{{ . }}</li>
+		<span name="markdownContent">{{ . }}</span>
 		{{ end }}
 		<!-- <li id="content"># Hello World</li> -->
 		<hr>
@@ -81,7 +81,8 @@
 			convert2md();
 		}
 		function convert2md(){
-			var list = document.getElementsByTagName("li");
+			//var list = document.getElementsByTagName("li");
+			var list = document.getElementsByName("markdownContent");
 			for(var i=0; i < list.length; i++){
 				//alert(list[i].innerHTML);
 				compile(list[i]);
