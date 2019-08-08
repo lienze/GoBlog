@@ -10,3 +10,6 @@
 ## GoBlog/bin/run.sh
 可以无需编译二进制文件而立刻运行博客系统。
 
+## 第三方库使用情况
+showdown.min.js v1.9.0 源自：https://github.com/showdownjs/showdown/
+

@@ -10,3 +10,5 @@ the script could generate index files for vimer, cscope and ctags should be inst
 ## GoBlog/bin/run.sh
 run the blog system immediately without build the binary file.
 
+## The third part
+showdown.min.js From https://github.com/showdownjs/showdown/
