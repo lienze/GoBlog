@@ -22,3 +22,6 @@ logpath       = "./log/"
 
 [pagecfg]
 maxitemperpage = 3    # the max number of each page show
+
+[website]
+webtitle = "Welcome"

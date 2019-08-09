@@ -7,6 +7,7 @@ type tomlConfig struct {
 	FileCfg  filecfg
 	LogCfg   logcfg
 	PageCfg  pagecfg
+	WebSite  website
 }
 
 type hostsvr struct {
@@ -35,4 +36,8 @@ type logcfg struct {
 
 type pagecfg struct {
 	MaxItemPerPage int
+}
+
+type website struct {
+	WebTitle string
 }

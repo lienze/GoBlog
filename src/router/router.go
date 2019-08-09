@@ -14,6 +14,7 @@ type ContentStruct struct {
 	ContentShow []string
 	MaxPage     int
 	CurPage     int
+	WebTitle    string
 }
 
 var CurPageData ContentStruct
@@ -50,6 +51,7 @@ func contentPage(w http.ResponseWriter, r *http.Request) {
 	}
 	CurPageData.CurPage = iCurPage
 	CurPageData.MaxPage = AllPageData.MaxPage
+	CurPageData.WebTitle = AllPageData.WebTitle
 	// insert current page
 	CurPageData.ContentShow = make([]string, 0)
 	allDataLen := len(AllPageData.ContentShow)
@@ -86,6 +88,7 @@ func RefreshContentShow(mapFiles map[string]string) {
 	//fmt.Println(mapkeys)
 	sort.Sort(sort.Reverse(sort.StringSlice(mapkeys)))
 	AllPageData.ContentShow = make([]string, 0)
+	AllPageData.WebTitle = config.GConfig.WebSite.WebTitle
 	for _, val := range mapkeys {
 		//fmt.Println(key, " ", val)
 		AllPageData.ContentShow = append(AllPageData.ContentShow, mapFiles[val])
