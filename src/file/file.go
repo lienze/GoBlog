@@ -26,15 +26,25 @@ func InitFiles(postPath string) (map[string]string, error) {
 func LoadFiles(postPath string) (map[string]string, error) {
 	fmt.Println("Start Loading Files...")
 	retMapFileContent := make(map[string]string)
-	files, errDir := ioutil.ReadDir(postPath)
+	readPath(postPath, &retMapFileContent)
+	fmt.Println("Load Files ok...")
+	return retMapFileContent, nil
+}
+
+func readPath(postRootPath string, retMapFileContent *map[string]string) error {
+	files, errDir := ioutil.ReadDir(postRootPath)
 	if errDir != nil {
-		return nil, errDir
+		return errDir
 	}
 	//fmt.Println(config.GConfig.FileCfg)
 	ignoreFileArr := config.GConfig.FileCfg.IgnoreFile
 	for _, f := range files {
-		fileFullPath := postPath + f.Name()
-		//check ignore file
+		fileFullPath := postRootPath + f.Name()
+		if f.IsDir() {
+			readPath(fileFullPath+"/", retMapFileContent)
+			continue
+		}
+		// check ignore file
 		ext := getFileExt(fileFullPath)
 		bIgnore := false
 		for _, val := range ignoreFileArr {
@@ -45,11 +55,11 @@ func LoadFiles(postPath string) (map[string]string, error) {
 		}
 		if !bIgnore {
 			if retContent, err := ReadFile(fileFullPath); err == nil {
-				retMapFileContent[fileFullPath] = retContent
+				(*retMapFileContent)[fileFullPath] = retContent
 			}
 		}
 	}
-	return retMapFileContent, nil
+	return nil
 }
 
 func ReadFile(name string) (string, error) {
