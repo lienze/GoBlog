@@ -17,8 +17,15 @@ type ContentStruct struct {
 	WebTitle    string
 }
 
+type IndexStruct struct {
+	PostPath    string
+	PostTitle   string
+	PostProfile string
+}
+
 var CurPageData ContentStruct
 var AllPageData ContentStruct
+var IndexData IndexStruct
 
 func rootPage(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("html/index.html")
@@ -102,4 +109,8 @@ func RefreshContentShow(mapFiles map[string]string) {
 	}
 	AllPageData.MaxPage = iMaxPage
 	AllPageData.CurPage = 1
+}
+
+func RefreshIndexData() {
+
 }
