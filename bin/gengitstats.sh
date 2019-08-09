@@ -1,6 +1,6 @@
 #!/bin/bash
-if [ -d ./html/result ];then
-	rm -rf ./html/result
+if [ -d ./public/result ];then
+	rm -rf ./public/result
 fi
-mkdir ./html/result
-gitstats ../../GoBlog ./html/result
+mkdir ./public/result
+gitstats ../../GoBlog ./public/result
