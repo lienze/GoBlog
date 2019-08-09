@@ -75,7 +75,7 @@ func InitRouter() error {
 	//http.HandleFunc("/showdown.min.js", getShowDownJS)
 
 	// init static file service
-	files := http.FileServer(http.Dir("./"))
+	files := http.FileServer(http.Dir("./public/"))
 	http.Handle("/static/", http.StripPrefix("/static/", files))
 	return nil
 }
