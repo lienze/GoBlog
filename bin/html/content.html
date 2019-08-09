@@ -91,9 +91,9 @@
 		function compile(elem){
 			//alert(elem.innerHTML);
 			var converter = new showdown.Converter();
-			// alert(converter);
-			var html = converter.makeHtml(elem.innerHTML);
-			//alert(html);
+			//alert(converter);
+			var html = converter.makeHtml(elem.textContent);
+			alert(html);
 			elem.innerHTML = html;
 		}
 		</script>
