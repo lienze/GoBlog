@@ -5,7 +5,7 @@
 </div>
 
 <div align=center>
-<img src="readmeres/show.png"/>
+<img src="res/show.png"/>
 </div>
 
 a simple blog system
