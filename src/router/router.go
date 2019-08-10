@@ -2,39 +2,38 @@ package router
 
 import (
 	"GoBlog/src/config"
+	"GoBlog/src/file"
+	"GoBlog/src/zdata"
 	"html/template"
 	"net/http"
-	"sort"
 	"strconv"
 )
 
 //var ContentShow []string = []string{}
 
-type ContentStruct struct {
-	ContentShow []string
-	MaxPage     int
-	CurPage     int
-	WebTitle    string
-}
-
-type IndexStruct struct {
-	PostPath    string
-	PostTitle   string
-	PostProfile string
-}
-
-var CurPageData ContentStruct
-var AllPageData ContentStruct
-var IndexData IndexStruct
-
 func rootPage(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("html/index.html")
-	t.Execute(w, "Hello World")
+	r.ParseForm()
+
+	t.Execute(w, zdata.IndexData)
 }
 
 func loginPage(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("html/login.html")
 	t.Execute(w, "")
+}
+
+func showpost(w http.ResponseWriter, r *http.Request) {
+	t, _ := template.ParseFiles("html/showpost.html")
+	r.ParseForm()
+	zdata.PageShow.WebTitle = zdata.AllPageData.WebTitle
+	r.ParseForm()
+	//fmt.Println("showpost:", r.Form["name"][0])
+	filePath := "./post/" + r.Form["name"][0]
+	fileContent := file.MapFiles[filePath]
+	//fmt.Println("fileContent:", fileContent)
+	zdata.PageShow.Content = fileContent
+	t.Execute(w, zdata.PageShow)
 }
 
 func contentPage(w http.ResponseWriter, r *http.Request) {
@@ -52,21 +51,21 @@ func contentPage(w http.ResponseWriter, r *http.Request) {
 		}
 		if iCurPage <= 0 {
 			iCurPage = 1
-		} else if iCurPage >= AllPageData.MaxPage {
-			iCurPage = AllPageData.MaxPage
+		} else if iCurPage >= zdata.AllPageData.MaxPage {
+			iCurPage = zdata.AllPageData.MaxPage
 		}
 	}
-	CurPageData.CurPage = iCurPage
-	CurPageData.MaxPage = AllPageData.MaxPage
-	CurPageData.WebTitle = AllPageData.WebTitle
+	zdata.CurPageData.CurPage = iCurPage
+	zdata.CurPageData.MaxPage = zdata.AllPageData.MaxPage
+	zdata.CurPageData.WebTitle = zdata.AllPageData.WebTitle
 	// insert current page
-	CurPageData.ContentShow = make([]string, 0)
-	allDataLen := len(AllPageData.ContentShow)
+	zdata.CurPageData.ContentShow = make([]string, 0)
+	allDataLen := len(zdata.AllPageData.ContentShow)
 	iPerPage := config.GConfig.PageCfg.MaxItemPerPage
 	for i := (iCurPage - 1) * iPerPage; i < iCurPage*iPerPage && i < allDataLen; i++ {
-		CurPageData.ContentShow = append(CurPageData.ContentShow, AllPageData.ContentShow[i])
+		zdata.CurPageData.ContentShow = append(zdata.CurPageData.ContentShow, zdata.AllPageData.ContentShow[i])
 	}
-	t.Execute(w, CurPageData)
+	t.Execute(w, zdata.CurPageData)
 }
 
 // temporary solution
@@ -79,38 +78,11 @@ func InitRouter() error {
 	http.HandleFunc("/", rootPage)
 	http.HandleFunc("/login", loginPage)
 	http.HandleFunc("/content", contentPage)
+	http.HandleFunc("/showpost", showpost)
 	//http.HandleFunc("/showdown.min.js", getShowDownJS)
 
 	// init static file service
 	files := http.FileServer(http.Dir("./public/"))
 	http.Handle("/static/", http.StripPrefix("/static/", files))
 	return nil
-}
-
-func RefreshContentShow(mapFiles map[string]string) {
-	var mapkeys []string
-	for k := range mapFiles {
-		mapkeys = append(mapkeys, k)
-	}
-	//fmt.Println(mapkeys)
-	sort.Sort(sort.Reverse(sort.StringSlice(mapkeys)))
-	AllPageData.ContentShow = make([]string, 0)
-	AllPageData.WebTitle = config.GConfig.WebSite.WebTitle
-	for _, val := range mapkeys {
-		//fmt.Println(key, " ", val)
-		AllPageData.ContentShow = append(AllPageData.ContentShow, mapFiles[val])
-	}
-	iMaxPage := len(mapkeys) / config.GConfig.PageCfg.MaxItemPerPage
-	if len(mapkeys)%config.GConfig.PageCfg.MaxItemPerPage != 0 {
-		iMaxPage++
-	}
-	if iMaxPage <= 0 {
-		iMaxPage = 1
-	}
-	AllPageData.MaxPage = iMaxPage
-	AllPageData.CurPage = 1
-}
-
-func RefreshIndexData() {
-
 }

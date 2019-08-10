@@ -2,7 +2,10 @@ package file
 
 import (
 	"GoBlog/src/config"
+	"GoBlog/src/zdata"
+	"bufio"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"os"
 	"strings"
@@ -20,6 +23,7 @@ func InitFiles(postPath string) (map[string]string, error) {
 	bUseFilePool = config.GConfig.FileCfg.UseFilePool
 	MapFiles = make(map[string]string)
 	mapFilePool = make(map[string]*os.File)
+	loadIndexData()
 	return LoadFiles(postPath)
 }
 
@@ -130,4 +134,41 @@ func getFileExt(filename string) string {
 	idx := strings.LastIndex(filename, ".")
 	//fmt.Println(filename[idx:])
 	return string(filename[idx+1:])
+}
+
+func loadIndexData() error {
+	fmt.Println("loadIndexData begin...")
+	fileObj, err := os.OpenFile(config.GConfig.PostPath+"idx.dat", os.O_RDWR, 0666)
+	if err != nil {
+		return err
+	}
+	defer fileObj.Close()
+	buf := bufio.NewReader(fileObj)
+	for {
+		line, err := buf.ReadString('\n')
+		line = strings.TrimSpace(line)
+		if line != "" {
+			//fmt.Println(line)
+			slist := strings.Split(line, "@")
+			tmp := zdata.IndexStruct{
+				PostPath:  slist[0],
+				PostTitle: slist[1] + "(" + slist[0] + ")",
+				//PostTitle:   slist[1] + "(http://www.baidu.com)",
+				PostProfile: slist[2],
+			}
+			zdata.IndexData = append(zdata.IndexData, tmp)
+			//fmt.Println(zdata.IndexData)
+		}
+		if err != nil {
+			if err == io.EOF {
+				fmt.Println("Read idx.dat ok!")
+				break
+			} else {
+				fmt.Println("Read file error", err)
+				return err
+			}
+		}
+	}
+	fmt.Println("loadIndexData end...")
+	return nil
 }

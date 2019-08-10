@@ -2,7 +2,7 @@ package file
 
 import (
 	"GoBlog/src/config"
-	"GoBlog/src/router"
+	"GoBlog/src/zdata"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -30,7 +30,7 @@ func ScanFolder(postPath string) {
 				MapFiles, err = LoadFiles(config.GConfig.PostPath)
 				if err == nil {
 					fmt.Println("Finished LoadFiles")
-					router.RefreshContentShow(MapFiles)
+					zdata.RefreshContentShow(MapFiles)
 				} else {
 					fmt.Println("ScanFolder...", err)
 				}

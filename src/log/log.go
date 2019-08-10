@@ -3,7 +3,7 @@ package log
 import (
 	"GoBlog/src/config"
 	"GoBlog/src/file"
-	"GoBlog/src/gtime"
+	"GoBlog/src/ztime"
 	"fmt"
 	"strconv"
 )
@@ -56,10 +56,10 @@ func Listen4Log() {
 		}
 		if bShowInConsole {
 			fmt.Printf("[%s][%s] %s\n",
-				gtime.GetCurTime(gtime.DAT_MILL), arrLogType[iType], rawContent)
+				ztime.GetCurTime(ztime.DAT_MILL), arrLogType[iType], rawContent)
 		}
-		filePath := mapLogPath[iType] + gtime.GetCurDate(gtime.STYLE1)
-		fileContent := fmt.Sprintf("[%s]%s\n", gtime.GetCurTime(gtime.T_MILL), rawContent)
+		filePath := mapLogPath[iType] + ztime.GetCurDate(ztime.STYLE1)
+		fileContent := fmt.Sprintf("[%s]%s\n", ztime.GetCurTime(ztime.T_MILL), rawContent)
 		file.AddContent2File(filePath, fileContent)
 	}
 }

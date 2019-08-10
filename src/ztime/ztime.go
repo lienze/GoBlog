@@ -1,4 +1,4 @@
-package gtime
+package ztime
 
 import "time"
 

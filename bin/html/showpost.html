@@ -2,33 +2,32 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title>Welcome to 265lab</title>
+		<title>{{ .WebTitle }}</title>
 		<script type="text/javascript" src="/static/showdown.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="/static/markdown.min.css" />
 	</head>
-	<body onload="convert2md()">
+	<body onload="initpage()">
 		<ul>
-			{{ range .}}
-			<span name="markdownContent">{{ .PostTitle }}</span>
-			<span name="markdownContent">{{ .PostProfile }}</span>
-			<hr>
-			{{ end }}
+		<span name="markdownContent">{{ .Content }}
 		</ul>
 		<script type="text/javascript">
+		function getquerystring(name){
+			var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+			var r = window.location.search.substr(1).match(reg);
+			if(r!=null)return  unescape(r[2]); return null;
+		}
+		function initpage(){
+			convert2md();
+		}
 		function convert2md(){
-			//var list = document.getElementsByTagName("li");
 			var list = document.getElementsByName("markdownContent");
 			for(var i=0; i < list.length; i++){
-				//alert(list[i].innerHTML);
 				compile(list[i]);
 			}
 		}
 		function compile(elem){
-			//alert(elem.innerHTML);
 			var converter = new showdown.Converter();
-			//alert(converter);
 			var html = converter.makeHtml(elem.textContent);
-			//alert(html);
 			elem.innerHTML = html;
 		}
 		</script>

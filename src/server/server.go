@@ -6,6 +6,7 @@ import (
 	"GoBlog/src/file"
 	"GoBlog/src/log"
 	"GoBlog/src/router"
+	"GoBlog/src/zdata"
 	"fmt"
 	"net/http"
 	"os"
@@ -51,7 +52,7 @@ func NewServer() error {
 	if err != nil {
 		return err
 	}
-	router.RefreshContentShow(file.MapFiles)
+	zdata.RefreshContentShow(file.MapFiles)
 
 	// new gorountine for scanning folder that we could refresh page
 	// when there is new post appear
