@@ -40,18 +40,18 @@ func ScanFolder(postPath string) {
 	}
 }
 
-func ReadFolder(postPath string, ignoreExt []string) ([]os.FileInfo, error) {
+func ReadFolder(postPath string, includeExt []string) ([]os.FileInfo, error) {
 	var retFilesInfo []os.FileInfo
 	filesInfo, errDir := ioutil.ReadDir(postPath)
-	if len(ignoreExt) > 0 {
+	if len(includeExt) > 0 {
 		for _, f := range filesInfo {
 			fileFullPath := postPath + f.Name()
 			//check ignore file
 			ext := getFileExt(fileFullPath)
-			bIgnore := false
-			for _, val := range ignoreExt {
+			bIgnore := true
+			for _, val := range includeExt {
 				if ext == val {
-					bIgnore = true
+					bIgnore = false
 					break
 				}
 			}
