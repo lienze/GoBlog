@@ -15,7 +15,7 @@ func ScanFolder(postPath string) {
 		freq := config.GConfig.FileCfg.RefreshFreq
 		for {
 			time.Sleep(time.Duration(freq) * time.Second)
-			filesInfo, errDir := ReadFolder(postPath, config.GConfig.FileCfg.IgnoreFile)
+			filesInfo, errDir := ReadFolder(postPath, config.GConfig.FileCfg.IncludeFile)
 			if errDir != nil {
 				fmt.Println(errDir)
 			}

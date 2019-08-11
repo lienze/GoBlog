@@ -24,7 +24,7 @@ type database struct {
 type filecfg struct {
 	AutoRefresh bool
 	RefreshFreq int //seconds
-	IgnoreFile  []string
+	IncludeFile []string
 	UseFilePool bool
 }
 

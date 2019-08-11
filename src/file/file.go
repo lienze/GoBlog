@@ -41,19 +41,19 @@ func readPath(postRootPath string, retMapFileContent *map[string]string) error {
 		return errDir
 	}
 	//fmt.Println(config.GConfig.FileCfg)
-	ignoreFileArr := config.GConfig.FileCfg.IgnoreFile
+	includeFileArr := config.GConfig.FileCfg.IncludeFile
 	for _, f := range files {
 		fileFullPath := postRootPath + f.Name()
 		if f.IsDir() {
 			readPath(fileFullPath+"/", retMapFileContent)
 			continue
 		}
-		// check ignore file
+		// check file ext
 		ext := getFileExt(fileFullPath)
-		bIgnore := false
-		for _, val := range ignoreFileArr {
+		bIgnore := true
+		for _, val := range includeFileArr {
 			if ext == val {
-				bIgnore = true
+				bIgnore = false
 				break
 			}
 		}
