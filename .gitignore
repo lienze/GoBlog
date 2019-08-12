@@ -22,4 +22,5 @@ tags
 /bin/dist
 /bin/main
 /bin/public/result
+/bin/public/stats
 /bin/log
