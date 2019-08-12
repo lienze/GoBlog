@@ -18,11 +18,6 @@ func rootPage(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, zdata.IndexData)
 }
 
-func loginPage(w http.ResponseWriter, r *http.Request) {
-	t, _ := template.ParseFiles("html/login.html")
-	t.Execute(w, "")
-}
-
 func showpost(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("html/showpost.html")
 	r.ParseForm()
@@ -76,7 +71,6 @@ func contentPage(w http.ResponseWriter, r *http.Request) {
 
 func InitRouter() error {
 	http.HandleFunc("/", rootPage)
-	http.HandleFunc("/login", loginPage)
 	http.HandleFunc("/content", contentPage)
 	http.HandleFunc("/showpost", showpost)
 	//http.HandleFunc("/showdown.min.js", getShowDownJS)
