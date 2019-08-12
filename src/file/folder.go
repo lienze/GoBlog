@@ -45,7 +45,14 @@ func ReadFolder(postPath string, includeExt []string) ([]os.FileInfo, error) {
 	filesInfo, errDir := ioutil.ReadDir(postPath)
 	if len(includeExt) > 0 {
 		for _, f := range filesInfo {
-			fileFullPath := postPath + f.Name()
+			fileFullPath := postPath + "/" + f.Name()
+			if f.IsDir() {
+				flist, err := ReadFolder(fileFullPath, includeExt)
+				if err == nil {
+					retFilesInfo = append(retFilesInfo, flist...)
+				}
+				continue
+			}
 			//check ignore file
 			ext := getFileExt(fileFullPath)
 			bIgnore := true
