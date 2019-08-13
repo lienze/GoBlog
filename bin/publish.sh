@@ -31,4 +31,11 @@ else
 	build_err
 fi
 echo "publish success!"
-
+if [ -f "$this_dir/dist.tar.gz" ];then
+	rm "$this_dir/dist.tar.gz"
+	echo "delete dist.tar.gz success!"
+fi
+tar -czf dist.tar.gz ./dist
+if [ -f "$this_dir/dist.tar.gz" ];then
+	echo "pack success!"
+fi
