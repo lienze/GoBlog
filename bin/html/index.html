@@ -14,8 +14,8 @@
 	<body onload="convert2md()">
 		<ul>
 			{{ range .IndexData }}
-			<span name="markdownContent">{{ .PostTitle }}</span>
-			<span name="markdownContent">{{ .PostProfileHref }}</span>
+			<span name="markdownContent">{{ .PostTitleHref }}</span>
+			<span name="markdownContent">{{ .PostProfile }}</span>
 			发布时间: {{ .PostDate }} | 阅读量:{{ .PostReadNum }} | 评论:{{ .PostCommentNum }}
 			<hr>
 			{{ end }}
