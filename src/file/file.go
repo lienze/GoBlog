@@ -157,7 +157,7 @@ func loadIndexData() error {
 				PostProfile: slist[2],
 				PostDate:    slist[3],
 			}
-			zdata.IndexData = append(zdata.IndexData, tmp)
+			zdata.IndexPage.IndexData = append(zdata.IndexPage.IndexData, tmp)
 			//fmt.Println(zdata.IndexData)
 		}
 		if err != nil {
@@ -170,6 +170,7 @@ func loadIndexData() error {
 			}
 		}
 	}
+	zdata.IndexPage.PageTitle = config.GConfig.WebSite.WebTitle
 	fmt.Println("loadIndexData end...")
 	return nil
 }

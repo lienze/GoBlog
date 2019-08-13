@@ -14,8 +14,7 @@ import (
 func rootPage(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("html/index.html")
 	r.ParseForm()
-
-	t.Execute(w, zdata.IndexData)
+	t.Execute(w, zdata.IndexPage)
 }
 
 func showpost(w http.ResponseWriter, r *http.Request) {

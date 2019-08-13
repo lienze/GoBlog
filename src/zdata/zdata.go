@@ -12,7 +12,13 @@ type ContentStruct struct {
 	WebTitle    string
 }
 
+type IndexPageStruct struct {
+	PageTitle string
+	IndexData []IndexStruct
+}
+
 type IndexStruct struct {
+	PageTitle   string
 	PostPath    string
 	PostTitle   string
 	PostProfile string
@@ -26,8 +32,8 @@ type PageStruct struct {
 
 var CurPageData ContentStruct
 var AllPageData ContentStruct
-var IndexData []IndexStruct
 var PageShow PageStruct
+var IndexPage IndexPageStruct
 
 func RefreshContentShow(mapFiles map[string]string) {
 	var mapkeys []string
