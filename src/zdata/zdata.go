@@ -16,6 +16,7 @@ type IndexStruct struct {
 	PostPath    string
 	PostTitle   string
 	PostProfile string
+	PostDate    string
 }
 
 type PageStruct struct {

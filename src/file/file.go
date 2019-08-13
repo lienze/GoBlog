@@ -155,6 +155,7 @@ func loadIndexData() error {
 				PostTitle: slist[1] + "(" + slist[0] + ")",
 				//PostTitle:   slist[1] + "(http://www.baidu.com)",
 				PostProfile: slist[2],
+				PostDate:    slist[3],
 			}
 			zdata.IndexData = append(zdata.IndexData, tmp)
 			//fmt.Println(zdata.IndexData)
