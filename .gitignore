@@ -20,6 +20,7 @@ tags
 
 # ignore files and folders
 /bin/dist
+/bin/dist.tar.gz
 /bin/main
 /bin/public/result
 /bin/public/stats
