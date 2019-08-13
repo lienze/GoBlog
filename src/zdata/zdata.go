@@ -12,26 +12,9 @@ type ContentStruct struct {
 	WebTitle    string
 }
 
-type IndexPageStruct struct {
-	PageTitle string
-	IndexData []IndexStruct
-}
-
-type IndexStruct struct {
-	PageTitle   string
-	PostPath    string
-	PostTitle   string
-	PostProfile string
-	PostDate    string
-}
-
-type PageStruct struct {
-	WebTitle string
-	Content  string
-}
-
 var CurPageData ContentStruct
 var AllPageData ContentStruct
+
 var PageShow PageStruct
 var IndexPage IndexPageStruct
 
