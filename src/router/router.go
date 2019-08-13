@@ -27,6 +27,10 @@ func showpost(w http.ResponseWriter, r *http.Request) {
 	fileContent := file.MapFiles[filePath]
 	//fmt.Println("fileContent:", fileContent)
 	zdata.PageShow.PageContent = fileContent
+	//fmt.Println("showpost", zdata.IndexPage.IndexData[filePath].PostTitle)
+	indexInfo := zdata.IndexPage.IndexData[filePath]
+	zdata.PageShow.PageTitle = indexInfo.PostTitle
+	zdata.PageShow.PageDate = indexInfo.PostDate
 	t.Execute(w, zdata.PageShow)
 }
 

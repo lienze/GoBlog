@@ -2,12 +2,13 @@ package zdata
 
 type IndexPageStruct struct {
 	WebTitle  string
-	IndexData []IndexStruct
+	IndexData map[string]IndexStruct
 }
 
 type IndexStruct struct {
 	PostPath       string
 	PostTitle      string
+	PostTitleHref  string
 	PostProfile    string
 	PostDate       string
 	PostReadNum    int

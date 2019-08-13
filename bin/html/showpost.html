@@ -6,9 +6,15 @@
 		<script type="text/javascript" src="/static/showdown.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="/static/markdown.min.css" />
 	</head>
-	<body onload="initpage()">
+	<style>
+	.powered-text{
+		font-size:14px;
+	}
+	</style><body onload="initpage()">
 		<ul>
-		<span name="markdownContent">{{ .PageContent }}
+			<span name="markdownContent">{{ .PageTitle }}</span>
+			<span>{{ .PageDate }}</span>
+			<span name="markdownContent">{{ .PageContent }}</span>
 		</ul>
 		<script type="text/javascript">
 		function getquerystring(name){
@@ -32,5 +38,10 @@
 		}
 		</script>
 	</body>
+	<footer>
+		<p class="powered-text" align="center">Powered by: <a href="https://github.com/lienze/GoBlog">GoBlog</a>
+		<br>
+		Contact information: <a href="mailto:lienze2010@126.com">lienze2010@126.com</a>.</p>
+	</footer>
 </html>
 
