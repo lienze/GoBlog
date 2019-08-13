@@ -8,6 +8,7 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -150,12 +151,21 @@ func loadIndexData() error {
 		if line != "" {
 			//fmt.Println(line)
 			slist := strings.Split(line, "@")
+			postReadNum, errconv := strconv.Atoi(slist[4])
+			if errconv != nil {
+				postReadNum = -1
+			}
+			postCommentNum, errconv := strconv.Atoi(slist[5])
+			if errconv != nil {
+				postCommentNum = -1
+			}
 			tmp := zdata.IndexStruct{
-				PostPath:  slist[0],
-				PostTitle: slist[1] + "(" + slist[0] + ")",
-				//PostTitle:   slist[1] + "(http://www.baidu.com)",
-				PostProfile: slist[2],
-				PostDate:    slist[3],
+				PostPath:       slist[0],
+				PostTitle:      slist[1] + "(" + slist[0] + ")",
+				PostProfile:    slist[2],
+				PostDate:       slist[3],
+				PostReadNum:    postReadNum,
+				PostCommentNum: postCommentNum,
 			}
 			zdata.IndexPage.IndexData = append(zdata.IndexPage.IndexData, tmp)
 			//fmt.Println(zdata.IndexData)

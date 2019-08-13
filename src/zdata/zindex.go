@@ -6,9 +6,10 @@ type IndexPageStruct struct {
 }
 
 type IndexStruct struct {
-	PageTitle   string
-	PostPath    string
-	PostTitle   string
-	PostProfile string
-	PostDate    string
+	PostPath       string
+	PostTitle      string
+	PostProfile    string
+	PostDate       string
+	PostReadNum    int
+	PostCommentNum int
 }
