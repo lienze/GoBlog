@@ -1,7 +1,7 @@
 package zdata
 
 type IndexPageStruct struct {
-	PageTitle string
+	WebTitle  string
 	IndexData []IndexStruct
 }
 

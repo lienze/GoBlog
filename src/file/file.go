@@ -160,15 +160,16 @@ func loadIndexData() error {
 				postCommentNum = -1
 			}
 			tmp := zdata.IndexStruct{
-				PostPath:       slist[0],
-				PostTitle:      slist[1] + "(" + slist[0] + ")",
-				PostProfile:    slist[2],
+				PostPath: "./post?name=" + slist[0],
+				PostTitle: "### " + "[" + slist[1] + "]" +
+					"(" + "./showpost?name=" + slist[0] + ")",
+				PostProfile:    ">" + slist[2],
 				PostDate:       slist[3],
 				PostReadNum:    postReadNum,
 				PostCommentNum: postCommentNum,
 			}
 			zdata.IndexPage.IndexData = append(zdata.IndexPage.IndexData, tmp)
-			//fmt.Println(zdata.IndexData)
+			//fmt.Println(tmp)
 		}
 		if err != nil {
 			if err == io.EOF {
@@ -180,7 +181,7 @@ func loadIndexData() error {
 			}
 		}
 	}
-	zdata.IndexPage.PageTitle = config.GConfig.WebSite.WebTitle
+	zdata.IndexPage.WebTitle = config.GConfig.WebSite.WebTitle
 	fmt.Println("loadIndexData end...")
 	return nil
 }

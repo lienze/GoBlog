@@ -26,7 +26,7 @@ func showpost(w http.ResponseWriter, r *http.Request) {
 	filePath := "./post/" + r.Form["name"][0]
 	fileContent := file.MapFiles[filePath]
 	//fmt.Println("fileContent:", fileContent)
-	zdata.PageShow.Content = fileContent
+	zdata.PageShow.PageContent = fileContent
 	t.Execute(w, zdata.PageShow)
 }
 
@@ -57,7 +57,8 @@ func contentPage(w http.ResponseWriter, r *http.Request) {
 	allDataLen := len(zdata.AllPageData.ContentShow)
 	iPerPage := config.GConfig.PageCfg.MaxItemPerPage
 	for i := (iCurPage - 1) * iPerPage; i < iCurPage*iPerPage && i < allDataLen; i++ {
-		zdata.CurPageData.ContentShow = append(zdata.CurPageData.ContentShow, zdata.AllPageData.ContentShow[i])
+		zdata.CurPageData.ContentShow =
+			append(zdata.CurPageData.ContentShow, zdata.AllPageData.ContentShow[i])
 	}
 	t.Execute(w, zdata.CurPageData)
 }
