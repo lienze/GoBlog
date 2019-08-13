@@ -6,6 +6,11 @@
 		<script type="text/javascript" src="/static/showdown.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="/static/markdown.min.css" />
 	</head>
+	<style>
+	.powered-text{
+		font-size:14px;
+	}
+	</style>
 	<body onload="convert2md()">
 		<ul>
 			{{ range .IndexData }}
@@ -35,8 +40,8 @@
 		</script>
 	</body>
 	<footer>
-		<p align="center">Powered by: <a href="https://github.com/lienze/GoBlog">GoBlog</a></p>
-		<p align="center">Contact information: <a href="mailto:lienze2010@126.com">lienze2010@126.com</a>.</p>
+		<p class="powered-text" align="center">Powered by: <a href="https://github.com/lienze/GoBlog">GoBlog</a></p>
+		<p class="powered-text" align="center">Contact information: <a href="mailto:lienze2010@126.com">lienze2010@126.com</a>.</p>
 	</footer>
 </html>
 
