@@ -5,4 +5,5 @@ type PageStruct struct {
 	PageTitle   string
 	PageDate    string
 	PageContent string
+	BlogVersion string
 }

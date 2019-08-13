@@ -1,8 +1,9 @@
 package zdata
 
 type IndexPageStruct struct {
-	WebTitle  string
-	IndexData map[string]IndexStruct
+	WebTitle    string
+	IndexData   map[string]IndexStruct
+	BlogVersion string
 }
 
 type IndexStruct struct {

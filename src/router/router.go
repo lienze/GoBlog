@@ -4,6 +4,7 @@ import (
 	"GoBlog/src/config"
 	"GoBlog/src/file"
 	"GoBlog/src/zdata"
+	"GoBlog/src/zversion"
 	"html/template"
 	"net/http"
 	"strconv"
@@ -31,6 +32,7 @@ func showpost(w http.ResponseWriter, r *http.Request) {
 	indexInfo := zdata.IndexPage.IndexData[filePath]
 	zdata.PageShow.PageTitle = indexInfo.PostTitle
 	zdata.PageShow.PageDate = indexInfo.PostDate
+	zdata.PageShow.BlogVersion = zversion.Ver
 	t.Execute(w, zdata.PageShow)
 }
 

@@ -3,6 +3,7 @@ package file
 import (
 	"GoBlog/src/config"
 	"GoBlog/src/zdata"
+	"GoBlog/src/zversion"
 	"bufio"
 	"fmt"
 	"io"
@@ -184,6 +185,7 @@ func loadIndexData() error {
 		}
 	}
 	zdata.IndexPage.WebTitle = config.GConfig.WebSite.WebTitle
+	zdata.IndexPage.BlogVersion = zversion.Ver
 	fmt.Println("loadIndexData end...")
 	return nil
 }
