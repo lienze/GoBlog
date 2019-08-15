@@ -1,3 +1,3 @@
 package zversion
 
-const Ver = "v0.3"
+const Ver = "0.3"
