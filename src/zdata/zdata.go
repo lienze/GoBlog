@@ -47,7 +47,7 @@ func RefreshContentShow(mapFiles map[string]string) {
 }
 
 // collect post data through IndexPage and MapFile struct
-func RefreshAllPostData(mapFiles map[string]string, mapComments map[string]CommentStruct) {
+func RefreshAllPostData(mapFiles map[string]string, mapComments map[string][]CommentStruct) {
 	AllPostData = make(map[string]PostStruct)
 	for k, v := range mapFiles {
 		indexData := IndexPage.IndexData[k]
@@ -60,7 +60,7 @@ func RefreshAllPostData(mapFiles map[string]string, mapComments map[string]Comme
 		}*/
 		comm := mapComments[k]
 		comms := make([]CommentStruct, 0)
-		comms = append(comms, comm)
+		comms = append(comms, comm...)
 		tmp := PostStruct{
 			PostPath:       k,
 			PostTitle:      indexData.PostTitle,

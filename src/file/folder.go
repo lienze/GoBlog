@@ -29,12 +29,12 @@ func ScanFolder(postPath string) {
 				if err == nil {
 					fmt.Println("Finished LoadFiles")
 					zdata.RefreshContentShow(mapFiles)
-					zdata.RefreshAllPostData(mapFiles,mapComments)
+					zdata.RefreshAllPostData(mapFiles, mapComments)
 				} else {
 					fmt.Println("ScanFolder...", err)
 				}
+				fmt.Println("ScanFolder:", len(filesInfo), len(mapFiles))
 			}
-			//fmt.Println("ScanFolder:", len(filesInfo), len(mapFiles))
 		}
 	}
 }
@@ -62,7 +62,9 @@ func ReadFolder(postPath string, includeExt []string) ([]os.FileInfo, error) {
 				}
 			}
 			if !bIgnore {
-				retFilesInfo = append(retFilesInfo, f)
+				if ext == "md" {
+					retFilesInfo = append(retFilesInfo, f)
+				}
 			}
 		}
 	}

@@ -20,7 +20,7 @@ var (
 	mapFilePool  map[string]*os.File
 )
 
-func InitFiles(postPath string) (map[string]string, map[string]zdata.CommentStruct, error) {
+func InitFiles(postPath string) (map[string]string, map[string][]zdata.CommentStruct, error) {
 	//fmt.Println("InitFiles...")
 	// init options
 	bUseFilePool = config.GConfig.FileCfg.UseFilePool
@@ -29,10 +29,10 @@ func InitFiles(postPath string) (map[string]string, map[string]zdata.CommentStru
 	return LoadFiles(postPath)
 }
 
-func LoadFiles(postPath string) (map[string]string, map[string]zdata.CommentStruct, error) {
+func LoadFiles(postPath string) (map[string]string, map[string][]zdata.CommentStruct, error) {
 	fmt.Println("Start Loading Files...")
 	retMapFileContent := make(map[string]string)
-	retMapFileComment := make(map[string]zdata.CommentStruct)
+	retMapFileComment := make(map[string][]zdata.CommentStruct)
 	readPath(postPath, &retMapFileContent, &retMapFileComment)
 	fmt.Println("Load Files ok...")
 	return retMapFileContent, retMapFileComment, nil
@@ -40,7 +40,7 @@ func LoadFiles(postPath string) (map[string]string, map[string]zdata.CommentStru
 
 func readPath(postRootPath string,
 	retMapFileContent *map[string]string,
-	retMapFileComment *map[string]zdata.CommentStruct) error {
+	retMapFileComment *map[string][]zdata.CommentStruct) error {
 	files, errDir := ioutil.ReadDir(postRootPath)
 	if errDir != nil {
 		return errDir
@@ -63,26 +63,15 @@ func readPath(postRootPath string,
 			}
 		}
 		if !bIgnore {
-			if retContent, err := ReadFile(fileFullPath); err == nil {
-				postID := zdata.GetPostIDFromPath(fileFullPath)
-				if ext == "md"{
+			postID := zdata.GetPostIDFromPath(fileFullPath)
+			if ext == "md" {
+				if retContent, err := ReadFile(fileFullPath); err == nil {
 					(*retMapFileContent)[postID] = retContent
-				} else if ext == "cm"{
-					sList := strings.Split(retContent, "@")
-					commentUserID, errconv := strconv.ParseInt(sList[0], 10, 64)
-					if errconv != nil {
-						commentUserID = -1
-					}
-					tmp := zdata.CommentStruct{
-						CommentDate:     time.Now(),
-						CommentDateShow: ztime.GetCurTime(ztime.DAT),
-						CommentUserID:   commentUserID,
-						CommentUserName: sList[1],
-						CommentContent:  sList[2],
-					}
-					fmt.Println(tmp)
-					(*retMapFileComment)[postID] = tmp
 				}
+			} else if ext == "cm" {
+				r, _ := analyseComments(fileFullPath)
+				fmt.Println(r)
+				(*retMapFileComment)[postID] = append((*retMapFileComment)[postID],r...)
 			}
 		}
 	}
@@ -221,6 +210,42 @@ func loadIndexData() error {
 	return nil
 }
 
-func loadComments() {
-
+func analyseComments(commentPath string) ([]zdata.CommentStruct, error) {
+	fmt.Println("analyseComments begin...")
+	fileObj, err := os.OpenFile(commentPath, os.O_RDWR, 0666)
+	if err != nil {
+		return nil, err
+	}
+	defer fileObj.Close()
+	buf := bufio.NewReader(fileObj)
+	var ret []zdata.CommentStruct
+	for {
+		line, err := buf.ReadString('\n')
+		line = strings.TrimSpace(line)
+		if line != "" {
+			sList := strings.Split(line, "@")
+			commentUserID, errconv := strconv.ParseInt(sList[0], 10, 64)
+			if errconv != nil {
+				commentUserID = -1
+			}
+			tmp := zdata.CommentStruct{
+				CommentDate:     time.Now(),
+				CommentDateShow: ztime.GetCurTime(ztime.DAT),
+				CommentUserID:   commentUserID,
+				CommentUserName: sList[1],
+				CommentContent:  sList[2],
+			}
+			fmt.Println(tmp)
+			ret = append(ret, tmp)
+		}
+		if err != nil {
+			if err == io.EOF {
+				break
+			} else {
+				return nil, err
+			}
+		}
+	}
+	fmt.Println("analyseComments end...")
+	return ret, nil
 }
