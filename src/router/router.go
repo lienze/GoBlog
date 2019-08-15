@@ -2,7 +2,6 @@ package router
 
 import (
 	"GoBlog/src/config"
-	"GoBlog/src/file"
 	"GoBlog/src/zdata"
 	"GoBlog/src/zversion"
 	"html/template"
@@ -25,13 +24,12 @@ func showpost(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	//fmt.Println("showpost:", r.Form["name"][0])
 	filePath := "./post/" + r.Form["name"][0]
-	fileContent := file.MapFiles[filePath]
-	//fmt.Println("fileContent:", fileContent)
-	zdata.PageShow.PageContent = fileContent
-	//fmt.Println("showpost", zdata.IndexPage.IndexData[filePath].PostTitle)
-	indexInfo := zdata.IndexPage.IndexData[filePath]
+	indexInfo := zdata.AllPostData[filePath]
 	zdata.PageShow.PageTitle = indexInfo.PostTitle
 	zdata.PageShow.PageDate = indexInfo.PostDate
+	zdata.PageShow.PageContent = indexInfo.PostContent
+	zdata.PageShow.PageReadNum = indexInfo.PostReadNum
+	zdata.PageShow.PageCommentNum = indexInfo.PostCommentNum
 	zdata.PageShow.BlogVersion = zversion.Ver
 	t.Execute(w, zdata.PageShow)
 }

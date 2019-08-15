@@ -44,6 +44,7 @@ func RefreshContentShow(mapFiles map[string]string) {
 	AllPageData.CurPage = 1
 }
 
+// collect post data through IndexPage and MapFile struct
 func RefreshAllPostData(mapFiles map[string]string) {
 	AllPostData = make(map[string]PostStruct)
 	for k, v := range mapFiles {

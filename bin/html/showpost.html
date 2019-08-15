@@ -13,7 +13,7 @@
 	</style><body onload="initpage()">
 		<ul>
 			<span name="markdownContent">{{ .PageTitle }}</span>
-			<span>{{ .PageDate }}</span>
+			<span>{{ .PageDate }}&nbsp;|&nbsp;阅读量:{{ .PageReadNum }}&nbsp;|&nbsp;评论:{{ .PageCommentNum }}</span>
 			<span name="markdownContent">{{ .PageContent }}</span>
 		</ul>
 		<script type="text/javascript">
