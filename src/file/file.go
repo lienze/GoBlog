@@ -16,14 +16,12 @@ import (
 var (
 	bUseFilePool bool = false
 	mapFilePool  map[string]*os.File
-	MapFiles     map[string]string // the whole data
 )
 
 func InitFiles(postPath string) (map[string]string, error) {
 	//fmt.Println("InitFiles...")
 	// init options
 	bUseFilePool = config.GConfig.FileCfg.UseFilePool
-	MapFiles = make(map[string]string)
 	mapFilePool = make(map[string]*os.File)
 	loadIndexData()
 	return LoadFiles(postPath)

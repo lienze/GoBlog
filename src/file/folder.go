@@ -10,7 +10,6 @@ import (
 )
 
 func ScanFolder(postPath string) {
-	var err error
 	if config.GConfig.FileCfg.AutoRefresh == true {
 		freq := config.GConfig.FileCfg.RefreshFreq
 		for {
@@ -19,23 +18,22 @@ func ScanFolder(postPath string) {
 			if errDir != nil {
 				fmt.Println(errDir)
 			}
-			if len(filesInfo) != len(MapFiles) {
+			if len(filesInfo) != len(zdata.AllPostData) {
 				// files in postPath folder have been changed
 				// update right now
 				// FIXME: there seem to have a bug then we add a file and remove
 				//        a file at the same time, files have been changed but
 				//        the process could not find the difference, so no refresh
 				//        happened.We may use MD5 to compare.
-				MapFiles = make(map[string]string)
-				MapFiles, err = LoadFiles(config.GConfig.PostPath)
+				mapFiles, err := LoadFiles(config.GConfig.PostPath)
 				if err == nil {
 					fmt.Println("Finished LoadFiles")
-					zdata.RefreshContentShow(MapFiles)
+					zdata.RefreshContentShow(mapFiles)
 				} else {
 					fmt.Println("ScanFolder...", err)
 				}
 			}
-			//fmt.Println("ScanFolder:", len(filesInfo), len(MapFiles))
+			//fmt.Println("ScanFolder:", len(filesInfo), len(mapFiles))
 		}
 	}
 }
