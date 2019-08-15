@@ -9,7 +9,7 @@ import (
 type CommentStruct struct {
 	CommentDate     time.Time
 	CommentDateShow string
-	CommentUserID   uint64
+	CommentUserID   int64
 	CommentUserName string
 	CommentContent  string
 }

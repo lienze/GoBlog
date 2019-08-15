@@ -12,7 +12,7 @@ dbname = "mytest"
 [filecfg]
 autorefresh = true
 refreshfreq = 5    # the frequency of refreshing the fold which is postPath(unit:second)
-includefile  = ["md"]
+includefile  = ["md","cm"]    # md means markdown files, cm means comment files
 usefilepool = true
 
 [logcfg]

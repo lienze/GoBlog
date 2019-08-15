@@ -2,10 +2,8 @@ package zdata
 
 import (
 	"GoBlog/src/config"
-	"GoBlog/src/ztime"
 	"fmt"
 	"sort"
-	"time"
 )
 
 type ContentStruct struct {
@@ -49,17 +47,18 @@ func RefreshContentShow(mapFiles map[string]string) {
 }
 
 // collect post data through IndexPage and MapFile struct
-func RefreshAllPostData(mapFiles map[string]string) {
+func RefreshAllPostData(mapFiles map[string]string, mapComments map[string]CommentStruct) {
 	AllPostData = make(map[string]PostStruct)
 	for k, v := range mapFiles {
 		indexData := IndexPage.IndexData[k]
-		comm := CommentStruct{
+		/*comm := CommentStruct{
 			CommentDate:     time.Now(),
 			CommentDateShow: ztime.GetCurTime(ztime.DAT),
 			CommentUserID:   12345,
 			CommentUserName: "Goodboy",
 			CommentContent:  "Hi,it's amazing!",
-		}
+		}*/
+		comm := mapComments[k]
 		comms := make([]CommentStruct, 0)
 		comms = append(comms, comm)
 		tmp := PostStruct{

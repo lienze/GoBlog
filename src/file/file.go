@@ -3,6 +3,7 @@ package file
 import (
 	"GoBlog/src/config"
 	"GoBlog/src/zdata"
+	"GoBlog/src/ztime"
 	"GoBlog/src/zversion"
 	"bufio"
 	"fmt"
@@ -11,6 +12,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 var (
@@ -18,7 +20,7 @@ var (
 	mapFilePool  map[string]*os.File
 )
 
-func InitFiles(postPath string) (map[string]string, error) {
+func InitFiles(postPath string) (map[string]string, map[string]zdata.CommentStruct, error) {
 	//fmt.Println("InitFiles...")
 	// init options
 	bUseFilePool = config.GConfig.FileCfg.UseFilePool
@@ -27,15 +29,18 @@ func InitFiles(postPath string) (map[string]string, error) {
 	return LoadFiles(postPath)
 }
 
-func LoadFiles(postPath string) (map[string]string, error) {
+func LoadFiles(postPath string) (map[string]string, map[string]zdata.CommentStruct, error) {
 	fmt.Println("Start Loading Files...")
 	retMapFileContent := make(map[string]string)
-	readPath(postPath, &retMapFileContent)
+	retMapFileComment := make(map[string]zdata.CommentStruct)
+	readPath(postPath, &retMapFileContent, &retMapFileComment)
 	fmt.Println("Load Files ok...")
-	return retMapFileContent, nil
+	return retMapFileContent, retMapFileComment, nil
 }
 
-func readPath(postRootPath string, retMapFileContent *map[string]string) error {
+func readPath(postRootPath string,
+	retMapFileContent *map[string]string,
+	retMapFileComment *map[string]zdata.CommentStruct) error {
 	files, errDir := ioutil.ReadDir(postRootPath)
 	if errDir != nil {
 		return errDir
@@ -45,7 +50,7 @@ func readPath(postRootPath string, retMapFileContent *map[string]string) error {
 	for _, f := range files {
 		fileFullPath := postRootPath + f.Name()
 		if f.IsDir() {
-			readPath(fileFullPath+"/", retMapFileContent)
+			readPath(fileFullPath+"/", retMapFileContent, retMapFileComment)
 			continue
 		}
 		// check file ext
@@ -60,7 +65,24 @@ func readPath(postRootPath string, retMapFileContent *map[string]string) error {
 		if !bIgnore {
 			if retContent, err := ReadFile(fileFullPath); err == nil {
 				postID := zdata.GetPostIDFromPath(fileFullPath)
-				(*retMapFileContent)[postID] = retContent
+				if ext == "md"{
+					(*retMapFileContent)[postID] = retContent
+				} else if ext == "cm"{
+					sList := strings.Split(retContent, "@")
+					commentUserID, errconv := strconv.ParseInt(sList[0], 10, 64)
+					if errconv != nil {
+						commentUserID = -1
+					}
+					tmp := zdata.CommentStruct{
+						CommentDate:     time.Now(),
+						CommentDateShow: ztime.GetCurTime(ztime.DAT),
+						CommentUserID:   commentUserID,
+						CommentUserName: sList[1],
+						CommentContent:  sList[2],
+					}
+					fmt.Println(tmp)
+					(*retMapFileComment)[postID] = tmp
+				}
 			}
 		}
 	}
