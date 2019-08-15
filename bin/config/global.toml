@@ -12,7 +12,7 @@ dbname = "mytest"
 [filecfg]
 autorefresh = true
 refreshfreq = 5    # the frequency of refreshing the fold which is postPath(unit:second)
-includefile  = ["md","dat"]
+includefile  = ["md"]
 usefilepool = true
 
 [logcfg]
