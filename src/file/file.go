@@ -90,6 +90,15 @@ func SaveFile(filename string, content string) error {
 	return nil
 }
 
+func FileExist(filePath string) {
+	_, err := os.Stat(filePath)
+	if err == nil {
+		fmt.Println("FileExist:", filePath)
+	} else {
+		fmt.Println("FileNotExist:", filePath)
+	}
+}
+
 func AddContent2File(filename string, content string) error {
 	//fmt.Println("Start Add Content 2 File")
 	bNewFile := true
@@ -187,4 +196,8 @@ func loadIndexData() error {
 	zdata.IndexPage.BlogVersion = zversion.Ver
 	fmt.Println("loadIndexData end...")
 	return nil
+}
+
+func loadComments() {
+
 }

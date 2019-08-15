@@ -3,6 +3,7 @@ package zdata
 import (
 	"GoBlog/src/config"
 	"GoBlog/src/ztime"
+	"fmt"
 	"sort"
 	"time"
 )
@@ -21,6 +22,7 @@ var PageShow PageStruct
 var IndexPage IndexPageStruct
 
 var AllPostData map[string]PostStruct
+var AllCommentData map[string]CommentStruct
 
 func RefreshContentShow(mapFiles map[string]string) {
 	var mapkeys []string
@@ -71,6 +73,9 @@ func RefreshAllPostData(mapFiles map[string]string) {
 			PostComments:   comms,
 		}
 		//fmt.Println("RefreshAllPostData:", k)
+		commentPath := GetCommentPathFromID(k)
+		//file.FileExist(commentPath)
+		fmt.Println("RefreshAllPostData:", commentPath)
 		AllPostData[k] = tmp
 	}
 }

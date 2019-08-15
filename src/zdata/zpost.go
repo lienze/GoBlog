@@ -1,6 +1,7 @@
 package zdata
 
 import (
+	"GoBlog/src/config"
 	"strings"
 	"time"
 )
@@ -29,4 +30,12 @@ func GetPostIDFromPath(fileFullPath string) string {
 	idx2 := strings.LastIndex(fileFullPath[:idx1], "/")
 	postID := fileFullPath[idx2+1 : idx1]
 	return postID
+}
+
+func GetPostPathFromID(postID string) string {
+	return config.GConfig.PostPath + postID + "/"
+}
+
+func GetCommentPathFromID(postID string) string {
+	return config.GConfig.PostPath + postID + "/comment.dat"
 }
