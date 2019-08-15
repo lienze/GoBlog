@@ -4,6 +4,7 @@ import "time"
 
 type CommentStruct struct {
 	CommentDate     time.Time
+	CommentDateShow string
 	CommentUserID   uint64
 	CommentUserName string
 	CommentConent   string

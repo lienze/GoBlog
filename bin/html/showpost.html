@@ -12,6 +12,8 @@
 	}
 	.CommentDate{
 		font-size:12px;
+		/*background-color:#A8A8A8;*/
+		color:#A8A8A8;
 	}
 	</style><body onload="initpage()">
 		<span name="markdownContent">{{ .PageTitle }}</span>
@@ -24,10 +26,9 @@
 			{{ range .PageComments }}
 				[{{ .CommentUserName }}]{{ .CommentConent }}
 				<br>
-				<span class="CommentDate">{{ .CommentDate }}</span>
+				<span class="CommentDate">{{ .CommentDateShow }}</span>
 				<hr>
 			{{ end }}
-			<hr>
 		</ul>
 		<script type="text/javascript">
 		function initpage(){

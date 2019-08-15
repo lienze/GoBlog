@@ -2,6 +2,7 @@ package zdata
 
 import (
 	"GoBlog/src/config"
+	"GoBlog/src/ztime"
 	"sort"
 	"time"
 )
@@ -52,6 +53,7 @@ func RefreshAllPostData(mapFiles map[string]string) {
 		indexData := IndexPage.IndexData[k]
 		comm := CommentStruct{
 			CommentDate:     time.Now(),
+			CommentDateShow: ztime.GetCurTime(ztime.DAT),
 			CommentUserID:   12345,
 			CommentUserName: "Goodboy",
 			CommentConent:   "Hi,it's amazing!",
