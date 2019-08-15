@@ -58,7 +58,7 @@ func RefreshAllPostData(mapFiles map[string]string) {
 			CommentDateShow: ztime.GetCurTime(ztime.DAT),
 			CommentUserID:   12345,
 			CommentUserName: "Goodboy",
-			CommentConent:   "Hi,it's amazing!",
+			CommentContent:  "Hi,it's amazing!",
 		}
 		comms := make([]CommentStruct, 0)
 		comms = append(comms, comm)
@@ -72,10 +72,10 @@ func RefreshAllPostData(mapFiles map[string]string) {
 			PostCommentNum: indexData.PostCommentNum,
 			PostComments:   comms,
 		}
-		//fmt.Println("RefreshAllPostData:", k)
+		//fmt.Println("RefreshAllPostData:", tmp.PostTitle)
 		commentPath := GetCommentPathFromID(k)
 		//file.FileExist(commentPath)
-		fmt.Println("RefreshAllPostData:", commentPath)
+		fmt.Println("[RefreshAllPostData]commentPath:", commentPath)
 		AllPostData[k] = tmp
 	}
 }

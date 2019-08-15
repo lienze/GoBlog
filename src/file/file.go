@@ -160,26 +160,27 @@ func loadIndexData() error {
 		line = strings.TrimSpace(line)
 		if line != "" {
 			//fmt.Println(line)
-			slist := strings.Split(line, "@")
-			postReadNum, errconv := strconv.Atoi(slist[4])
+			sList := strings.Split(line, "@")
+			postReadNum, errconv := strconv.Atoi(sList[4])
 			if errconv != nil {
 				postReadNum = -1
 			}
-			postCommentNum, errconv := strconv.Atoi(slist[5])
+			postCommentNum, errconv := strconv.Atoi(sList[5])
 			if errconv != nil {
 				postCommentNum = -1
 			}
 			tmp := zdata.IndexStruct{
-				PostPath:  "./post?name=" + slist[0],
-				PostTitle: "### " + slist[1],
-				PostTitleHref: "### " + "[" + slist[1] + "]" +
-					"(" + "./showpost?name=" + slist[0] + ")",
-				PostProfile:    ">" + slist[2],
-				PostDate:       slist[3],
+				PostPath:  "./post?name=" + sList[0],
+				PostTitle: "### " + sList[1],
+				PostTitleHref: "### " + "[" + sList[1] + "]" +
+					"(" + "./showpost?name=" + sList[0] + ")",
+				PostProfile:    ">" + sList[2],
+				PostDate:       sList[3],
 				PostReadNum:    postReadNum,
 				PostCommentNum: postCommentNum,
 			}
-			zdata.IndexPage.IndexData["./post/"+slist[0]] = tmp
+			k := zdata.GetPostIDFromPath(config.GConfig.PostPath + sList[0])
+			zdata.IndexPage.IndexData[k] = tmp
 			//fmt.Println(tmp)
 		}
 		if err != nil {

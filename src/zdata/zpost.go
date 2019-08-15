@@ -11,7 +11,7 @@ type CommentStruct struct {
 	CommentDateShow string
 	CommentUserID   uint64
 	CommentUserName string
-	CommentConent   string
+	CommentContent  string
 }
 
 type PostStruct struct {
