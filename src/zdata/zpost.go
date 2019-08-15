@@ -1,6 +1,9 @@
 package zdata
 
-import "time"
+import (
+	"strings"
+	"time"
+)
 
 type CommentStruct struct {
 	CommentDate     time.Time
@@ -19,4 +22,11 @@ type PostStruct struct {
 	PostReadNum    int
 	PostCommentNum int
 	PostComments   []CommentStruct
+}
+
+func GetPostIDFromPath(fileFullPath string) string {
+	idx1 := strings.LastIndex(fileFullPath, "/")
+	idx2 := strings.LastIndex(fileFullPath[:idx1], "/")
+	postID := fileFullPath[idx2+1 : idx1]
+	return postID
 }

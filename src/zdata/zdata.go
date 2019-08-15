@@ -70,7 +70,7 @@ func RefreshAllPostData(mapFiles map[string]string) {
 			PostCommentNum: indexData.PostCommentNum,
 			PostComments:   comms,
 		}
-		//fmt.Println(tmp)
+		//fmt.Println("RefreshAllPostData:", k)
 		AllPostData[k] = tmp
 	}
 }

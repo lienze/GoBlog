@@ -59,7 +59,8 @@ func readPath(postRootPath string, retMapFileContent *map[string]string) error {
 		}
 		if !bIgnore {
 			if retContent, err := ReadFile(fileFullPath); err == nil {
-				(*retMapFileContent)[fileFullPath] = retContent
+				postID := zdata.GetPostIDFromPath(fileFullPath)
+				(*retMapFileContent)[postID] = retContent
 			}
 		}
 	}

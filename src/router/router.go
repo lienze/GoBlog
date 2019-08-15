@@ -24,7 +24,8 @@ func showpost(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	//fmt.Println("showpost:", r.Form["name"][0])
 	filePath := "./post/" + r.Form["name"][0]
-	indexInfo := zdata.AllPostData[filePath]
+	postID := zdata.GetPostIDFromPath(filePath)
+	indexInfo := zdata.AllPostData[postID]
 	zdata.PageShow.PageTitle = indexInfo.PostTitle
 	zdata.PageShow.PageDate = indexInfo.PostDate
 	zdata.PageShow.PageContent = indexInfo.PostContent
