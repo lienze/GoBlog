@@ -55,6 +55,8 @@ func NewServer() error {
 	}
 	zdata.RefreshContentShow(file.MapFiles)
 
+	zdata.RefreshAllPostData(file.MapFiles)
+
 	// new gorountine for scanning folder that we could refresh page
 	// when there is new post appear
 	go file.ScanFolder(config.GConfig.PostPath)

@@ -18,6 +18,8 @@ var AllPageData ContentStruct
 var PageShow PageStruct
 var IndexPage IndexPageStruct
 
+var AllPostData map[string]PostStruct
+
 func RefreshContentShow(mapFiles map[string]string) {
 	var mapkeys []string
 	for k := range mapFiles {
@@ -40,4 +42,22 @@ func RefreshContentShow(mapFiles map[string]string) {
 	}
 	AllPageData.MaxPage = iMaxPage
 	AllPageData.CurPage = 1
+}
+
+func RefreshAllPostData(mapFiles map[string]string) {
+	AllPostData = make(map[string]PostStruct)
+	for k, v := range mapFiles {
+		indexData := IndexPage.IndexData[k]
+		tmp := PostStruct{
+			PostPath:       k,
+			PostTitle:      indexData.PostTitle,
+			PostProfile:    indexData.PostProfile,
+			PostDate:       indexData.PostDate,
+			PostContent:    v,
+			PostReadNum:    indexData.PostReadNum,
+			PostCommentNum: indexData.PostCommentNum,
+		}
+		//fmt.Println(tmp)
+		AllPostData[k] = tmp
+	}
 }

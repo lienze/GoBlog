@@ -47,9 +47,9 @@ func ReadFolder(postPath string, includeExt []string) ([]os.FileInfo, error) {
 		for _, f := range filesInfo {
 			fileFullPath := postPath + "/" + f.Name()
 			if f.IsDir() {
-				flist, err := ReadFolder(fileFullPath, includeExt)
+				fList, err := ReadFolder(fileFullPath, includeExt)
 				if err == nil {
-					retFilesInfo = append(retFilesInfo, flist...)
+					retFilesInfo = append(retFilesInfo, fList...)
 				}
 				continue
 			}
