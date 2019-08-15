@@ -29,6 +29,7 @@ func ScanFolder(postPath string) {
 				if err == nil {
 					fmt.Println("Finished LoadFiles")
 					zdata.RefreshContentShow(mapFiles)
+					zdata.RefreshAllPostData(mapFiles)
 				} else {
 					fmt.Println("ScanFolder...", err)
 				}

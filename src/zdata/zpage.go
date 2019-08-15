@@ -7,5 +7,6 @@ type PageStruct struct {
 	PageContent    string
 	PageReadNum    int
 	PageCommentNum int
+	PageComments   []CommentStruct
 	BlogVersion    string
 }

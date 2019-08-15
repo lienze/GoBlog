@@ -10,11 +10,24 @@
 	.powered-text{
 		font-size:14px;
 	}
+	.CommentDate{
+		font-size:12px;
+	}
 	</style><body onload="initpage()">
+		<span name="markdownContent">{{ .PageTitle }}</span>
+		<span>{{ .PageDate }}&nbsp;|&nbsp;阅读量:{{ .PageReadNum }}&nbsp;|&nbsp;评论:{{ .PageCommentNum }}</span>
+		<span name="markdownContent">{{ .PageContent }}</span>
+		<hr>
+		评论(11):
 		<ul>
-			<span name="markdownContent">{{ .PageTitle }}</span>
-			<span>{{ .PageDate }}&nbsp;|&nbsp;阅读量:{{ .PageReadNum }}&nbsp;|&nbsp;评论:{{ .PageCommentNum }}</span>
-			<span name="markdownContent">{{ .PageContent }}</span>
+			<hr>
+			{{ range .PageComments }}
+				[{{ .CommentUserName }}]{{ .CommentConent }}
+				<br>
+				<span class="CommentDate">{{ .CommentDate }}</span>
+				<hr>
+			{{ end }}
+			<hr>
 		</ul>
 		<script type="text/javascript">
 		function initpage(){

@@ -30,6 +30,7 @@ func showpost(w http.ResponseWriter, r *http.Request) {
 	zdata.PageShow.PageContent = indexInfo.PostContent
 	zdata.PageShow.PageReadNum = indexInfo.PostReadNum
 	zdata.PageShow.PageCommentNum = indexInfo.PostCommentNum
+	zdata.PageShow.PageComments = indexInfo.PostComments
 	zdata.PageShow.BlogVersion = zversion.Ver
 	t.Execute(w, zdata.PageShow)
 }

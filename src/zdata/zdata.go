@@ -3,6 +3,7 @@ package zdata
 import (
 	"GoBlog/src/config"
 	"sort"
+	"time"
 )
 
 type ContentStruct struct {
@@ -49,6 +50,14 @@ func RefreshAllPostData(mapFiles map[string]string) {
 	AllPostData = make(map[string]PostStruct)
 	for k, v := range mapFiles {
 		indexData := IndexPage.IndexData[k]
+		comm := CommentStruct{
+			CommentDate:     time.Now(),
+			CommentUserID:   12345,
+			CommentUserName: "Goodboy",
+			CommentConent:   "Hi,it's amazing!",
+		}
+		comms := make([]CommentStruct, 0)
+		comms = append(comms, comm)
 		tmp := PostStruct{
 			PostPath:       k,
 			PostTitle:      indexData.PostTitle,
@@ -57,6 +66,7 @@ func RefreshAllPostData(mapFiles map[string]string) {
 			PostContent:    v,
 			PostReadNum:    indexData.PostReadNum,
 			PostCommentNum: indexData.PostCommentNum,
+			PostComments:   comms,
 		}
 		//fmt.Println(tmp)
 		AllPostData[k] = tmp
