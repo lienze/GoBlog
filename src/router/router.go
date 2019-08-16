@@ -69,6 +69,7 @@ func upcomment(w http.ResponseWriter, r *http.Request) {
 		CommentContent:  comment,
 	}
 	dataInfo.PostComments = append(dataInfo.PostComments, newComment)
+	dataInfo.PostCommentNum = len(dataInfo.PostComments)
 	zdata.AllPostData[postID] = dataInfo
 	//fmt.Println(name, "::::::", comment)
 	t.Execute(w, "upload comment succeed!")
