@@ -69,9 +69,9 @@ func readPath(postRootPath string,
 					(*retMapFileContent)[postID] = retContent
 				}
 			} else if ext == "cm" {
-				r, _ := analyseComments(fileFullPath)
-				fmt.Println(r)
-				(*retMapFileComment)[postID] = append((*retMapFileComment)[postID],r...)
+				retSlice, _ := analyseComments(fileFullPath)
+				//fmt.Println(r)
+				(*retMapFileComment)[postID] = append((*retMapFileComment)[postID],retSlice...)
 			}
 		}
 	}
@@ -235,7 +235,7 @@ func analyseComments(commentPath string) ([]zdata.CommentStruct, error) {
 				CommentUserName: sList[1],
 				CommentContent:  sList[2],
 			}
-			fmt.Println(tmp)
+			//fmt.Println(tmp)
 			ret = append(ret, tmp)
 		}
 		if err != nil {

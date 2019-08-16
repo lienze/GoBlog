@@ -2,7 +2,6 @@ package zdata
 
 import (
 	"GoBlog/src/config"
-	"fmt"
 	"sort"
 )
 
@@ -51,13 +50,6 @@ func RefreshAllPostData(mapFiles map[string]string, mapComments map[string][]Com
 	AllPostData = make(map[string]PostStruct)
 	for k, v := range mapFiles {
 		indexData := IndexPage.IndexData[k]
-		/*comm := CommentStruct{
-			CommentDate:     time.Now(),
-			CommentDateShow: ztime.GetCurTime(ztime.DAT),
-			CommentUserID:   12345,
-			CommentUserName: "Goodboy",
-			CommentContent:  "Hi,it's amazing!",
-		}*/
 		comm := mapComments[k]
 		comms := make([]CommentStruct, 0)
 		comms = append(comms, comm...)
@@ -71,10 +63,8 @@ func RefreshAllPostData(mapFiles map[string]string, mapComments map[string][]Com
 			PostCommentNum: indexData.PostCommentNum,
 			PostComments:   comms,
 		}
-		//fmt.Println("RefreshAllPostData:", tmp.PostTitle)
-		commentPath := GetCommentPathFromID(k)
-		//file.FileExist(commentPath)
-		fmt.Println("[RefreshAllPostData]commentPath:", commentPath)
+		//commentPath := GetCommentPathFromID(k)
+		//fmt.Println("[RefreshAllPostData]commentPath:", commentPath)
 		AllPostData[k] = tmp
 	}
 }

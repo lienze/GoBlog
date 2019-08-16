@@ -20,7 +20,7 @@
 		<span>{{ .PageDate }}&nbsp;|&nbsp;阅读量:{{ .PageReadNum }}&nbsp;|&nbsp;评论:{{ .PageCommentNum }}</span>
 		<span name="markdownContent">{{ .PageContent }}</span>
 		<hr>
-		评论(11):
+		评论({{ .PageCommentNum }}):
 		<ul>
 			<hr>
 			{{ range .PageComments }}
