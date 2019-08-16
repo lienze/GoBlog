@@ -4,6 +4,7 @@ import (
 	"GoBlog/src/config"
 	"GoBlog/src/zdata"
 	"GoBlog/src/zversion"
+	"fmt"
 	"html/template"
 	"net/http"
 	"strconv"
@@ -36,7 +37,6 @@ func showpost(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("html/showpost.html")
 	r.ParseForm()
 	zdata.PageShow.WebTitle = config.GConfig.WebSite.WebTitle
-	r.ParseForm()
 	//fmt.Println("showpost:", r.Form["name"][0])
 	filePath := "./post/" + r.Form["name"][0]
 	postID := zdata.GetPostIDFromPath(filePath)
@@ -52,6 +52,15 @@ func showpost(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, zdata.PageShow)
 }
 
+func upcomment(w http.ResponseWriter, r *http.Request) {
+	t, _ := template.ParseFiles("html/upcomment.html")
+	r.ParseForm()
+	name := r.Form["name"][0]
+	comment := r.Form["comment"][0]
+	fmt.Println(name, "::::::", comment)
+	t.Execute(w, "upload comment succeed!")
+}
+
 // temporary solution
 //func getShowDownJS(w http.ResponseWriter, r *http.Request) {
 //	fileContent, _ := file.ReadFile("./html/showdown.min.js")
@@ -61,6 +70,7 @@ func showpost(w http.ResponseWriter, r *http.Request) {
 func InitRouter() error {
 	http.HandleFunc("/", rootPage)
 	http.HandleFunc("/showpost", showpost)
+	http.HandleFunc("/upcomment", upcomment)
 	//http.HandleFunc("/showdown.min.js", getShowDownJS)
 
 	// init static file service
