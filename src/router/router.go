@@ -3,11 +3,12 @@ package router
 import (
 	"GoBlog/src/config"
 	"GoBlog/src/zdata"
+	"GoBlog/src/ztime"
 	"GoBlog/src/zversion"
-	"fmt"
 	"html/template"
 	"net/http"
 	"strconv"
+	"time"
 )
 
 func rootPage(w http.ResponseWriter, r *http.Request) {
@@ -57,7 +58,19 @@ func upcomment(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	name := r.Form["name"][0]
 	comment := r.Form["comment"][0]
-	fmt.Println(name, "::::::", comment)
+	postPath := "./post/" + r.Form["postname"][0]
+	postID := zdata.GetPostIDFromPath(postPath)
+	dataInfo := zdata.AllPostData[postID]
+	newComment := zdata.CommentStruct{
+		CommentDate:     time.Now(),
+		CommentDateShow: ztime.GetCurTime(ztime.DAT),
+		CommentUserID:   134562,
+		CommentUserName: name,
+		CommentContent:  comment,
+	}
+	dataInfo.PostComments = append(dataInfo.PostComments, newComment)
+	zdata.AllPostData[postID] = dataInfo
+	//fmt.Println(name, "::::::", comment)
 	t.Execute(w, "upload comment succeed!")
 }
 
