@@ -55,7 +55,7 @@ func NewServer() error {
 	if err != nil {
 		return err
 	}
-	zdata.RefreshContentShow(mapFiles)
+	//zdata.RefreshContentShow(mapFiles)
 
 	zdata.RefreshAllPostData(mapFiles, mapComments)
 

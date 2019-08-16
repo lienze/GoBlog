@@ -71,7 +71,7 @@ func readPath(postRootPath string,
 			} else if ext == "cm" {
 				retSlice, _ := analyseComments(fileFullPath)
 				//fmt.Println(r)
-				(*retMapFileComment)[postID] = append((*retMapFileComment)[postID],retSlice...)
+				(*retMapFileComment)[postID] = append((*retMapFileComment)[postID], retSlice...)
 			}
 		}
 	}

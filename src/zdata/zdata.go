@@ -53,6 +53,8 @@ func RefreshAllPostData(mapFiles map[string]string, mapComments map[string][]Com
 		comm := mapComments[k]
 		comms := make([]CommentStruct, 0)
 		comms = append(comms, comm...)
+		indexData.PostCommentNum = len(comms)
+		IndexPage.IndexData[k] = indexData
 		tmp := PostStruct{
 			PostPath:       k,
 			PostTitle:      indexData.PostTitle,
