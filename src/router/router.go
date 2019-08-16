@@ -9,18 +9,33 @@ import (
 	"strconv"
 )
 
-//var ContentShow []string = []string{}
-
 func rootPage(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("html/index.html")
 	r.ParseForm()
+	var iCurPage int = 0
+	var err error
+	// the para page may null, check it before use
+	if r.Form["page"] == nil {
+		iCurPage = 1
+	} else {
+		iCurPage, err = strconv.Atoi(r.Form["page"][0])
+		if err != nil {
+			iCurPage = 1
+		}
+		if iCurPage <= 0 {
+			iCurPage = 1
+		} else if iCurPage >= zdata.IndexPage.MaxPage {
+			iCurPage = zdata.IndexPage.MaxPage
+		}
+	}
+	zdata.SetCurIndexPageShow(iCurPage)
 	t.Execute(w, zdata.IndexPage)
 }
 
 func showpost(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("html/showpost.html")
 	r.ParseForm()
-	zdata.PageShow.WebTitle = zdata.AllPageData.WebTitle
+	zdata.PageShow.WebTitle = config.GConfig.WebSite.WebTitle
 	r.ParseForm()
 	//fmt.Println("showpost:", r.Form["name"][0])
 	filePath := "./post/" + r.Form["name"][0]
@@ -37,39 +52,6 @@ func showpost(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, zdata.PageShow)
 }
 
-func contentPage(w http.ResponseWriter, r *http.Request) {
-	t, _ := template.ParseFiles("html/content.html")
-	r.ParseForm()
-	var iCurPage int = 0
-	var err error
-	// the para page may null, check it before use
-	if r.Form["page"] == nil {
-		iCurPage = 1
-	} else {
-		iCurPage, err = strconv.Atoi(r.Form["page"][0])
-		if err != nil {
-			iCurPage = 1
-		}
-		if iCurPage <= 0 {
-			iCurPage = 1
-		} else if iCurPage >= zdata.AllPageData.MaxPage {
-			iCurPage = zdata.AllPageData.MaxPage
-		}
-	}
-	zdata.CurPageData.CurPage = iCurPage
-	zdata.CurPageData.MaxPage = zdata.AllPageData.MaxPage
-	zdata.CurPageData.WebTitle = zdata.AllPageData.WebTitle
-	// insert current page
-	zdata.CurPageData.ContentShow = make([]string, 0)
-	allDataLen := len(zdata.AllPageData.ContentShow)
-	iPerPage := config.GConfig.PageCfg.MaxItemPerPage
-	for i := (iCurPage - 1) * iPerPage; i < iCurPage*iPerPage && i < allDataLen; i++ {
-		zdata.CurPageData.ContentShow =
-			append(zdata.CurPageData.ContentShow, zdata.AllPageData.ContentShow[i])
-	}
-	t.Execute(w, zdata.CurPageData)
-}
-
 // temporary solution
 //func getShowDownJS(w http.ResponseWriter, r *http.Request) {
 //	fileContent, _ := file.ReadFile("./html/showdown.min.js")
@@ -78,7 +60,6 @@ func contentPage(w http.ResponseWriter, r *http.Request) {
 
 func InitRouter() error {
 	http.HandleFunc("/", rootPage)
-	http.HandleFunc("/content", contentPage)
 	http.HandleFunc("/showpost", showpost)
 	//http.HandleFunc("/showdown.min.js", getShowDownJS)
 

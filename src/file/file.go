@@ -165,7 +165,7 @@ func loadIndexData() error {
 	}
 	defer fileObj.Close()
 	buf := bufio.NewReader(fileObj)
-	zdata.IndexPage.IndexData = make(map[string]zdata.IndexStruct)
+	zdata.IndexPage.AllIndexData = make(map[string]zdata.IndexStruct)
 	for {
 		line, err := buf.ReadString('\n')
 		line = strings.TrimSpace(line)
@@ -191,7 +191,7 @@ func loadIndexData() error {
 				PostCommentNum: postCommentNum,
 			}
 			k := zdata.GetPostIDFromPath(config.GConfig.PostPath + sList[0])
-			zdata.IndexPage.IndexData[k] = tmp
+			zdata.IndexPage.AllIndexData[k] = tmp
 			//fmt.Println(tmp)
 		}
 		if err != nil {

@@ -12,49 +12,59 @@ type ContentStruct struct {
 	WebTitle    string
 }
 
-var CurPageData ContentStruct
-var AllPageData ContentStruct
-
 var PageShow PageStruct
 var IndexPage IndexPageStruct
 
 var AllPostData map[string]PostStruct
 var AllCommentData map[string]CommentStruct
 
-func RefreshContentShow(mapFiles map[string]string) {
+func RefreshIndexShow(mapFiles map[string]PostStruct) {
 	var mapkeys []string
-	for k := range mapFiles {
+	for k := range IndexPage.AllIndexData {
 		mapkeys = append(mapkeys, k)
 	}
 	//fmt.Println(mapkeys)
 	sort.Sort(sort.Reverse(sort.StringSlice(mapkeys)))
-	AllPageData.ContentShow = make([]string, 0)
-	AllPageData.WebTitle = config.GConfig.WebSite.WebTitle
+	IndexPage.WebTitle = config.GConfig.WebSite.WebTitle
+	IndexPage.AllIndexKey = mapkeys
+	SetCurIndexPageShow(1)
+}
+
+func SetCurIndexPageShow(iCurPage int) {
+	mapkeys := IndexPage.AllIndexKey
 	for _, val := range mapkeys {
 		//fmt.Println(key, " ", val)
-		AllPageData.ContentShow = append(AllPageData.ContentShow, mapFiles[val])
+		IndexPage.CurIndexData = append(IndexPage.CurIndexData, IndexPage.AllIndexData[val])
 	}
-	iMaxPage := len(mapkeys) / config.GConfig.PageCfg.MaxItemPerPage
-	if len(mapkeys)%config.GConfig.PageCfg.MaxItemPerPage != 0 {
+	iPerPage := config.GConfig.PageCfg.MaxItemPerPage
+	iAllDataLen := len(IndexPage.AllIndexKey)
+	iMaxPage := len(mapkeys) / iPerPage
+	if len(mapkeys)%iPerPage != 0 {
 		iMaxPage++
 	}
 	if iMaxPage <= 0 {
 		iMaxPage = 1
 	}
-	AllPageData.MaxPage = iMaxPage
-	AllPageData.CurPage = 1
+	IndexPage.MaxPage = iMaxPage
+	IndexPage.CurPage = iCurPage
+	IndexPage.CurIndexData = make([]IndexStruct, 0)
+	for i := (iCurPage - 1) * iPerPage; i < iCurPage*iPerPage && i < iAllDataLen; i++ {
+		k := IndexPage.AllIndexKey[i]
+		IndexPage.CurIndexData =
+			append(IndexPage.CurIndexData, IndexPage.AllIndexData[k])
+	}
 }
 
 // collect post data through IndexPage and MapFile struct
 func RefreshAllPostData(mapFiles map[string]string, mapComments map[string][]CommentStruct) {
 	AllPostData = make(map[string]PostStruct)
 	for k, v := range mapFiles {
-		indexData := IndexPage.IndexData[k]
+		indexData := IndexPage.AllIndexData[k]
 		comm := mapComments[k]
 		comms := make([]CommentStruct, 0)
 		comms = append(comms, comm...)
 		indexData.PostCommentNum = len(comms)
-		IndexPage.IndexData[k] = indexData
+		IndexPage.AllIndexData[k] = indexData
 		tmp := PostStruct{
 			PostPath:       k,
 			PostTitle:      indexData.PostTitle,

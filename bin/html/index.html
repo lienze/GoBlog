@@ -11,16 +11,61 @@
 		font-size:14px;
 	}
 	</style>
-	<body onload="convert2md()">
+	<body onload="initpage()">
 		<ul>
-			{{ range .IndexData }}
+			{{ range .CurIndexData }}
 			<span name="markdownContent">{{ .PostTitleHref }}</span>
 			<span name="markdownContent">{{ .PostProfile }}</span>
 			发布时间: {{ .PostDate }} | 阅读量:{{ .PostReadNum }} | 评论:{{ .PostCommentNum }}
 			<hr>
 			{{ end }}
 		</ul>
+		<div align="center">
+			<button onclick="prepage();"  >◄</button>
+			[{{ .CurPage }}]...<span id="maxPage">{{ .MaxPage }}</span>
+			<button onclick="nextpage();" >►</button>
+		</div>
 		<script type="text/javascript">
+		var iMaxPageNum = 0;
+		function getquerystring(name){
+			var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+			var r = window.location.search.substr(1).match(reg);
+			if(r!=null)return  unescape(r[2]); return null;
+		}
+		function setmaxpagenum(){
+			iMaxPageNum = document.getElementById("maxPage").innerText;
+		}
+		function prepage(){
+			var iCurPage = getquerystring("page");
+			if(iCurPage == null){
+				iCurPage = 1;
+			}else{
+				iCurPage--;
+			}
+			setcurpage(iCurPage);
+		}
+		function nextpage(){
+			var iCurPage = getquerystring("page");
+			if(iCurPage == null){
+				iCurPage = 1;
+			}else{
+				iCurPage++;
+			}
+			setcurpage(iCurPage);
+		}
+		function setcurpage(idx){
+			if(idx < 1){
+				idx = 1;
+			}else if(idx > iMaxPageNum){
+				idx = iMaxPageNum;
+			}
+			var pageAddr = "?page=" + idx;
+			window.location.href = pageAddr;
+		}
+		function initpage(){
+			setmaxpagenum();
+			convert2md();
+		}
 		function convert2md(){
 			//var list = document.getElementsByTagName("li");
 			var list = document.getElementsByName("markdownContent");
