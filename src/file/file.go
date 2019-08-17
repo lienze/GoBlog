@@ -131,11 +131,12 @@ func AddContent2File(filename string, content string) error {
 		// do not close file obj when use file pool option
 		if bNewFile == true {
 			// close the same type log before
-			slist := strings.Split(filename, "/")
+			sList := strings.Split(filename, "/")
 			// example: filename is "./log/normal/20190804"
-			logType := slist[2]
+			logType := sList[2]
 			for key, _ := range mapFilePool {
 				if strings.Contains(key, logType) {
+					mapFilePool[key].Close()
 					delete(mapFilePool, key)
 				}
 			}
