@@ -1,10 +1,13 @@
 
-function getquerystring(name){
+function getquerystring(name)
+{
 	var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
 	var r = window.location.search.substr(1).match(reg);
 	if(r!=null) return unescape(r[2]); return null;
 }
-function clickcomment(){
+
+function clickcomment()
+{
 	var name = document.getElementById("FormName");
 	var comment = document.getElementById("FormComment");
 	var postname = getquerystring("name");
@@ -12,16 +15,22 @@ function clickcomment(){
 	var pageAddr = "upcomment?name="+name.value+"&comment="+comment.value+"&postname="+postname;
 	window.location.href = pageAddr;
 }
-function initpage(){
+
+function initpage()
+{
 	convert2md();
 }
-function convert2md(){
+
+function convert2md()
+{
 	var list = document.getElementsByName("markdownContent");
 	for(var i=0; i < list.length; i++){
 		compile(list[i]);
 	}
 }
-function compile(elem){
+
+function compile(elem)
+{
 	var converter = new showdown.Converter();
 	var html = converter.makeHtml(elem.textContent);
 	elem.innerHTML = html;

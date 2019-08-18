@@ -34,7 +34,9 @@ function nextpage()
 	setcurpage(iCurPage);
 }
 
-function setcurpage(idx){
+
+function setcurpage(idx)
+{
 	if(idx < 1){
 		idx = 1;
 	}else if(idx > iMaxPageNum){
