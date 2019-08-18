@@ -4,6 +4,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>success</title>
 		<script type="text/javascript" src="/static/js/showdown.min.js"></script>
+		<script type="text/javascript" src="/static/js/upcomment.js"></script>
 		<link rel="stylesheet" type="text/css" href="/static/css/markdown.min.css" />
 	</head>
 	<style>
@@ -13,19 +14,6 @@
 	</style>
 	<body onload="initpage()">
 	</body>
-	<script type="text/javascript">
-	function initpage(){
-		alert("upload comment succeed!");
-		var postname = getquerystring("postname");
-		var pageAddr = "showpost?name=" + postname;
-		window.location.href = pageAddr;
-	}
-	function getquerystring(name){
-		var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-		var r = window.location.search.substr(1).match(reg);
-		if(r!=null)return  unescape(r[2]); return null;
-	}
-	</script>
 	<footer>
 		<p class="powered-text" align="center">Powered by:<a href="https://github.com/lienze/GoBlog">GoBlog</a>&nbsp;version:{{ .BlogVersion }}
 		<br>
