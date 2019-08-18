@@ -1,0 +1,1 @@
+function initpage(){alert("upload comment succeed!");var a=getquerystring("postname");var b="showpost?name="+a;window.location.href=b}function getquerystring(b){var c=new RegExp("(^|&)"+b+"=([^&]*)(&|$)");var a=window.location.search.substr(1).match(c);if(a!=null){return unescape(a[2])}return null};
