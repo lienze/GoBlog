@@ -1,1 +1,28 @@
-function getquerystring(b){var c=new RegExp("(^|&)"+b+"=([^&]*)(&|$)");var a=window.location.search.substr(1).match(c);if(a!=null){return unescape(a[2])}return null}function clickcomment(){var b=document.getElementById("FormName");var d=document.getElementById("FormComment");var a=getquerystring("name");var c="upcomment?name="+b.value+"&comment="+d.value+"&postname="+a;window.location.href=c}function initpage(){convert2md()}function convert2md(){var b=document.getElementsByName("markdownContent");for(var a=0;a<b.length;a++){compile(b[a])}}function compile(a){var c=new showdown.Converter();var b=c.makeHtml(a.textContent);a.innerHTML=b};
+
+function getquerystring(name){
+	var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+	var r = window.location.search.substr(1).match(reg);
+	if(r!=null) return unescape(r[2]); return null;
+}
+function clickcomment(){
+	var name = document.getElementById("FormName");
+	var comment = document.getElementById("FormComment");
+	var postname = getquerystring("name");
+	//alert(postname);
+	var pageAddr = "upcomment?name="+name.value+"&comment="+comment.value+"&postname="+postname;
+	window.location.href = pageAddr;
+}
+function initpage(){
+	convert2md();
+}
+function convert2md(){
+	var list = document.getElementsByName("markdownContent");
+	for(var i=0; i < list.length; i++){
+		compile(list[i]);
+	}
+}
+function compile(elem){
+	var converter = new showdown.Converter();
+	var html = converter.makeHtml(elem.textContent);
+	elem.innerHTML = html;
+}
