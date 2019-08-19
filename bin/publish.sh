@@ -43,7 +43,7 @@ else
 	build_err
 fi
 echo "publish success!"
-delete_dir $this_dir/html/js
+delete_dir $dist_dir/html/js
 tar -czf dist.tar.gz ./dist
 if [ -f "$this_dir/dist.tar.gz" ];then
 	echo "pack success!"
