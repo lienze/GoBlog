@@ -46,21 +46,37 @@ func Listen4Log() {
 	var recvStr string
 	var iType int = 0
 	var err error
-	select {
-	case recvStr = <-logchan:
-		logType := recvStr[0:1]
-		rawContent := recvStr[1:]
-		if iType, err = strconv.Atoi(logType); err != nil {
-			iType = 0
-			fmt.Printf("error logType in Listen4Log [%s]\n", logType)
+	for {
+		select {
+		case recvStr = <-logchan:
+			logType := recvStr[0:1]
+			rawContent := recvStr[1:]
+			if iType, err = strconv.Atoi(logType); err != nil {
+				iType = 0
+				fmt.Printf("error logType in Listen4Log [%s]\n", logType)
+			}
+			if bShowInConsole {
+				if arrLogType[iType] == "error" {
+					sLog := fmt.Sprintf("[%s][%s] %s",
+						ztime.GetCurTime(ztime.DAT_MILL), arrLogType[iType], rawContent)
+					fmt.Printf("%c[1;40;31m%s%c[0m\n", 0x1B, sLog, 0x1B)
+				} else if arrLogType[iType] == "warning" {
+					sLog := fmt.Sprintf("[%s][%s] %s",
+						ztime.GetCurTime(ztime.DAT_MILL), arrLogType[iType], rawContent)
+					fmt.Printf("%c[1;40;33m%s%c[0m\n", 0x1B, sLog, 0x1B)
+				} else if arrLogType[iType] == "normal" {
+					sLog := fmt.Sprintf("[%s][%s] %s",
+						ztime.GetCurTime(ztime.DAT_MILL), arrLogType[iType], rawContent)
+					fmt.Printf("%c[1;40;32m%s%c[0m\n", 0x1B, sLog, 0x1B)
+				} else {
+					fmt.Printf("[%s][%s] %s\n",
+						ztime.GetCurTime(ztime.DAT_MILL), arrLogType[iType], rawContent)
+				}
+			}
+			filePath := mapLogPath[iType] + ztime.GetCurDate(ztime.STYLE1)
+			fileContent := fmt.Sprintf("[%s]%s\n", ztime.GetCurTime(ztime.T_MILL), rawContent)
+			file.AddContent2File(filePath, fileContent)
 		}
-		if bShowInConsole {
-			fmt.Printf("[%s][%s] %s\n",
-				ztime.GetCurTime(ztime.DAT_MILL), arrLogType[iType], rawContent)
-		}
-		filePath := mapLogPath[iType] + ztime.GetCurDate(ztime.STYLE1)
-		fileContent := fmt.Sprintf("[%s]%s\n", ztime.GetCurTime(ztime.T_MILL), rawContent)
-		file.AddContent2File(filePath, fileContent)
 	}
 }
 

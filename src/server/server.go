@@ -66,7 +66,9 @@ func NewServer() error {
 	// catch signal
 	go HandleSignal()
 
-	log.Normal("Hello World!")
+	log.Normal("This is a normal info")
+	log.Warning("This is a warning info")
+	log.Error("This is an error info")
 
 	fmt.Println("GoBlog is running...")
 	err = server.ListenAndServe()
