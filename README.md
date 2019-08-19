@@ -12,6 +12,10 @@
 <img src="res/show.png"/>
 </div>
 
+<div align=center>
+<img src="res/console.jpg"/>
+</div>
+
 a simple blog system
 
 github address:https://github.com/lienze/GoBlog
