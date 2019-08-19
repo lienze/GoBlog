@@ -3,6 +3,7 @@ package log
 import (
 	"GoBlog/src/config"
 	"GoBlog/src/file"
+	"GoBlog/src/zconsole"
 	"GoBlog/src/ztime"
 	"fmt"
 	"strconv"
@@ -59,15 +60,15 @@ func Listen4Log() {
 				if arrLogType[iType] == "error" {
 					sLog := fmt.Sprintf("[%s][%s] %s",
 						ztime.GetCurTime(ztime.DAT_MILL), arrLogType[iType], rawContent)
-					fmt.Printf("%c[1;40;31m%s%c[0m\n", 0x1B, sLog, 0x1B)
+					zconsole.PrintRedText(sLog)
 				} else if arrLogType[iType] == "warning" {
 					sLog := fmt.Sprintf("[%s][%s] %s",
 						ztime.GetCurTime(ztime.DAT_MILL), arrLogType[iType], rawContent)
-					fmt.Printf("%c[1;40;33m%s%c[0m\n", 0x1B, sLog, 0x1B)
+					zconsole.PrintYellowText(sLog)
 				} else if arrLogType[iType] == "normal" {
 					sLog := fmt.Sprintf("[%s][%s] %s",
 						ztime.GetCurTime(ztime.DAT_MILL), arrLogType[iType], rawContent)
-					fmt.Printf("%c[1;40;32m%s%c[0m\n", 0x1B, sLog, 0x1B)
+					zconsole.PrintGreenText(sLog)
 				} else {
 					fmt.Printf("[%s][%s] %s\n",
 						ztime.GetCurTime(ztime.DAT_MILL), arrLogType[iType], rawContent)
