@@ -3,7 +3,6 @@ package file
 import (
 	"GoBlog/src/config"
 	"GoBlog/src/zdata"
-	"GoBlog/src/ztime"
 	"GoBlog/src/zversion"
 	"bufio"
 	"fmt"
@@ -12,7 +11,6 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	"time"
 )
 
 var (
@@ -112,7 +110,7 @@ func SaveComment(filename string, content []zdata.CommentStruct) {
 	var writeData string
 	for _, v := range content {
 		//fmt.Println(k, " ", v)
-		writeData += strconv.FormatInt(v.CommentUserID, 10) + "@" +
+		writeData += v.CommentDate + "@" + strconv.FormatInt(v.CommentUserID, 10) + "@" +
 			v.CommentUserName + "@" + v.CommentContent + "\n"
 		// convert CommentStruct to string
 		/*
@@ -252,16 +250,19 @@ func analyseComments(commentPath string) ([]zdata.CommentStruct, error) {
 		line = strings.TrimSpace(line)
 		if line != "" {
 			sList := strings.Split(line, "@")
-			commentUserID, errconv := strconv.ParseInt(sList[0], 10, 64)
+			/*parseTime, parseErr := time.Parse("2006-01-02 15:04:05.000", sList[0])
+			if parseErr == nil {
+				fmt.Println("parseTime:", parseTime)
+			}*/
+			commentUserID, errconv := strconv.ParseInt(sList[1], 10, 64)
 			if errconv != nil {
 				commentUserID = -1
 			}
 			tmp := zdata.CommentStruct{
-				CommentDate:     time.Now(),
-				CommentDateShow: ztime.GetCurTime(ztime.DAT),
+				CommentDate:     sList[0],
 				CommentUserID:   commentUserID,
-				CommentUserName: sList[1],
-				CommentContent:  sList[2],
+				CommentUserName: sList[2],
+				CommentContent:  sList[3],
 			}
 			//fmt.Println(tmp)
 			ret = append(ret, tmp)

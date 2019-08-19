@@ -9,7 +9,6 @@ import (
 	"html/template"
 	"net/http"
 	"strconv"
-	"time"
 )
 
 func rootPage(w http.ResponseWriter, r *http.Request) {
@@ -63,8 +62,7 @@ func upcomment(w http.ResponseWriter, r *http.Request) {
 	postID := zdata.GetPostIDFromPath(postPath)
 	dataInfo := zdata.AllPostData[postID]
 	newComment := zdata.CommentStruct{
-		CommentDate:     time.Now(),
-		CommentDateShow: ztime.GetCurTime(ztime.DAT),
+		CommentDate:     ztime.GetCurTime(ztime.DAT_MILL),
 		CommentUserID:   134562,
 		CommentUserName: name,
 		CommentContent:  comment,

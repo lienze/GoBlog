@@ -3,12 +3,10 @@ package zdata
 import (
 	"GoBlog/src/config"
 	"strings"
-	"time"
 )
 
 type CommentStruct struct {
-	CommentDate     time.Time
-	CommentDateShow string
+	CommentDate     string
 	CommentUserID   int64
 	CommentUserName string
 	CommentContent  string
