@@ -20,6 +20,13 @@ var (
 	mapFilePool  map[string]*os.File
 )
 
+// convert from struct to []byte
+type SliceMock struct {
+	addr uintptr
+	len  int
+	cap  int
+}
+
 func InitFiles(postPath string) (map[string]string, map[string][]zdata.CommentStruct, error) {
 	//fmt.Println("InitFiles...")
 	// init options
@@ -99,6 +106,26 @@ func SaveFile(filename string, content string) error {
 		return err
 	}
 	return nil
+}
+
+func SaveComment(filename string, content []zdata.CommentStruct) {
+	var writeData string
+	for _, v := range content {
+		//fmt.Println(k, " ", v)
+		writeData += strconv.FormatInt(v.CommentUserID, 10) + "@" +
+			v.CommentUserName + "@" + v.CommentContent + "\n"
+		// convert CommentStruct to string
+		/*
+			iLen := unsafe.Sizeof(v)
+			bBytes := &SliceMock{
+				addr: uintptr(unsafe.Pointer(&v)),
+				cap:  int(iLen),
+				len:  int(iLen),
+			}
+			data := *(*[]byte)(unsafe.Pointer(bBytes))
+		*/
+	}
+	SaveFile(filename, writeData)
 }
 
 func FileExist(filePath string) {

@@ -2,6 +2,7 @@ package router
 
 import (
 	"GoBlog/src/config"
+	"GoBlog/src/file"
 	"GoBlog/src/zdata"
 	"GoBlog/src/ztime"
 	"GoBlog/src/zversion"
@@ -71,6 +72,8 @@ func upcomment(w http.ResponseWriter, r *http.Request) {
 	dataInfo.PostComments = append(dataInfo.PostComments, newComment)
 	dataInfo.PostCommentNum = len(dataInfo.PostComments)
 	zdata.AllPostData[postID] = dataInfo
+	commentPath := "./post/" + postID + "/comment.cm"
+	file.SaveComment(commentPath, dataInfo.PostComments)
 	//fmt.Println(name, "::::::", comment)
 	t.Execute(w, "upload comment succeed!")
 }
