@@ -5,11 +5,11 @@
 </div>
 
 <div align=center>
-<img src="res/index.png"/>
+<img src="res/index.jpg"/>
 </div>
 
 <div align=center>
-<img src="res/show.png"/>
+<img src="res/show.jpg"/>
 </div>
 
 <div align=center>
