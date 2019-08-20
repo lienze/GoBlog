@@ -6,17 +6,9 @@
 		<script type="text/javascript" src="/static/js/showdown.min.js"></script>
 		<script type="text/javascript" src="/static/js/showpost.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="/static/css/markdown.min.css" />
+		<link rel="stylesheet" type="text/css" href="/static/css/common.min.css" />
 	</head>
-	<style>
-	.powered-text{
-		font-size:14px;
-	}
-	.CommentDate{
-		font-size:12px;
-		/*background-color:#A8A8A8;*/
-		color:#A8A8A8;
-	}
-	</style><body onload="initpage()">
+	<body onload="initpage()">
 		<span name="markdownContent">{{ .PageTitle }}</span>
 		<span>{{ .PageDate }}&nbsp;|&nbsp;阅读量:{{ .PageReadNum }}&nbsp;|&nbsp;评论:{{ .PageCommentNum }}</span>
 		<span name="markdownContent">{{ .PageContent }}</span>
@@ -38,10 +30,9 @@
 			<input type="text" size="78" name="comment" value="" id="FormComment">
 			<button onclick="clickcomment()">submit</button>
 		</div>
-
 	</body>
 	<footer>
-		<p class="powered-text" align="center">Powered by:<a href="https://github.com/lienze/GoBlog">GoBlog</a>&nbsp;version:{{ .BlogVersion }}
+		<p class="PoweredText" align="center">Powered by:<a href="https://github.com/lienze/GoBlog">GoBlog</a>&nbsp;version:{{ .BlogVersion }}
 		<br>
 		Contact information: <a href="mailto:lienze2010@126.com">lienze2010@126.com</a>.</p>
 	</footer>

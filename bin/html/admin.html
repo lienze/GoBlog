@@ -2,13 +2,27 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title>success</title>
+		<title>{{ .WebTitle }}</title>
 		<script type="text/javascript" src="/static/js/showdown.min.js"></script>
-		<script type="text/javascript" src="/static/js/upcomment.min.js"></script>
+		<script type="text/javascript" src="/static/js/index.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="/static/css/markdown.min.css" />
 		<link rel="stylesheet" type="text/css" href="/static/css/common.min.css" />
 	</head>
 	<body onload="initpage()">
+		<button>写博客</button>
+		<ul>
+			{{ range .CurIndexData }}
+			<span name="markdownContent">{{ .PostTitleHref }}</span>
+			<span name="markdownContent">{{ .PostProfile }}</span>
+			发布时间: {{ .PostDate }} | 阅读量:{{ .PostReadNum }} | 评论:{{ .PostCommentNum }}&nbsp;<a href="/delete.html">删除</a>
+			<hr>
+			{{ end }}
+		</ul>
+		<div align="center">
+			<button onclick="prepage();"  >◄</button>
+			[{{ .CurPage }}]...<span id="maxPage">{{ .MaxPage }}</span>
+			<button onclick="nextpage();" >►</button>
+		</div>
 	</body>
 	<footer>
 		<p class="PoweredText" align="center">Powered by:<a href="https://github.com/lienze/GoBlog">GoBlog</a>&nbsp;version:{{ .BlogVersion }}

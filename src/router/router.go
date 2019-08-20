@@ -76,6 +76,29 @@ func upcomment(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, "upload comment succeed!")
 }
 
+func adminPage(w http.ResponseWriter, r *http.Request) {
+	t, _ := template.ParseFiles("html/admin.html")
+	r.ParseForm()
+	var iCurPage int = 0
+	var err error
+	// the para page may null, check it before use
+	if r.Form["page"] == nil {
+		iCurPage = 1
+	} else {
+		iCurPage, err = strconv.Atoi(r.Form["page"][0])
+		if err != nil {
+			iCurPage = 1
+		}
+		if iCurPage <= 0 {
+			iCurPage = 1
+		} else if iCurPage >= zdata.IndexPage.MaxPage {
+			iCurPage = zdata.IndexPage.MaxPage
+		}
+	}
+	zdata.SetCurIndexPageShow(iCurPage)
+	t.Execute(w, zdata.IndexPage)
+}
+
 // temporary solution
 //func getShowDownJS(w http.ResponseWriter, r *http.Request) {
 //	fileContent, _ := file.ReadFile("./html/showdown.min.js")
@@ -87,6 +110,7 @@ func InitRouter() error {
 	http.HandleFunc("/showpost", showpost)
 	http.HandleFunc("/upcomment", upcomment)
 	//http.HandleFunc("/showdown.min.js", getShowDownJS)
+	http.HandleFunc("/admin", adminPage)
 
 	// init static file service
 	files := http.FileServer(http.Dir("./public/"))

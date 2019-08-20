@@ -44,6 +44,7 @@ else
 fi
 echo "publish success!"
 delete_dir $dist_dir/html/js
+delete_dir $dist_dir/html/css
 tar -czf dist.tar.gz ./dist
 if [ -f "$this_dir/dist.tar.gz" ];then
 	echo "pack success!"

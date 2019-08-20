@@ -6,12 +6,8 @@
 		<script type="text/javascript" src="/static/js/showdown.min.js"></script>
 		<script type="text/javascript" src="/static/js/index.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="/static/css/markdown.min.css" />
+		<link rel="stylesheet" type="text/css" href="/static/css/common.min.css" />
 	</head>
-	<style>
-	.powered-text{
-		font-size:14px;
-	}
-	</style>
 	<body onload="initpage()">
 		<ul>
 			{{ range .CurIndexData }}
@@ -29,7 +25,7 @@
 
 	</body>
 	<footer>
-		<p class="powered-text" align="center">Powered by:<a href="https://github.com/lienze/GoBlog">GoBlog</a>&nbsp;version:{{ .BlogVersion }}
+		<p class="PoweredText" align="center">Powered by:<a href="https://github.com/lienze/GoBlog">GoBlog</a>&nbsp;version:{{ .BlogVersion }}
 		<br>
 		Contact information: <a href="mailto:lienze2010@126.com">lienze2010@126.com</a>.</p>
 	</footer>
