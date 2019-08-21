@@ -16,7 +16,6 @@ var PageShow PageStruct
 var IndexPage IndexPageStruct
 
 var AllPostData map[string]PostStruct
-var AllCommentData map[string]CommentStruct
 
 func RefreshIndexShow(mapFiles map[string]PostStruct) {
 	var mapkeys []string
@@ -32,10 +31,6 @@ func RefreshIndexShow(mapFiles map[string]PostStruct) {
 
 func SetCurIndexPageShow(iCurPage int) {
 	mapkeys := IndexPage.AllIndexKey
-	for _, val := range mapkeys {
-		//fmt.Println(key, " ", val)
-		IndexPage.CurIndexData = append(IndexPage.CurIndexData, IndexPage.AllIndexData[val])
-	}
 	iPerPage := config.GConfig.PageCfg.MaxItemPerPage
 	iAllDataLen := len(IndexPage.AllIndexKey)
 	iMaxPage := len(mapkeys) / iPerPage

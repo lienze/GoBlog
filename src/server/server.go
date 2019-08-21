@@ -84,7 +84,7 @@ func HandleSignal() {
 
 	select {
 	case sig := <-c:
-		fmt.Printf("Get [%s] signal\n", sig)
+		fmt.Printf("\nGet [%s] signal\n", sig)
 		handSignal(sig)
 		os.Exit(0)
 	}

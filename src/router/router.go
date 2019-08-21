@@ -42,6 +42,7 @@ func showpost(w http.ResponseWriter, r *http.Request) {
 	filePath := "./post/" + r.Form["name"][0]
 	postID := zdata.GetPostIDFromPath(filePath)
 	indexInfo := zdata.AllPostData[postID]
+	indexInfo.PostReadNum += 1
 	zdata.PageShow.PageTitle = indexInfo.PostTitle
 	zdata.PageShow.PageDate = indexInfo.PostDate
 	zdata.PageShow.PageContent = indexInfo.PostContent
@@ -49,6 +50,10 @@ func showpost(w http.ResponseWriter, r *http.Request) {
 	zdata.PageShow.PageCommentNum = indexInfo.PostCommentNum
 	zdata.PageShow.PageComments = indexInfo.PostComments
 	zdata.PageShow.BlogVersion = zversion.Ver
+	zdata.AllPostData[postID] = indexInfo
+	indexData := zdata.IndexPage.AllIndexData[postID]
+	indexData.PostReadNum = indexInfo.PostReadNum
+	zdata.IndexPage.AllIndexData[postID] = indexData
 	//fmt.Println(indexInfo.PostCommentNum)
 	t.Execute(w, zdata.PageShow)
 }
