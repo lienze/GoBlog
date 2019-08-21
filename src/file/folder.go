@@ -25,7 +25,7 @@ func ScanFolder(postPath string) {
 				//        a file at the same time, files have been changed but
 				//        the process could not find the difference, so no refresh
 				//        happened.We may use MD5 to compare.
-				mapFiles, mapComments, err := LoadFiles(config.GConfig.PostPath)
+				mapFiles, mapComments, err := LoadFiles(config.GConfig.PostPath + "/")
 				if err == nil {
 					fmt.Println("Finished LoadFiles")
 					zdata.RefreshIndexShow(zdata.AllPostData)
@@ -44,7 +44,7 @@ func ReadFolder(postPath string, includeExt []string) ([]os.FileInfo, error) {
 	filesInfo, errDir := ioutil.ReadDir(postPath)
 	if len(includeExt) > 0 {
 		for _, f := range filesInfo {
-			fileFullPath := postPath + "/" + f.Name()
+			fileFullPath := postPath + f.Name()
 			if f.IsDir() {
 				fList, err := ReadFolder(fileFullPath, includeExt)
 				if err == nil {

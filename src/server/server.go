@@ -51,7 +51,7 @@ func NewServer() error {
 
 	var mapFiles map[string]string
 	var mapComments map[string][]zdata.CommentStruct
-	mapFiles, mapComments, err = file.InitFiles(config.GConfig.PostPath)
+	mapFiles, mapComments, err = file.InitFiles(config.GConfig.PostPath + "/")
 	if err != nil {
 		return err
 	}
@@ -61,7 +61,7 @@ func NewServer() error {
 	zdata.RefreshIndexShow(zdata.AllPostData)
 	// new gorountine for scanning folder that we could refresh page
 	// when there is new post appear
-	go file.ScanFolder(config.GConfig.PostPath)
+	go file.ScanFolder(config.GConfig.PostPath + "/")
 
 	// catch signal
 	go HandleSignal()
@@ -96,6 +96,7 @@ func handSignal(sig os.Signal) {
 		fmt.Println("hand SIGTERM")
 	case os.Interrupt:
 		fmt.Println("hand Interrupt")
+		//file.SaveIndexFile("./post/idx.dat", zdata.IndexPage.AllIndexData)
 	default:
 		fmt.Printf("hand [%s]\n", sig)
 	}

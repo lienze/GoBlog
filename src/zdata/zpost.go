@@ -31,9 +31,9 @@ func GetPostIDFromPath(fileFullPath string) string {
 }
 
 func GetPostPathFromID(postID string) string {
-	return config.GConfig.PostPath + postID + "/"
+	return config.GConfig.PostPath + "/" + postID + "/"
 }
 
 func GetCommentPathFromID(postID string) string {
-	return config.GConfig.PostPath + postID + "/comment.dat"
+	return config.GConfig.PostPath + "/" + postID + "/comment.dat"
 }

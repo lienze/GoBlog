@@ -126,6 +126,18 @@ func SaveComment(filename string, content []zdata.CommentStruct) {
 	SaveFile(filename, writeData)
 }
 
+func SaveIndexFile(filePath string, content map[string]zdata.IndexStruct) {
+	var writeData string
+	for _, v := range content {
+		writeData += v.PostPath + "@" + v.PostTitle + "@" +
+			v.PostProfile + "@" + v.PostDate + "@" +
+			strconv.Itoa(v.PostReadNum) + "@" +
+			strconv.Itoa(v.PostCommentNum) + "\n"
+	}
+	SaveFile(filePath, writeData)
+
+}
+
 func FileExist(filePath string) {
 	_, err := os.Stat(filePath)
 	if err == nil {
@@ -185,7 +197,7 @@ func getFileExt(filename string) string {
 
 func loadIndexData() error {
 	fmt.Println("loadIndexData begin...")
-	fileObj, err := os.OpenFile(config.GConfig.PostPath+"idx.dat", os.O_RDWR, 0666)
+	fileObj, err := os.OpenFile(config.GConfig.PostPath+"/"+"idx.dat", os.O_RDWR, 0666)
 	if err != nil {
 		return err
 	}
@@ -207,7 +219,7 @@ func loadIndexData() error {
 				postCommentNum = -1
 			}
 			tmp := zdata.IndexStruct{
-				PostPath:  "./post?name=" + sList[0],
+				PostPath:  config.GConfig.PostPath + "?name=" + sList[0],
 				PostTitle: "### " + sList[1],
 				PostTitleHref: "### " + "[" + sList[1] + "]" +
 					"(" + "./showpost?name=" + sList[0] + ")",
@@ -216,7 +228,7 @@ func loadIndexData() error {
 				PostReadNum:    postReadNum,
 				PostCommentNum: postCommentNum,
 			}
-			k := zdata.GetPostIDFromPath(config.GConfig.PostPath + sList[0])
+			k := zdata.GetPostIDFromPath(config.GConfig.PostPath + "/" + sList[0])
 			zdata.IndexPage.AllIndexData[k] = tmp
 			//fmt.Println(tmp)
 		}
