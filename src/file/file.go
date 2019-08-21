@@ -129,11 +129,13 @@ func SaveComment(filename string, content []zdata.CommentStruct) {
 func SaveIndexFile(filePath string, content map[string]zdata.IndexStruct) {
 	var writeData string
 	for _, v := range content {
-		writeData += v.PostPath + "@" + v.PostTitle + "@" +
-			v.PostProfile + "@" + v.PostDate + "@" +
+		idxPostPath := strings.Index(v.PostPath, "name=")
+		writeData += v.PostPath[idxPostPath+5:] + "@" + v.PostTitle[4:] + "@" +
+			v.PostProfile[1:] + "@" + v.PostDate + "@" +
 			strconv.Itoa(v.PostReadNum) + "@" +
 			strconv.Itoa(v.PostCommentNum) + "\n"
 	}
+	//fmt.Println(writeData)
 	SaveFile(filePath, writeData)
 
 }

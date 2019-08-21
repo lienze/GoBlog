@@ -96,7 +96,7 @@ func handSignal(sig os.Signal) {
 		fmt.Println("hand SIGTERM")
 	case os.Interrupt:
 		fmt.Println("hand Interrupt")
-		//file.SaveIndexFile("./post/idx.dat", zdata.IndexPage.AllIndexData)
+		file.SaveIndexFile(config.GConfig.PostPath+"/"+"idx.dat", zdata.IndexPage.AllIndexData)
 	default:
 		fmt.Printf("hand [%s]\n", sig)
 	}
