@@ -39,7 +39,7 @@ func showpost(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	zdata.PageShow.WebTitle = config.GConfig.WebSite.WebTitle
 	//fmt.Println("showpost:", r.Form["name"][0])
-	filePath := "./post/" + r.Form["name"][0]
+	filePath := config.GConfig.PostPath + "/" + r.Form["name"][0]
 	postID := zdata.GetPostIDFromPath(filePath)
 	indexInfo := zdata.AllPostData[postID]
 	indexInfo.PostReadNum += 1
@@ -63,7 +63,7 @@ func upcomment(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	name := r.Form["name"][0]
 	comment := r.Form["comment"][0]
-	postPath := "./post/" + r.Form["postname"][0]
+	postPath := config.GConfig.PostPath + "/" + r.Form["postname"][0]
 	postID := zdata.GetPostIDFromPath(postPath)
 	dataInfo := zdata.AllPostData[postID]
 	newComment := zdata.CommentStruct{
@@ -75,7 +75,7 @@ func upcomment(w http.ResponseWriter, r *http.Request) {
 	dataInfo.PostComments = append(dataInfo.PostComments, newComment)
 	dataInfo.PostCommentNum = len(dataInfo.PostComments)
 	zdata.AllPostData[postID] = dataInfo
-	commentPath := "./post/" + postID + "/comment.cm"
+	commentPath := config.GConfig.PostPath + "/" + postID + "/comment.cm"
 	file.SaveComment(commentPath, dataInfo.PostComments)
 	//fmt.Println(name, "::::::", comment)
 	t.Execute(w, "upload comment succeed!")
