@@ -163,6 +163,39 @@ func savePost(w http.ResponseWriter, r *http.Request) {
 		InfoString:"Save Succeed!",
 		BlogVersion: zversion.Ver,
 	}
+	// make sure that the postID is available in AllPostData map
+	var ok bool = false
+	_,ok = zdata.AllPostData[postID]
+	if ok == false{
+		// FIXME: PostTitle and PostProfile need to be fixed.
+		tmp := zdata.PostStruct{
+			PostID:         postID,
+			PostTitle:      "PostTitle",
+			PostProfile:    "PostProfile",
+			PostDate:       ztime.GetCurTime(ztime.DAT_MILL),
+			PostContent:    postContent,
+			PostReadNum:    0,
+			PostCommentNum: 0,
+			PostComments:   nil,
+		}
+		zdata.AllPostData[postID] = tmp
+		fmt.Println(tmp)
+	}
+	_,ok = zdata.AllPostData[postID]
+	if ok == false {
+		tmp := zdata.IndexStruct{
+			PostID:    postID,
+			PostPath:  config.GConfig.PostPath + "?name=" + postID + "/" + postID + ".md",
+			PostTitle: "### " + "PostTitle",
+			PostTitleHref: "### " + "[" + "PostTitle" + "]" +
+				"(" + "./showpost?name=" + postID + "/" + postID + ".md" + ")",
+			PostProfile:    ">" + "PostProfile",
+			PostDate:       ztime.GetCurTime(ztime.DAT_MILL),
+			PostReadNum:    0,
+			PostCommentNum: 0,
+		}
+		zdata.AllIndexData[postID] = tmp
+	}
 	t.Execute(w, a)
 }
 

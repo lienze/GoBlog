@@ -13,7 +13,7 @@ type CommentStruct struct {
 }
 
 type PostStruct struct {
-	PostPath       string
+	PostID         string
 	PostTitle      string
 	PostProfile    string
 	PostDate       string

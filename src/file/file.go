@@ -230,7 +230,7 @@ func loadIndexData() error {
 				PostReadNum:    postReadNum,
 				PostCommentNum: postCommentNum,
 			}
-			//k := zdata.GetPostIDFromPath(config.GConfig.PostPath + "/" + sList[0])
+			//k := zdata.GetPostIDFromPath(config.GConfig.PostID + "/" + sList[0])
 			zdata.AllIndexData[sList[0]] = tmp
 			//fmt.Println(tmp)
 		}

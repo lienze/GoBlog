@@ -65,7 +65,7 @@ func RefreshAllPostData(mapFiles map[string]string, mapComments map[string][]Com
 		indexData.PostCommentNum = len(comms)
 		AllIndexData[k] = indexData
 		tmp := PostStruct{
-			PostPath:       k,
+			PostID:         k,
 			PostTitle:      indexData.PostTitle,
 			PostProfile:    indexData.PostProfile,
 			PostDate:       indexData.PostDate,
