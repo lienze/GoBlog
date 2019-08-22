@@ -8,18 +8,42 @@
 		<link rel="stylesheet" type="text/css" href="/static/css/common.min.css" />
 	</head>
 	<body>
-		<button onclick="OnNewBlog()">保存</button><br><br>
+		<button onclick="OnSaveButton()">保存</button><br><br>
 		<div>
-			<textarea id="rawcontent" style="height:200px;width:835px;" onkeyup="compile()"></textarea>
-			<div id="result"></div>
+            <div id="result"></div><br><br>
+			<textarea id="rawcontent" style="height:200px;width:835px;" onkeyup="CompileAll()"></textarea>
 		</div>
 	</body>
 	<script type="text/javascript">
-	function compile_all(){
+	function CompileAll(){
 		var text = document.getElementById("rawcontent").value;
 		var converter = new showdown.Converter();
 		var html = converter.makeHtml(text);
 		document.getElementById("result").innerHTML = html;
+	}
+	function OnSaveButton(){
+	    var curDate = new Date();
+	    var PostID = timeFormat(curDate);
+	    var mkcontent = document.getElementById("rawcontent").value;
+	    var enmkcontent = encodeURIComponent(mkcontent);
+        var pageAddr = "save?PostID="+PostID+"&Content="+enmkcontent;
+        alert(pageAddr);
+        window.location.href = pageAddr;
+	}
+    function timeFormat(date){
+        var strDate = date.getFullYear();
+		strDate += getFormatDate(date.getMonth()+1);
+        strDate += getFormatDate(date.getDate());
+        strDate += getFormatDate(date.getHours());
+        strDate += getFormatDate(date.getMinutes());
+        strDate += getFormatDate(date.getSeconds());
+        return strDate;
+    }
+    function getFormatDate(date){
+	    if(date < 10){
+			date = "0" + date;
+		}
+		return date;
 	}
 	</script>
 	<footer>

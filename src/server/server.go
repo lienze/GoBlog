@@ -70,7 +70,7 @@ func NewServer() error {
 	log.Warning("This is a warning info")
 	log.Error("This is an error info")
 
-	fmt.Println("GoBlog is running...")
+	fmt.Printf("GoBlog is running...http://%s\n",addr4Server)
 	err = server.ListenAndServe()
 	if err != nil {
 		return err

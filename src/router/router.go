@@ -7,6 +7,7 @@ import (
 	"GoBlog/src/zdata"
 	"GoBlog/src/ztime"
 	"GoBlog/src/zversion"
+	"fmt"
 	"html/template"
 	"net/http"
 	"strconv"
@@ -148,6 +149,23 @@ func deletePage(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, "Delete Success")
 }
 
+func savePost(w http.ResponseWriter, r *http.Request) {
+	t, _ := template.ParseFiles("html/savepost.html")
+	r.ParseForm()
+	postID := r.Form["PostID"][0]
+	postContent := r.Form["Content"][0]
+	fmt.Println("savePost:",postID)
+	fmt.Println("savePost:",postContent)
+	a := struct {
+		InfoString string
+		BlogVersion string
+	}{
+		InfoString:"Save Succeed!",
+		BlogVersion: zversion.Ver,
+	}
+	t.Execute(w, a)
+}
+
 // temporary solution
 //func getShowDownJS(w http.ResponseWriter, r *http.Request) {
 //	fileContent, _ := file.ReadFile("./html/showdown.min.js")
@@ -162,6 +180,7 @@ func InitRouter() error {
 	http.HandleFunc("/admin", adminPage)
 	http.HandleFunc("/newblog", newBlog)
 	http.HandleFunc("/delete", deletePage)
+	http.HandleFunc("/save", savePost)
 
 	// init static file service
 	files := http.FileServer(http.Dir("./public/"))
