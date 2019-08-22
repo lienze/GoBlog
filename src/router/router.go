@@ -105,6 +105,17 @@ func adminPage(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, zdata.IndexPage)
 }
 
+func newBlog(w http.ResponseWriter, r *http.Request) {
+	t, _ := template.ParseFiles("html/newblog.html")
+	r.ParseForm()
+	a := struct {
+		BlogVersion string
+	}{
+		BlogVersion: zversion.Ver,
+	}
+	t.Execute(w, a)
+}
+
 func deletePage(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("html/delete.html")
 	r.ParseForm()
@@ -149,6 +160,7 @@ func InitRouter() error {
 	http.HandleFunc("/upcomment", upcomment)
 	//http.HandleFunc("/showdown.min.js", getShowDownJS)
 	http.HandleFunc("/admin", adminPage)
+	http.HandleFunc("/newblog", newBlog)
 	http.HandleFunc("/delete", deletePage)
 
 	// init static file service

@@ -9,7 +9,7 @@
 		<link rel="stylesheet" type="text/css" href="/static/css/common.min.css" />
 	</head>
 	<body onload="initpage()">
-		<button>写博客</button>
+		<button onclick="OnNewBlog()">写博客</button>
 		<ul>
 			{{ range .CurIndexData }}
 			<span name="markdownContent">{{ .PostTitleHref }}</span>
@@ -29,6 +29,10 @@
 		function OnDelete(PostID){
 			var pageAddr = "delete?PostID="+PostID;
 			window.location.href = pageAddr;
+		}
+		function OnNewBlog(){
+			var pageAddr = "newblog";
+			window.location.href = pageAddr
 		}
 		</script>
 	</body>
