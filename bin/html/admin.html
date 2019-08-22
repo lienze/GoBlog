@@ -26,8 +26,9 @@
 			<button onclick="nextpage();" >►</button>
 		</div>
 		<script type="text/javascript">
-		function OnDelete(readNum){
-			alert(readNum);
+		function OnDelete(PostID){
+			var pageAddr = "delete?PostID="+PostID;
+			window.location.href = pageAddr;
 		}
 		</script>
 	</body>
