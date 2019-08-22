@@ -11,6 +11,7 @@ type IndexPageStruct struct {
 }
 
 type IndexStruct struct {
+	PostID         string
 	PostPath       string
 	PostTitle      string
 	PostTitleHref  string

@@ -129,8 +129,7 @@ func SaveComment(filename string, content []zdata.CommentStruct) {
 func SaveIndexFile(filePath string, content map[string]zdata.IndexStruct) {
 	var writeData string
 	for _, v := range content {
-		idxPostPath := strings.Index(v.PostPath, "name=")
-		writeData += v.PostPath[idxPostPath+5:] + "@" + v.PostTitle[4:] + "@" +
+		writeData += v.PostID + "@" + v.PostTitle[4:] + "@" +
 			v.PostProfile[1:] + "@" + v.PostDate + "@" +
 			strconv.Itoa(v.PostReadNum) + "@" +
 			strconv.Itoa(v.PostCommentNum) + "\n"
@@ -210,7 +209,7 @@ func loadIndexData() error {
 		line, err := buf.ReadString('\n')
 		line = strings.TrimSpace(line)
 		if line != "" {
-			//fmt.Println(line)
+			//fmt.Println("loadIndexData:", line)
 			sList := strings.Split(line, "@")
 			postReadNum, errconv := strconv.Atoi(sList[4])
 			if errconv != nil {
@@ -221,17 +220,18 @@ func loadIndexData() error {
 				postCommentNum = -1
 			}
 			tmp := zdata.IndexStruct{
-				PostPath:  config.GConfig.PostPath + "?name=" + sList[0],
+				PostID:    sList[0],
+				PostPath:  config.GConfig.PostPath + "?name=" + sList[0] + "/" + sList[0] + ".md",
 				PostTitle: "### " + sList[1],
 				PostTitleHref: "### " + "[" + sList[1] + "]" +
-					"(" + "./showpost?name=" + sList[0] + ")",
+					"(" + "./showpost?name=" + sList[0] + "/" + sList[0] + ".md" + ")",
 				PostProfile:    ">" + sList[2],
 				PostDate:       sList[3],
 				PostReadNum:    postReadNum,
 				PostCommentNum: postCommentNum,
 			}
-			k := zdata.GetPostIDFromPath(config.GConfig.PostPath + "/" + sList[0])
-			zdata.IndexPage.AllIndexData[k] = tmp
+			//k := zdata.GetPostIDFromPath(config.GConfig.PostPath + "/" + sList[0])
+			zdata.IndexPage.AllIndexData[sList[0]] = tmp
 			//fmt.Println(tmp)
 		}
 		if err != nil {
