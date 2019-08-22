@@ -292,3 +292,11 @@ func analyseComments(commentPath string) ([]zdata.CommentStruct, error) {
 	fmt.Println("analyseComments end...")
 	return ret, nil
 }
+
+// remove file or empty dictionary
+func RemoveFile(filePath string) error {
+	if err := os.Remove(filePath); err != nil {
+		return err
+	}
+	return nil
+}

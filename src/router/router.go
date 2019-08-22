@@ -3,10 +3,10 @@ package router
 import (
 	"GoBlog/src/config"
 	"GoBlog/src/file"
+	"GoBlog/src/log"
 	"GoBlog/src/zdata"
 	"GoBlog/src/ztime"
 	"GoBlog/src/zversion"
-	"fmt"
 	"html/template"
 	"net/http"
 	"strconv"
@@ -109,6 +109,7 @@ func deletePage(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("html/delete.html")
 	r.ParseForm()
 	postID := r.Form["PostID"][0]
+	// TODO: check user permissions
 	var ok bool = false
 	_, ok = zdata.AllPostData[postID]
 	if ok {
@@ -124,7 +125,15 @@ func deletePage(w http.ResponseWriter, r *http.Request) {
 		*/
 		zdata.RefreshIndexShow(zdata.AllPostData)
 	}
-	fmt.Println("deletePage:", postID)
+	// try to delete the folder whatever delete data succeed
+	postPath := zdata.GetPostPathFromID(postID)
+	//fmt.Println("deletePage:", postID)
+	if err := file.RemoveFolder(postPath); err != nil {
+		log.Error("delete Folder error:" + err.Error())
+		t.Execute(w, "Delete Error:"+err.Error())
+		return
+	}
+	file.SaveIndexFile(config.GConfig.PostPath+"/"+"idx.dat", zdata.AllIndexData)
 	t.Execute(w, "Delete Success")
 }
 

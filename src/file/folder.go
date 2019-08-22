@@ -84,3 +84,10 @@ func CreateFolder(folderPath string) error {
 	err := os.MkdirAll(folderPath, 0711)
 	return err
 }
+
+func RemoveFolder(folderPath string) error {
+	if err := os.RemoveAll(folderPath); err != nil {
+		return err
+	}
+	return nil
+}
