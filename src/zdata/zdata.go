@@ -15,11 +15,12 @@ type ContentStruct struct {
 var PageShow PageStruct
 var IndexPage IndexPageStruct
 
+var AllIndexData map[string]IndexStruct
 var AllPostData map[string]PostStruct
 
 func RefreshIndexShow(mapFiles map[string]PostStruct) {
 	var mapkeys []string
-	for k := range IndexPage.AllIndexData {
+	for k := range AllIndexData {
 		mapkeys = append(mapkeys, k)
 	}
 	//fmt.Println(mapkeys)
@@ -46,7 +47,7 @@ func SetCurIndexPageShow(iCurPage int) {
 	for i := (iCurPage - 1) * iPerPage; i < iCurPage*iPerPage && i < iAllDataLen; i++ {
 		k := IndexPage.AllIndexKey[i]
 		IndexPage.CurIndexData =
-			append(IndexPage.CurIndexData, IndexPage.AllIndexData[k])
+			append(IndexPage.CurIndexData, AllIndexData[k])
 	}
 }
 
@@ -54,12 +55,15 @@ func SetCurIndexPageShow(iCurPage int) {
 func RefreshAllPostData(mapFiles map[string]string, mapComments map[string][]CommentStruct) {
 	AllPostData = make(map[string]PostStruct)
 	for k, v := range mapFiles {
-		indexData := IndexPage.AllIndexData[k]
 		comm := mapComments[k]
 		comms := make([]CommentStruct, 0)
 		comms = append(comms, comm...)
+		indexData, ok := AllIndexData[k]
+		if ok == false {
+			continue
+		}
 		indexData.PostCommentNum = len(comms)
-		IndexPage.AllIndexData[k] = indexData
+		AllIndexData[k] = indexData
 		tmp := PostStruct{
 			PostPath:       k,
 			PostTitle:      indexData.PostTitle,
@@ -73,5 +77,13 @@ func RefreshAllPostData(mapFiles map[string]string, mapComments map[string][]Com
 		//commentPath := GetCommentPathFromID(k)
 		//fmt.Println("[RefreshAllPostData]commentPath:", commentPath)
 		AllPostData[k] = tmp
+	}
+}
+
+// refresh index data
+func RefreshAllIndexData() {
+	for k, v := range AllIndexData {
+		v.PostCommentNum = len(AllPostData[k].PostComments)
+		AllIndexData[k] = v
 	}
 }

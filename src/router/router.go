@@ -6,6 +6,7 @@ import (
 	"GoBlog/src/zdata"
 	"GoBlog/src/ztime"
 	"GoBlog/src/zversion"
+	"fmt"
 	"html/template"
 	"net/http"
 	"strconv"
@@ -51,9 +52,9 @@ func showpost(w http.ResponseWriter, r *http.Request) {
 	zdata.PageShow.PageComments = indexInfo.PostComments
 	zdata.PageShow.BlogVersion = zversion.Ver
 	zdata.AllPostData[postID] = indexInfo
-	indexData := zdata.IndexPage.AllIndexData[postID]
+	indexData := zdata.AllIndexData[postID]
 	indexData.PostReadNum = indexInfo.PostReadNum
-	zdata.IndexPage.AllIndexData[postID] = indexData
+	zdata.AllIndexData[postID] = indexData
 	//fmt.Println(indexInfo.PostCommentNum)
 	t.Execute(w, zdata.PageShow)
 }
@@ -86,7 +87,7 @@ func adminPage(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	var iCurPage int = 0
 	var err error
-	// the para page may null, check it before use
+	// the para of page may null, check it before use
 	if r.Form["page"] == nil {
 		iCurPage = 1
 	} else {
@@ -104,6 +105,29 @@ func adminPage(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, zdata.IndexPage)
 }
 
+func deletePage(w http.ResponseWriter, r *http.Request) {
+	t, _ := template.ParseFiles("html/delete.html")
+	r.ParseForm()
+	postID := r.Form["PostID"][0]
+	var ok bool = false
+	_, ok = zdata.AllPostData[postID]
+	if ok {
+		delete(zdata.AllPostData, postID)
+	}
+	_, ok = zdata.AllIndexData[postID]
+	if ok {
+		delete(zdata.AllIndexData, postID)
+		/*
+			for k, v := range zdata.AllIndexData {
+				fmt.Println(k, "|||||", v)
+			}
+		*/
+		zdata.RefreshIndexShow(zdata.AllPostData)
+	}
+	fmt.Println("deletePage:", postID)
+	t.Execute(w, "Delete Success")
+}
+
 // temporary solution
 //func getShowDownJS(w http.ResponseWriter, r *http.Request) {
 //	fileContent, _ := file.ReadFile("./html/showdown.min.js")
@@ -116,6 +140,7 @@ func InitRouter() error {
 	http.HandleFunc("/upcomment", upcomment)
 	//http.HandleFunc("/showdown.min.js", getShowDownJS)
 	http.HandleFunc("/admin", adminPage)
+	http.HandleFunc("/delete", deletePage)
 
 	// init static file service
 	files := http.FileServer(http.Dir("./public/"))

@@ -129,6 +129,7 @@ func SaveComment(filename string, content []zdata.CommentStruct) {
 func SaveIndexFile(filePath string, content map[string]zdata.IndexStruct) {
 	var writeData string
 	for _, v := range content {
+		//fmt.Println("SaveIndexFile:", k, "!!!!!!", v)
 		writeData += v.PostID + "@" + v.PostTitle[4:] + "@" +
 			v.PostProfile[1:] + "@" + v.PostDate + "@" +
 			strconv.Itoa(v.PostReadNum) + "@" +
@@ -136,7 +137,6 @@ func SaveIndexFile(filePath string, content map[string]zdata.IndexStruct) {
 	}
 	//fmt.Println(writeData)
 	SaveFile(filePath, writeData)
-
 }
 
 func FileExist(filePath string) {
@@ -204,7 +204,7 @@ func loadIndexData() error {
 	}
 	defer fileObj.Close()
 	buf := bufio.NewReader(fileObj)
-	zdata.IndexPage.AllIndexData = make(map[string]zdata.IndexStruct)
+	zdata.AllIndexData = make(map[string]zdata.IndexStruct)
 	for {
 		line, err := buf.ReadString('\n')
 		line = strings.TrimSpace(line)
@@ -231,7 +231,7 @@ func loadIndexData() error {
 				PostCommentNum: postCommentNum,
 			}
 			//k := zdata.GetPostIDFromPath(config.GConfig.PostPath + "/" + sList[0])
-			zdata.IndexPage.AllIndexData[sList[0]] = tmp
+			zdata.AllIndexData[sList[0]] = tmp
 			//fmt.Println(tmp)
 		}
 		if err != nil {

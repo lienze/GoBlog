@@ -2,7 +2,6 @@ package zdata
 
 type IndexPageStruct struct {
 	WebTitle     string
-	AllIndexData map[string]IndexStruct
 	AllIndexKey  []string
 	CurIndexData []IndexStruct
 	CurPage      int
