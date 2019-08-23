@@ -154,19 +154,19 @@ func savePost(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	postID := r.Form["PostID"][0]
 	postContent := r.Form["Content"][0]
-	fmt.Println("savePost:",postID)
-	fmt.Println("savePost:",postContent)
+	fmt.Println("savePost:", postID)
+	fmt.Println("savePost:", postContent)
 	a := struct {
-		InfoString string
+		InfoString  string
 		BlogVersion string
 	}{
-		InfoString:"Save Succeed!",
+		InfoString:  "Save Succeed!",
 		BlogVersion: zversion.Ver,
 	}
 	// make sure that the postID is available in AllPostData map
 	var ok bool = false
-	_,ok = zdata.AllPostData[postID]
-	if ok == false{
+	_, ok = zdata.AllPostData[postID]
+	if ok == false {
 		// FIXME: PostTitle and PostProfile need to be fixed.
 		tmp := zdata.PostStruct{
 			PostID:         postID,
@@ -181,7 +181,7 @@ func savePost(w http.ResponseWriter, r *http.Request) {
 		zdata.AllPostData[postID] = tmp
 		fmt.Println(tmp)
 	}
-	_,ok = zdata.AllPostData[postID]
+	_, ok = zdata.AllIndexData[postID]
 	if ok == false {
 		tmp := zdata.IndexStruct{
 			PostID:    postID,
@@ -196,6 +196,8 @@ func savePost(w http.ResponseWriter, r *http.Request) {
 		}
 		zdata.AllIndexData[postID] = tmp
 	}
+	file.CreateFolder(config.GConfig.PostPath + "/" + postID)
+	file.SaveFile(config.GConfig.PostPath+"/"+postID+"/"+postID+".md", postContent)
 	t.Execute(w, a)
 }
 
