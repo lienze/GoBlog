@@ -10,7 +10,7 @@
 	<body>
 		<button onclick="OnSaveButton()">保存</button><br><br>
 		<div>
-            <div id="result"></div><br><br>
+			<div id="result"></div><br><br>
 			<textarea id="rawcontent" style="height:200px;width:835px;" onkeyup="CompileAll()"></textarea>
 		</div>
 	</body>
@@ -22,25 +22,33 @@
 		document.getElementById("result").innerHTML = html;
 	}
 	function OnSaveButton(){
-	    var curDate = new Date();
-	    var PostID = timeFormat(curDate);
-	    var mkcontent = document.getElementById("rawcontent").value;
-	    var enmkcontent = encodeURIComponent(mkcontent);
-        var pageAddr = "save?PostID="+PostID+"&Content="+enmkcontent;
-        alert(pageAddr);
-        window.location.href = pageAddr;
+		var curDate = new Date();
+		var PostID = timeFormat(curDate);
+		var mkcontent = document.getElementById("rawcontent").value;
+		var enmkcontent = encodeURIComponent(mkcontent);
+		var pageAddr = "save?PostID="+PostID+"&Content="+enmkcontent;
+		//alert(pageAddr);
+		window.location.href = pageAddr;
 	}
-    function timeFormat(date){
-        var strDate = date.getFullYear();
-		strDate += getFormatDate(date.getMonth()+1);
-        strDate += getFormatDate(date.getDate());
-        strDate += getFormatDate(date.getHours());
-        strDate += getFormatDate(date.getMinutes());
-        strDate += getFormatDate(date.getSeconds());
-        return strDate;
-    }
-    function getFormatDate(date){
-	    if(date < 10){
+	function timeFormat(date){
+		var strDate = date.getFullYear();
+		strDate += getFormatDate2(date.getMonth()+1);
+		strDate += getFormatDate2(date.getDate());
+		strDate += getFormatDate2(date.getHours());
+		strDate += getFormatDate2(date.getMinutes());
+		strDate += getFormatDate3(date.getSeconds());
+		return strDate;
+	}
+	function getFormatDate2(date){
+		if(date < 10){
+			date = "0" + date;
+		}
+		return date;
+	}
+	function getFormatDate3(date){
+		if(date < 10){
+			date = "00"+date;
+		}else if(date < 100){
 			date = "0" + date;
 		}
 		return date;
