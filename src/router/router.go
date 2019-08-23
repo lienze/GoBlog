@@ -201,6 +201,22 @@ func savePost(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, a)
 }
 
+func modifyPost(w http.ResponseWriter, r *http.Request) {
+	t, _ := template.ParseFiles("html/modifypost.html")
+	r.ParseForm()
+	postID := r.Form["PostID"][0]
+	postData := zdata.AllPostData[postID]
+	a := struct {
+		InfoString  string
+		BlogVersion string
+	}{
+		InfoString:  postData.PostContent,
+		BlogVersion: zversion.Ver,
+	}
+	fmt.Println("modifyPost:", postID)
+	t.Execute(w, a)
+}
+
 // temporary solution
 //func getShowDownJS(w http.ResponseWriter, r *http.Request) {
 //	fileContent, _ := file.ReadFile("./html/showdown.min.js")
@@ -216,6 +232,7 @@ func InitRouter() error {
 	http.HandleFunc("/newblog", newBlog)
 	http.HandleFunc("/delete", deletePage)
 	http.HandleFunc("/save", savePost)
+	http.HandleFunc("/modify", modifyPost)
 
 	// init static file service
 	files := http.FileServer(http.Dir("./public/"))

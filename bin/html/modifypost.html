@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>success</title>
+		<script type="text/javascript" src="/static/js/showdown.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="/static/css/markdown.min.css" />
+		<link rel="stylesheet" type="text/css" href="/static/css/common.min.css" />
+	</head>
+	<body>
+		<button onclick="OnSaveButton()">保存</button><br><br>
+		<div>
+			<div id="result"></div><br><br>
+			<textarea id="rawcontent" style="height:200px;width:835px;" onkeyup="CompileAll()">{{ .InfoString }}</textarea>
+		</div>
+	</body>
+	<script type="text/javascript">
+	function CompileAll(){
+		var text = document.getElementById("rawcontent").value;
+		var converter = new showdown.Converter();
+		var html = converter.makeHtml(text);
+		document.getElementById("result").innerHTML = html;
+	}
+	function OnSaveButton(){
+		var curDate = new Date();
+		var PostID = timeFormat(curDate);
+		var mkcontent = document.getElementById("rawcontent").value;
+		var enmkcontent = encodeURIComponent(mkcontent);
+		var pageAddr = "save?PostID="+PostID+"&Content="+enmkcontent;
+		//alert(pageAddr);
+		window.location.href = pageAddr;
+	}
+	</script>
+	<footer>
+		<p class="PoweredText" align="center">Powered by:<a href="https://github.com/lienze/GoBlog">GoBlog</a>&nbsp;version:{{ .BlogVersion }}
+		<br>
+		Contact information: <a href="mailto:lienze2010@126.com">lienze2010@126.com</a>.</p>
+	</footer>
+</html>
+

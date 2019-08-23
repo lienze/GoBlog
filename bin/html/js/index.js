@@ -41,7 +41,7 @@ function setcurpage(idx)
 		idx = iMaxPageNum;
 	}
 	var pageAddr = "?page=" + idx;
-	alert(pageAddr);
+	//alert(pageAddr);
 	window.location.href = pageAddr;
 }
 

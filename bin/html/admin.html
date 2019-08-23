@@ -17,6 +17,7 @@
 			发布时间: {{ .PostDate }} | 阅读量:{{ .PostReadNum }} | 
 			评论:{{ .PostCommentNum }}&nbsp;
 			<a href="javascript:onclick=OnDelete({{ .PostID }})">删除</a>
+			<a href="javascript:onclick=OnModify({{ .PostID }})">修改</a>
 			<hr>
 			{{ end }}
 		</ul>
@@ -33,6 +34,10 @@
 		function OnNewBlog(){
 			var pageAddr = "newblog";
 			window.location.href = pageAddr
+		}
+		function OnModify(PostID){
+			var pageAddr = "modify?PostID="+PostID;
+			window.location.href = pageAddr;
 		}
 		</script>
 	</body>
