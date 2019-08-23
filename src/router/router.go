@@ -213,7 +213,28 @@ func modifyPost(w http.ResponseWriter, r *http.Request) {
 		InfoString:  postData.PostContent,
 		BlogVersion: zversion.Ver,
 	}
-	fmt.Println("modifyPost:", postID)
+	//fmt.Println("modifyPost:", postID)
+	t.Execute(w, a)
+}
+
+func loginPage(w http.ResponseWriter, r *http.Request) {
+	t, _ := template.ParseFiles("html/login.html")
+	r.ParseForm()
+	passwordID := r.Form["ID"][0]
+	var showInfo string
+	if passwordID == config.GConfig.WebSite.PassWord {
+		showInfo = "Login Succeed!"
+	} else {
+		showInfo = "Login Failed!"
+	}
+	a := struct {
+		InfoString  string
+		BlogVersion string
+	}{
+		InfoString:  showInfo,
+		BlogVersion: zversion.Ver,
+	}
+	//fmt.Println("modifyPost:", passwordID)
 	t.Execute(w, a)
 }
 
@@ -233,6 +254,7 @@ func InitRouter() error {
 	http.HandleFunc("/delete", deletePage)
 	http.HandleFunc("/save", savePost)
 	http.HandleFunc("/modify", modifyPost)
+	http.HandleFunc("/login", loginPage)
 
 	// init static file service
 	files := http.FileServer(http.Dir("./public/"))

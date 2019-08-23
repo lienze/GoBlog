@@ -25,3 +25,4 @@ maxitemperpage = 5    # the max number of each page show
 
 [website]
 webtitle = "Welcome"
+password = "123"

@@ -9,11 +9,16 @@
 		<link rel="stylesheet" type="text/css" href="/static/css/common.min.css" />
 	</head>
 	<body onload="initpage()">
+		<div class="LoginArea" name="loginform">
+			Password:
+			<input type="text" size="10" name="password" value="" id="FormPassword">
+			<a href="javascript:onclick=OnLogin()">Login</a>
+		</div>
 		<ul>
 			{{ range .CurIndexData }}
 			<span name="markdownContent">{{ .PostTitleHref }}</span>
 			<span name="markdownContent">{{ .PostProfile }}</span>
-			发布时间: {{ .PostDate }} | 阅读量:{{ .PostReadNum }} | 评论:{{ .PostCommentNum }}
+			Post: {{ .PostDate }} | Viewed:{{ .PostReadNum }} | Comments:{{ .PostCommentNum }}
 			<hr>
 			{{ end }}
 		</ul>
@@ -22,7 +27,13 @@
 			[{{ .CurPage }}]...<span id="maxPage">{{ .MaxPage }}</span>
 			<button onclick="nextpage();" >►</button>
 		</div>
-
+		<script type="text/javascript">
+		function OnLogin(){
+			var passWord = document.getElementById("FormPassword").value;
+			var pageAddr = "login?ID="+passWord;
+			window.location.href = pageAddr;
+		}
+		</script>
 	</body>
 	<footer>
 		<p class="PoweredText" align="center">Powered by:<a href="https://github.com/lienze/GoBlog">GoBlog</a>&nbsp;version:{{ .BlogVersion }}

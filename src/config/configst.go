@@ -40,4 +40,5 @@ type pagecfg struct {
 
 type website struct {
 	WebTitle string
+	PassWord string
 }

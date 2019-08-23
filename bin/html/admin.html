@@ -9,15 +9,17 @@
 		<link rel="stylesheet" type="text/css" href="/static/css/common.min.css" />
 	</head>
 	<body onload="initpage()">
-		<button onclick="OnNewBlog()">写博客</button>
+		<div>
+			<button onclick="OnNewBlog()">New Blog</button>
+		</div>
 		<ul>
 			{{ range .CurIndexData }}
 			<span name="markdownContent">{{ .PostTitleHref }}</span>
 			<span name="markdownContent">{{ .PostProfile }}</span>
-			发布时间: {{ .PostDate }} | 阅读量:{{ .PostReadNum }} | 
-			评论:{{ .PostCommentNum }}&nbsp;
-			<a href="javascript:onclick=OnDelete({{ .PostID }})">删除</a>
-			<a href="javascript:onclick=OnModify({{ .PostID }})">修改</a>
+			Post: {{ .PostDate }} | Viewed:{{ .PostReadNum }} | 
+			Comments:{{ .PostCommentNum }}&nbsp;
+			<a href="javascript:onclick=OnDelete({{ .PostID }})">Delete</a>
+			<a href="javascript:onclick=OnModify({{ .PostID }})">Modify</a>
 			<hr>
 			{{ end }}
 		</ul>
@@ -37,6 +39,11 @@
 		}
 		function OnModify(PostID){
 			var pageAddr = "modify?PostID="+PostID;
+			window.location.href = pageAddr;
+		}
+		function OnLogin(){
+			var pageAddr = "login";
+			alert(pageAddr);
 			window.location.href = pageAddr;
 		}
 		</script>
