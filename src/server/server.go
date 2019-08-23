@@ -61,7 +61,7 @@ func NewServer() error {
 	zdata.RefreshIndexShow(zdata.AllPostData)
 	// new gorountine for scanning folder that we could refresh page
 	// when there is new post appear
-	go file.ScanFolder(config.GConfig.PostPath + "/")
+	//go file.ScanFolder(config.GConfig.PostPath + "/")
 
 	// catch signal
 	go HandleSignal()
@@ -70,7 +70,7 @@ func NewServer() error {
 	log.Warning("This is a warning info")
 	log.Error("This is an error info")
 
-	fmt.Printf("GoBlog is running...http://%s\n",addr4Server)
+	fmt.Printf("GoBlog is running...http://%s\n", addr4Server)
 	err = server.ListenAndServe()
 	if err != nil {
 		return err
