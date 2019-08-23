@@ -17,9 +17,8 @@ function prepage()
 	var iCurPage = getquerystring("page");
 	if(iCurPage == null){
 		iCurPage = 1;
-	}else{
-		iCurPage--;
 	}
+	iCurPage--;
 	setcurpage(iCurPage);
 }
 
@@ -28,9 +27,8 @@ function nextpage()
 	var iCurPage = getquerystring("page");
 	if(iCurPage == null){
 		iCurPage = 1;
-	}else{
-		iCurPage++;
 	}
+	iCurPage++;
 	setcurpage(iCurPage);
 }
 
@@ -43,6 +41,7 @@ function setcurpage(idx)
 		idx = iMaxPageNum;
 	}
 	var pageAddr = "?page=" + idx;
+	alert(pageAddr);
 	window.location.href = pageAddr;
 }
 
