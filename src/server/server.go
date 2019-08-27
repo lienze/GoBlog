@@ -92,10 +92,8 @@ func HandleSignal() {
 
 func handSignal(sig os.Signal) {
 	switch sig {
-	case syscall.SIGTERM:
-		fmt.Println("hand SIGTERM")
-	case os.Interrupt:
-		fmt.Println("hand Interrupt")
+	case syscall.SIGTERM, os.Interrupt:
+		fmt.Println("hand", sig)
 		fmt.Println("SaveIndexFile number:", len(zdata.AllIndexData))
 		file.SaveIndexFile(config.GConfig.PostPath+"/"+"idx.dat", zdata.AllIndexData)
 	default:
