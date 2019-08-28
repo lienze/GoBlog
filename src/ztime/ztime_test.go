@@ -7,10 +7,4 @@ func TestGetCurDate(t *testing.T) {
 	if len(curDate) != 8 {
 		t.FailNow()
 	}
-	/*switch iType {
-	case STYLE1:
-		return time.Now().Format("20060102")
-	default:
-		return time.Now().Format("20060102")
-	}*/
 }
