@@ -1,3 +1,2 @@
 #!/bin/bash
-
-go test ../... -v -cover
+go test ../... -cover -v 
