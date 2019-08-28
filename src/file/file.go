@@ -95,6 +95,31 @@ func ReadFile(name string) (string, error) {
 	}
 }
 
+func ReadFile2Slice(filePath string) ([]string, error) {
+	var retStr []string
+	fileObj, err := os.OpenFile(filePath, os.O_RDWR, 0666)
+	if err != nil {
+		return nil, err
+	}
+	defer fileObj.Close()
+	buf := bufio.NewReader(fileObj)
+	for {
+		line, err := buf.ReadString('\n')
+		line = strings.TrimSpace(line)
+		if line != "" {
+			retStr = append(retStr, line)
+		}
+		if err != nil {
+			if err == io.EOF {
+				break
+			} else {
+				return nil, err
+			}
+		}
+	}
+	return retStr, nil
+}
+
 func SaveFile(filename string, content string) error {
 	fmt.Println("Start SaveFile", filename)
 	data := []byte(content)
