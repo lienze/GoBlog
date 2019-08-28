@@ -2,7 +2,9 @@
 # ----------------------------------------------vars define
 this_dir=`pwd`
 dist_dir="$this_dir/dist"
-
+cd $this_dir/../
+src_dir=`pwd`
+cd $this_dir
 # ------------------------------------------function define
 function build_err()
 {
@@ -36,6 +38,7 @@ cp -rf "$this_dir/post" $dist_dir
 cp -rf "$this_dir/config" $dist_dir
 cp -rf "$this_dir/public" $dist_dir
 source "$this_dir/build.sh"
+cp -rf "$src_dir/version" $dist_dir
 if [ -f "$this_dir/main" ];then
 	cp -f "$this_dir/main" $dist_dir
 else
