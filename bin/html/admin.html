@@ -12,6 +12,10 @@
 		<div>
 			<button onclick="OnNewBlog()">New Blog</button>
 		</div>
+		<div class="LogoutArea" name="logoutform">
+			admin
+			<a href="javascript:onclick=OnLogout()">Logout</a>
+		</div>
 		<ul>
 			{{ range .CurIndexData }}
 			<span name="markdownContent">{{ .PostTitleHref }}</span>
@@ -41,8 +45,8 @@
 			var pageAddr = "modify?PostID="+PostID;
 			window.location.href = pageAddr;
 		}
-		function OnLogin(){
-			var pageAddr = "login";
+		function OnLogout(){
+			var pageAddr = "logout";
 			alert(pageAddr);
 			window.location.href = pageAddr;
 		}
