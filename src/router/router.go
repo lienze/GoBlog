@@ -5,6 +5,7 @@ import (
 	"GoBlog/src/file"
 	"GoBlog/src/log"
 	"GoBlog/src/zdata"
+	"GoBlog/src/zsession"
 	"GoBlog/src/ztime"
 	"GoBlog/src/zversion"
 	"fmt"
@@ -101,6 +102,10 @@ func adminPage(w http.ResponseWriter, r *http.Request) {
 		} else if iCurPage >= zdata.IndexPage.MaxPage {
 			iCurPage = zdata.IndexPage.MaxPage
 		}
+	}
+	if zsession.GetSessionMng().CheckCookie(w, r) == false {
+		//fmt.Println("adminPage check false")
+		http.Redirect(w, r, "/", http.StatusFound)
 	}
 	zdata.SetCurIndexPageShow(iCurPage)
 	t.Execute(w, zdata.IndexPage)
@@ -224,6 +229,8 @@ func loginPage(w http.ResponseWriter, r *http.Request) {
 	var showInfo string
 	if passwordID == config.GConfig.WebSite.PassWord {
 		showInfo = "Login Succeed!"
+		zsession.GetSessionMng().AddSession(w)
+		//fmt.Println("loginPage:", zsession.GetSessionMng())
 	} else {
 		showInfo = "Login Failed!"
 	}
@@ -236,6 +243,12 @@ func loginPage(w http.ResponseWriter, r *http.Request) {
 	}
 	//fmt.Println("modifyPost:", passwordID)
 	t.Execute(w, a)
+}
+
+func logoutPage(w http.ResponseWriter, r *http.Request) {
+	zsession.GetSessionMng().RemoveSession(w, r)
+	//fmt.Println("Logout succeed!")
+	http.Redirect(w, r, "/", http.StatusFound)
 }
 
 // temporary solution
@@ -255,6 +268,7 @@ func InitRouter() error {
 	http.HandleFunc("/save", savePost)
 	http.HandleFunc("/modify", modifyPost)
 	http.HandleFunc("/login", loginPage)
+	http.HandleFunc("/logout", logoutPage)
 
 	// init static file service
 	files := http.FileServer(http.Dir("./public/"))
