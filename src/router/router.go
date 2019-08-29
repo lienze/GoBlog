@@ -85,6 +85,9 @@ func upcomment(w http.ResponseWriter, r *http.Request) {
 }
 
 func adminPage(w http.ResponseWriter, r *http.Request) {
+	if CheckCookie(w, r) == false {
+		return
+	}
 	t, _ := template.ParseFiles("html/admin.html")
 	r.ParseForm()
 	var iCurPage int = 0
@@ -103,15 +106,14 @@ func adminPage(w http.ResponseWriter, r *http.Request) {
 			iCurPage = zdata.IndexPage.MaxPage
 		}
 	}
-	if zsession.GetSessionMng().CheckCookie(w, r) == false {
-		//fmt.Println("adminPage check false")
-		http.Redirect(w, r, "/", http.StatusFound)
-	}
 	zdata.SetCurIndexPageShow(iCurPage)
 	t.Execute(w, zdata.IndexPage)
 }
 
 func newBlog(w http.ResponseWriter, r *http.Request) {
+	if CheckCookie(w, r) == false {
+		return
+	}
 	t, _ := template.ParseFiles("html/newblog.html")
 	r.ParseForm()
 	a := struct {
@@ -123,10 +125,12 @@ func newBlog(w http.ResponseWriter, r *http.Request) {
 }
 
 func deletePage(w http.ResponseWriter, r *http.Request) {
+	if CheckCookie(w, r) == false {
+		return
+	}
 	t, _ := template.ParseFiles("html/delete.html")
 	r.ParseForm()
 	postID := r.Form["PostID"][0]
-	// TODO: check user permissions
 	var ok bool = false
 	_, ok = zdata.AllPostData[postID]
 	if ok {
@@ -155,6 +159,9 @@ func deletePage(w http.ResponseWriter, r *http.Request) {
 }
 
 func savePost(w http.ResponseWriter, r *http.Request) {
+	if CheckCookie(w, r) == false {
+		return
+	}
 	t, _ := template.ParseFiles("html/savepost.html")
 	r.ParseForm()
 	postID := r.Form["PostID"][0]
@@ -207,6 +214,9 @@ func savePost(w http.ResponseWriter, r *http.Request) {
 }
 
 func modifyPost(w http.ResponseWriter, r *http.Request) {
+	if CheckCookie(w, r) == false {
+		return
+	}
 	t, _ := template.ParseFiles("html/modifypost.html")
 	r.ParseForm()
 	postID := r.Form["PostID"][0]
@@ -251,6 +261,9 @@ func loginPage(w http.ResponseWriter, r *http.Request) {
 }
 
 func logoutPage(w http.ResponseWriter, r *http.Request) {
+	if CheckCookie(w, r) == false {
+		return
+	}
 	zsession.GetSessionMng().RemoveSession(w, r)
 	//fmt.Println("Logout succeed!")
 	http.Redirect(w, r, "/", http.StatusFound)
