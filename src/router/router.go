@@ -251,11 +251,9 @@ func loginPage(w http.ResponseWriter, r *http.Request) {
 	a := struct {
 		InfoString   string
 		LoginSuccess bool
-		BlogVersion  string
 	}{
 		InfoString:   showInfo,
 		LoginSuccess: loginSuccess,
-		BlogVersion:  zversion.Ver,
 	}
 	//fmt.Println("modifyPost:", passwordID)
 	t.Execute(w, a)

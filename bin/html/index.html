@@ -15,14 +15,15 @@
 			<!--<a href="javascript:onclick=OnLogin()">Login</a>-->
 			<button style="width:104px" onclick="OnLogin()">Login</button>
 		</div>
-		<ul>
+		<div>
 			{{ range .CurIndexData }}
+			<!--<span style="width:35px;height:35px;margin:35px;border-radius:50%/50%;background:#FF9900;">Original</span>-->
 			<span name="markdownContent">{{ .PostTitleHref }}</span>
 			<span name="markdownContent">{{ .PostProfile }}</span>
 			Post: {{ .PostDate }} | Viewed:{{ .PostReadNum }} | Comments:{{ .PostCommentNum }}
 			<hr>
 			{{ end }}
-		</ul>
+		</div>
 		<div align="center">
 			<button onclick="prepage();"  >◄</button>
 			[{{ .CurPage }}]...<span id="maxPage">{{ .MaxPage }}</span>
