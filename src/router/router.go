@@ -144,7 +144,7 @@ func deletePage(w http.ResponseWriter, r *http.Request) {
 				fmt.Println(k, "|||||", v)
 			}
 		*/
-		zdata.RefreshIndexShow(zdata.AllPostData)
+		zdata.RefreshIndexShow()
 	}
 	// try to delete the folder whatever delete data succeed
 	postPath := zdata.GetPostPathFromID(postID)
@@ -165,6 +165,8 @@ func savePost(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("html/savepost.html")
 	r.ParseForm()
 	postID := r.Form["PostID"][0]
+	postTitle := r.Form["Title"][0]
+	postProfile := r.Form["Profile"][0]
 	postContent := r.Form["Content"][0]
 	fmt.Println("savePost:", postID)
 	fmt.Println("savePost:", postContent)
@@ -182,8 +184,8 @@ func savePost(w http.ResponseWriter, r *http.Request) {
 		// FIXME: PostTitle and PostProfile need to be fixed.
 		tmp := zdata.PostStruct{
 			PostID:         postID,
-			PostTitle:      "PostTitle",
-			PostProfile:    "PostProfile",
+			PostTitle:      postTitle,
+			PostProfile:    postProfile,
 			PostDate:       ztime.GetCurTime(ztime.DAT_MILL),
 			PostContent:    postContent,
 			PostReadNum:    0,
@@ -198,15 +200,16 @@ func savePost(w http.ResponseWriter, r *http.Request) {
 		tmp := zdata.IndexStruct{
 			PostID:    postID,
 			PostPath:  config.GConfig.PostPath + "?name=" + postID + "/" + postID + ".md",
-			PostTitle: "### " + "PostTitle",
-			PostTitleHref: "### " + "[" + "PostTitle" + "]" +
+			PostTitle: "### " + postTitle,
+			PostTitleHref: "### " + "[" + postTitle + "]" +
 				"(" + "./showpost?name=" + postID + "/" + postID + ".md" + ")",
-			PostProfile:    ">" + "PostProfile",
+			PostProfile:    ">" + postProfile,
 			PostDate:       ztime.GetCurTime(ztime.DAT_MILL),
 			PostReadNum:    0,
 			PostCommentNum: 0,
 		}
 		zdata.AllIndexData[postID] = tmp
+		zdata.RefreshIndexShow()
 	}
 	file.CreateFolder(config.GConfig.PostPath + "/" + postID)
 	file.SaveFile(config.GConfig.PostPath+"/"+postID+"/"+postID+".md", postContent)

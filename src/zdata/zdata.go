@@ -18,7 +18,7 @@ var IndexPage IndexPageStruct
 var AllIndexData map[string]IndexStruct
 var AllPostData map[string]PostStruct
 
-func RefreshIndexShow(mapFiles map[string]PostStruct) {
+func RefreshIndexShow() {
 	var mapkeys []string
 	for k := range AllIndexData {
 		mapkeys = append(mapkeys, k)

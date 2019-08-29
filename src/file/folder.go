@@ -28,7 +28,7 @@ func ScanFolder(postPath string) {
 				mapFiles, mapComments, err := LoadFiles(config.GConfig.PostPath + "/")
 				if err == nil {
 					fmt.Println("Finished LoadFiles")
-					zdata.RefreshIndexShow(zdata.AllPostData)
+					zdata.RefreshIndexShow()
 					zdata.RefreshAllPostData(mapFiles, mapComments)
 				} else {
 					fmt.Println("ScanFolder...", err)
