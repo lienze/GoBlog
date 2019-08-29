@@ -8,7 +8,8 @@
 		<link rel="stylesheet" type="text/css" href="/static/css/common.min.css" />
 	</head>
 	<body>
-		<button onclick="OnSaveButton()">保存</button><br><br>
+		<button style="width:45px;height:45px;" onclick="OnBackButton()">Back</button>
+		<button style="width:45px;height:45px;" onclick="OnSaveButton()">Save</button><br><br>
 		<div>
 			<div id="result"></div><br><br>
 			<textarea id="rawcontent" style="height:200px;width:835px;" onkeyup="CompileAll()"></textarea>
@@ -29,6 +30,12 @@
 		var pageAddr = "save?PostID="+PostID+"&Content="+enmkcontent;
 		//alert(pageAddr);
 		window.location.href = pageAddr;
+	}
+	function OnBackButton(){
+		var ret = confirm("Go back without save?");
+		if(ret==true){
+			window.location.href = "/admin";
+		}
 	}
 	function timeFormat(date){
 		var strDate = date.getFullYear();

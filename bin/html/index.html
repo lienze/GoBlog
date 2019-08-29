@@ -10,9 +10,10 @@
 	</head>
 	<body onload="initpage()">
 		<div class="LoginArea" name="loginform">
-			Password:
-			<input type="text" size="10" name="password" value="" id="FormPassword">
-			<a href="javascript:onclick=OnLogin()">Login</a>
+			<input type="text" style="width:100px" name="username" placeholder="user name" id="FormUsername" readonly="true" value="admin"><br>
+			<input type="password" style="width:100px" name="password" placeholder="password" id="FormPassword"><br>
+			<!--<a href="javascript:onclick=OnLogin()">Login</a>-->
+			<button style="width:104px" onclick="OnLogin()">Login</button>
 		</div>
 		<ul>
 			{{ range .CurIndexData }}
@@ -29,8 +30,9 @@
 		</div>
 		<script type="text/javascript">
 		function OnLogin(){
+			var userName = document.getElementById("FormUsername").value;
 			var passWord = document.getElementById("FormPassword").value;
-			var pageAddr = "login?ID="+passWord;
+			var pageAddr = "login?Name="+userName+"&ID="+passWord;
 			window.location.href = pageAddr;
 		}
 		</script>

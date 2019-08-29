@@ -8,8 +8,8 @@
 		<link rel="stylesheet" type="text/css" href="/static/css/common.min.css" />
 	</head>
 	<body onload="CompileAll()">
-		<button onclick="OnBackButton()">Back</button>
-		<button onclick="OnSaveButton()">Save</button><br><br>
+		<button style="width:45px;height:45px;" onclick="OnBackButton()">Back</button>
+		<button style="width:45px;height:45px;" onclick="OnSaveButton()">Save</button><br><br>
 		<div>
 			<div id="result"></div><br><br>
 			<textarea id="rawcontent" style="height:200px;width:835px;" onkeyup="CompileAll()">{{ .InfoString }}</textarea>
