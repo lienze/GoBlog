@@ -235,10 +235,11 @@ func modifyPost(w http.ResponseWriter, r *http.Request) {
 func loginPage(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("html/login.html")
 	r.ParseForm()
+	userName := r.Form["Name"][0]
 	passwordID := r.Form["ID"][0]
 	var showInfo string
 	var loginSuccess bool
-	if passwordID == config.GConfig.WebSite.PassWord {
+	if passwordID == config.GConfig.WebSite.PassWord && userName == "admin" {
 		showInfo = "Login Succeed!"
 		loginSuccess = true
 		zsession.GetSessionMng().AddSession(w)
