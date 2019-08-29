@@ -32,7 +32,7 @@ func (sMng *SessionMng) AddSession(w http.ResponseWriter) string {
 	cookie := http.Cookie{
 		Name:   sMng.CookieName,
 		Value:  newSessionID,
-		MaxAge: 30,
+		MaxAge: 60, // seconds
 	}
 	http.SetCookie(w, &cookie)
 	return newSessionID

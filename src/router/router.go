@@ -227,19 +227,24 @@ func loginPage(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	passwordID := r.Form["ID"][0]
 	var showInfo string
+	var loginSuccess bool
 	if passwordID == config.GConfig.WebSite.PassWord {
 		showInfo = "Login Succeed!"
+		loginSuccess = true
 		zsession.GetSessionMng().AddSession(w)
 		//fmt.Println("loginPage:", zsession.GetSessionMng())
 	} else {
 		showInfo = "Login Failed!"
+		loginSuccess = false
 	}
 	a := struct {
-		InfoString  string
-		BlogVersion string
+		InfoString   string
+		LoginSuccess bool
+		BlogVersion  string
 	}{
-		InfoString:  showInfo,
-		BlogVersion: zversion.Ver,
+		InfoString:   showInfo,
+		LoginSuccess: loginSuccess,
+		BlogVersion:  zversion.Ver,
 	}
 	//fmt.Println("modifyPost:", passwordID)
 	t.Execute(w, a)
