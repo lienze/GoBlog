@@ -1,6 +1,7 @@
 package zsession
 
 import (
+	"GoBlog/src/config"
 	"net/http"
 )
 
@@ -20,7 +21,7 @@ func GetSessionMng() *SessionMng {
 
 func initSessionMng() *SessionMng {
 	sessionMng = &SessionMng{
-		CookieName: "goblog",
+		CookieName: config.GConfig.CookieCfg.CookieName,
 		SessionMap: make(map[string]string),
 	}
 	return sessionMng
@@ -32,7 +33,7 @@ func (sMng *SessionMng) AddSession(w http.ResponseWriter) string {
 	cookie := http.Cookie{
 		Name:   sMng.CookieName,
 		Value:  newSessionID,
-		MaxAge: 60, // seconds
+		MaxAge: config.GConfig.CookieCfg.MaxAge, // seconds
 	}
 	http.SetCookie(w, &cookie)
 	return newSessionID

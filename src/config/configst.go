@@ -1,13 +1,14 @@
 package config
 
 type tomlConfig struct {
-	PostPath string
-	Host     hostsvr
-	DB       database
-	FileCfg  filecfg
-	LogCfg   logcfg
-	PageCfg  pagecfg
-	WebSite  website
+	PostPath  string
+	Host      hostsvr
+	DB        database
+	FileCfg   filecfg
+	LogCfg    logcfg
+	PageCfg   pagecfg
+	WebSite   website
+	CookieCfg cookiecfg
 }
 
 type hostsvr struct {
@@ -41,4 +42,9 @@ type pagecfg struct {
 type website struct {
 	WebTitle string
 	PassWord string
+}
+
+type cookiecfg struct {
+	CookieName string
+	MaxAge     int
 }

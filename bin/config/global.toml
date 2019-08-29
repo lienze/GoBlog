@@ -11,8 +11,8 @@ dbname = "mytest"
 
 [filecfg]
 autorefresh = true
-refreshfreq = 5    # the frequency of refreshing the fold which is postPath(unit:second)
-includefile  = ["md","cm"]    # md means markdown files, cm means comment files
+refreshfreq = 5             # the frequency of refreshing the fold which is postPath(unit:seconds)
+includefile = ["md","cm"]   # md means markdown files, cm means comment files
 usefilepool = true
 
 [logcfg]
@@ -21,8 +21,12 @@ showinconsole = true
 logpath       = "./log/"
 
 [pagecfg]
-maxitemperpage = 5    # the max number of each page show
+maxitemperpage = 5          # the max number of each page show
 
 [website]
 webtitle = "Welcome"
 password = "123"
+
+[cookiecfg]
+cookiename = "goblog"
+maxage     = 30             # unit:seconds
