@@ -52,7 +52,7 @@ func showpost(w http.ResponseWriter, r *http.Request) {
 	zdata.PageShow.PageReadNum = indexInfo.PostReadNum
 	zdata.PageShow.PageCommentNum = indexInfo.PostCommentNum
 	zdata.PageShow.PageComments = indexInfo.PostComments
-	zdata.PageShow.BlogVersion = zversion.Ver
+	zdata.PageShow.BlogVersion = zversion.GetVersion()
 	zdata.AllPostData[postID] = indexInfo
 	indexData := zdata.AllIndexData[postID]
 	indexData.PostReadNum = indexInfo.PostReadNum
@@ -119,7 +119,7 @@ func newBlog(w http.ResponseWriter, r *http.Request) {
 	a := struct {
 		BlogVersion string
 	}{
-		BlogVersion: zversion.Ver,
+		BlogVersion: zversion.GetVersion(),
 	}
 	t.Execute(w, a)
 }
@@ -175,7 +175,7 @@ func savePost(w http.ResponseWriter, r *http.Request) {
 		BlogVersion string
 	}{
 		InfoString:  "Save Succeed!",
-		BlogVersion: zversion.Ver,
+		BlogVersion: zversion.GetVersion(),
 	}
 	// make sure that the postID is available in AllPostData map
 	var ok bool = false
@@ -229,7 +229,7 @@ func modifyPost(w http.ResponseWriter, r *http.Request) {
 		BlogVersion string
 	}{
 		InfoString:  postData.PostContent,
-		BlogVersion: zversion.Ver,
+		BlogVersion: zversion.GetVersion(),
 	}
 	//fmt.Println("modifyPost:", postID)
 	t.Execute(w, a)

@@ -20,8 +20,8 @@ func TestVersion(t *testing.T) {
 		t.FailNow()
 	}
 
-	if Ver != filever {
-		t.Log("Ver:", Ver, ",filever:", filever)
+	if ver != filever {
+		t.Log("ver:", ver, ",filever:", filever)
 		t.FailNow()
 	}
 }

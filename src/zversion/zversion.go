@@ -1,3 +1,7 @@
 package zversion
 
-const Ver = "0.4"
+const ver = "0.4"
+
+func GetVersion() string {
+	return ver
+}

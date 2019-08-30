@@ -23,7 +23,7 @@ func NewServer() error {
 	addr4Server := fmt.Sprintf("%s:%d",
 		config.GConfig.Host.Server,
 		config.GConfig.Host.Port)
-	fmt.Println("GoBlog version:", zversion.Ver)
+	fmt.Println("GoBlog version:", zversion.GetVersion())
 	if runtime.GOOS == "darwin" {
 		fmt.Println("darwin platform")
 		addr4Server = fmt.Sprintf("127.0.0.1:8080")

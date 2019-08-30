@@ -270,7 +270,7 @@ func loadIndexData() error {
 		}
 	}
 	zdata.IndexPage.WebTitle = config.GConfig.WebSite.WebTitle
-	zdata.IndexPage.BlogVersion = zversion.Ver
+	zdata.IndexPage.BlogVersion = zversion.GetVersion()
 	fmt.Println("loadIndexData end...")
 	return nil
 }
