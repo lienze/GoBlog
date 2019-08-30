@@ -7,13 +7,14 @@
 		<link rel="stylesheet" type="text/css" href="/static/css/markdown.min.css" />
 		<link rel="stylesheet" type="text/css" href="/static/css/common.min.css" />
 	</head>
-	<body>
-		<p align="center">{{ . }}</p>
+	<body onload="InitPage()">
+		<script type="text/javascript">
+		function InitPage(){
+			alert({{ . }})
+			var pageAddr = "admin";
+			window.location.href = pageAddr;
+		}
+		</script>
 	</body>
-	<footer>
-		<p class="PoweredText" align="center">Powered by:<a href="https://github.com/lienze/GoBlog">GoBlog</a>&nbsp;version:{{ .BlogVersion }}
-		<br>
-		Contact information: <a href="mailto:lienze2010@126.com">lienze2010@126.com</a>.</p>
-	</footer>
 </html>
 

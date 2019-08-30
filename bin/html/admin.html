@@ -10,11 +10,12 @@
 	</head>
 	<body onload="initpage()">
 		<div>
-			<button style="height:45px;width:45px" onclick="OnNewBlog()">New Blog</button>
+			<button style="height:45px;width:45px;" onclick="OnHomePage()">Home<br>Page</button>
+			<button style="height:45px;width:45px;" onclick="OnNewBlog()">New<br>Blog</button>
 		</div>
 		<div class="LogoutArea" name="logoutform">
 			admin
-			<a href="javascript:onclick=OnLogout()">Logout</a>
+			<button style="width:104px" onclick="OnLogout()">Logout</button>
 		</div>
 		<ul>
 			{{ range .CurIndexData }}
@@ -49,6 +50,10 @@
 			var pageAddr = "logout";
 			alert(pageAddr);
 			window.location.href = pageAddr;
+		}
+		function OnHomePage(){
+			var pageAddr = "/";
+			window.location.href = pageAddr
 		}
 		</script>
 	</body>

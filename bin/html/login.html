@@ -9,6 +9,8 @@
 		function ShowLoginInfo(){
 			var infoString = {{ .InfoString }};
 			alert(infoString);
+			window.location.href = "/";
+			/*
 			if({{ .LoginSuccess }} == true){
 				var pageAddr = "admin";
 				window.location.href = pageAddr;
@@ -16,6 +18,7 @@
 				var pageAddr = "index";
 				window.location.href = pageAddr;
 			}
+			*/
 		}
 		</script>
 	</body>

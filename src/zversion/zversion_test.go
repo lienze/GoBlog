@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func TestVersion(t *testing.T) {
+func TestGetVersion(t *testing.T) {
 	// get the version info from the version file
 	var filever string
 	if contents, err := ioutil.ReadFile("../../version"); err == nil {

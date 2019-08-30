@@ -9,12 +9,19 @@
 		<link rel="stylesheet" type="text/css" href="/static/css/common.min.css" />
 	</head>
 	<body onload="initpage()">
+		{{ if .BooLogin }}
+		<div class="LoginArea" name="loginform">
+			<a href="javascript:onclick=Go2Admin()">admin</a>
+			<button style="width:104px" onclick="OnLogout()">Logout</button>
+		</div>
+		{{ else }}
 		<div class="LoginArea" name="loginform">
 			<input type="text" style="width:100px" name="username" placeholder="user name" id="FormUsername" readonly="true" value="admin"><br>
 			<input type="password" style="width:100px" name="password" placeholder="password" id="FormPassword"><br>
 			<!--<a href="javascript:onclick=OnLogin()">Login</a>-->
 			<button style="width:104px" onclick="OnLogin()">Login</button>
 		</div>
+		{{ end }}
 		<div>
 			{{ range .CurIndexData }}
 			<!--<span style="width:35px;height:35px;margin:35px;border-radius:50%/50%;background:#FF9900;">Original</span>-->
@@ -34,6 +41,15 @@
 			var userName = document.getElementById("FormUsername").value;
 			var passWord = document.getElementById("FormPassword").value;
 			var pageAddr = "login?Name="+userName+"&ID="+passWord;
+			window.location.href = pageAddr;
+		}
+		function Go2Admin(){
+			var pageAddr = "admin";
+			window.location.href = pageAddr;
+		}
+		function OnLogout(){
+			var pageAddr = "logout";
+			alert(pageAddr);
 			window.location.href = pageAddr;
 		}
 		</script>

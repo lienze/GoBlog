@@ -11,8 +11,11 @@
 		<button style="width:45px;height:45px;" onclick="OnBackButton()">Back</button>
 		<button style="width:45px;height:45px;" onclick="OnSaveButton()">Save</button><br><br>
 		<div>
+			<input id="title" type="text" style="width:835px;" placeholder="Title" value="{{ .PostTitle }}"/>
+			<input id="profile" type="text" style="width:835px;" placeholder="Brief introduction" value="{{ .PostProfile }}">
+			<hr>
 			<div id="result"></div><br><br>
-			<textarea id="rawcontent" style="height:200px;width:835px;" onkeyup="CompileAll()">{{ .InfoString }}</textarea>
+			<textarea id="rawcontent" style="height:200px;width:835px;" onkeyup="CompileAll()">{{ .PostContent }}</textarea>
 		</div>
 	</body>
 	<script type="text/javascript">
@@ -25,9 +28,11 @@
 	function OnSaveButton(){
 		var curDate = new Date();
 		var PostID = timeFormat(curDate);
+		var Title = encodeURIComponent(document.getElementById("title").value);
+		var Profile = encodeURIComponent(document.getElementById("profile").value);
 		var mkcontent = document.getElementById("rawcontent").value;
 		var enmkcontent = encodeURIComponent(mkcontent);
-		var pageAddr = "save?PostID="+PostID+"&Content="+enmkcontent;
+		var pageAddr = "save?PostID="+PostID+"&Title="+Title+"&Profile="+Profile+"&Content="+enmkcontent;
 		//alert(pageAddr);
 		window.location.href = pageAddr;
 	}
@@ -36,6 +41,29 @@
 		if(ret==true){
 			window.location.href = "/admin";
 		}
+	}
+	function timeFormat(date){
+		var strDate = date.getFullYear();
+		strDate += getFormatDate2(date.getMonth()+1);
+		strDate += getFormatDate2(date.getDate());
+		strDate += getFormatDate2(date.getHours());
+		strDate += getFormatDate2(date.getMinutes());
+		strDate += getFormatDate3(date.getSeconds());
+		return strDate;
+	}
+	function getFormatDate2(date){
+		if(date < 10){
+			date = "0" + date;
+		}
+		return date;
+	}
+	function getFormatDate3(date){
+		if(date < 10){
+			date = "00"+date;
+		}else if(date < 100){
+			date = "0" + date;
+		}
+		return date;
 	}
 	</script>
 	<footer>

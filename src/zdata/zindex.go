@@ -6,6 +6,7 @@ type IndexPageStruct struct {
 	CurIndexData []IndexStruct
 	CurPage      int
 	MaxPage      int
+	BooLogin     bool
 	BlogVersion  string
 }
 

@@ -15,6 +15,11 @@ import (
 )
 
 func rootPage(w http.ResponseWriter, r *http.Request) {
+	if CheckCookie(w, r) == false {
+		zdata.IndexPage.BooLogin = false
+	} else {
+		zdata.IndexPage.BooLogin = true
+	}
 	t, _ := template.ParseFiles("html/index.html")
 	r.ParseForm()
 	var iCurPage int = 0
@@ -85,7 +90,7 @@ func upcomment(w http.ResponseWriter, r *http.Request) {
 }
 
 func adminPage(w http.ResponseWriter, r *http.Request) {
-	if CheckCookie(w, r) == false {
+	if CheckCookieRedirect(w, r) == false {
 		return
 	}
 	t, _ := template.ParseFiles("html/admin.html")
@@ -111,7 +116,7 @@ func adminPage(w http.ResponseWriter, r *http.Request) {
 }
 
 func newBlog(w http.ResponseWriter, r *http.Request) {
-	if CheckCookie(w, r) == false {
+	if CheckCookieRedirect(w, r) == false {
 		return
 	}
 	t, _ := template.ParseFiles("html/newblog.html")
@@ -125,7 +130,7 @@ func newBlog(w http.ResponseWriter, r *http.Request) {
 }
 
 func deletePage(w http.ResponseWriter, r *http.Request) {
-	if CheckCookie(w, r) == false {
+	if CheckCookieRedirect(w, r) == false {
 		return
 	}
 	t, _ := template.ParseFiles("html/delete.html")
@@ -159,7 +164,7 @@ func deletePage(w http.ResponseWriter, r *http.Request) {
 }
 
 func savePost(w http.ResponseWriter, r *http.Request) {
-	if CheckCookie(w, r) == false {
+	if CheckCookieRedirect(w, r) == false {
 		return
 	}
 	t, _ := template.ParseFiles("html/savepost.html")
@@ -217,7 +222,7 @@ func savePost(w http.ResponseWriter, r *http.Request) {
 }
 
 func modifyPost(w http.ResponseWriter, r *http.Request) {
-	if CheckCookie(w, r) == false {
+	if CheckCookieRedirect(w, r) == false {
 		return
 	}
 	t, _ := template.ParseFiles("html/modifypost.html")
@@ -225,10 +230,14 @@ func modifyPost(w http.ResponseWriter, r *http.Request) {
 	postID := r.Form["PostID"][0]
 	postData := zdata.AllPostData[postID]
 	a := struct {
-		InfoString  string
+		PostTitle   string
+		PostProfile string
+		PostContent string
 		BlogVersion string
 	}{
-		InfoString:  postData.PostContent,
+		PostContent: postData.PostContent,
+		PostTitle:   postData.PostTitle[4:],
+		PostProfile: postData.PostProfile[1:],
 		BlogVersion: zversion.GetVersion(),
 	}
 	//fmt.Println("modifyPost:", postID)
@@ -263,7 +272,7 @@ func loginPage(w http.ResponseWriter, r *http.Request) {
 }
 
 func logoutPage(w http.ResponseWriter, r *http.Request) {
-	if CheckCookie(w, r) == false {
+	if CheckCookieRedirect(w, r) == false {
 		return
 	}
 	zsession.GetSessionMng().RemoveSession(w, r)
