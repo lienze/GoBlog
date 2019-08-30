@@ -26,13 +26,12 @@
 		document.getElementById("result").innerHTML = html;
 	}
 	function OnSaveButton(){
-		var curDate = new Date();
-		var PostID = timeFormat(curDate);
+		var PostID = {{ .PostID }};
 		var Title = encodeURIComponent(document.getElementById("title").value);
 		var Profile = encodeURIComponent(document.getElementById("profile").value);
 		var mkcontent = document.getElementById("rawcontent").value;
 		var enmkcontent = encodeURIComponent(mkcontent);
-		var pageAddr = "save?PostID="+PostID+"&Title="+Title+"&Profile="+Profile+"&Content="+enmkcontent;
+		var pageAddr = "savemodify?PostID="+PostID+"&Title="+Title+"&Profile="+Profile+"&Content="+enmkcontent;
 		//alert(pageAddr);
 		window.location.href = pageAddr;
 	}

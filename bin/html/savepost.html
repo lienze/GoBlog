@@ -10,7 +10,7 @@
 	<body onload="InitPage()">
 		<script type="text/javascript">
 		function InitPage(){
-			alert({{ .InfoString }})
+			alert({{ . }})
 			var pageAddr = "admin";
 			window.location.href = pageAddr;
 		}

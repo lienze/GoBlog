@@ -8,7 +8,6 @@ import (
 	"GoBlog/src/zsession"
 	"GoBlog/src/ztime"
 	"GoBlog/src/zversion"
-	"fmt"
 	"html/template"
 	"net/http"
 	"strconv"
@@ -173,8 +172,8 @@ func savePost(w http.ResponseWriter, r *http.Request) {
 	postTitle := r.Form["Title"][0]
 	postProfile := r.Form["Profile"][0]
 	postContent := r.Form["Content"][0]
-	fmt.Println("savePost:", postID)
-	fmt.Println("savePost:", postContent)
+	//fmt.Println("savePost:", postID)
+	//fmt.Println("savePost:", postContent)
 	a := struct {
 		InfoString  string
 		BlogVersion string
@@ -186,7 +185,6 @@ func savePost(w http.ResponseWriter, r *http.Request) {
 	var ok bool = false
 	_, ok = zdata.AllPostData[postID]
 	if ok == false {
-		// FIXME: PostTitle and PostProfile need to be fixed.
 		tmp := zdata.PostStruct{
 			PostID:         postID,
 			PostTitle:      postTitle,
@@ -198,7 +196,7 @@ func savePost(w http.ResponseWriter, r *http.Request) {
 			PostComments:   nil,
 		}
 		zdata.AllPostData[postID] = tmp
-		fmt.Println(tmp)
+		//fmt.Println(tmp)
 	}
 	_, ok = zdata.AllIndexData[postID]
 	if ok == false {
@@ -221,6 +219,58 @@ func savePost(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, a)
 }
 
+func saveModifyPost(w http.ResponseWriter, r *http.Request) {
+	if CheckCookieRedirect(w, r) == false {
+		return
+	}
+	t, _ := template.ParseFiles("html/savepost.html")
+	r.ParseForm()
+	postID := r.Form["PostID"][0]
+	postTitle := r.Form["Title"][0]
+	postProfile := r.Form["Profile"][0]
+	postContent := r.Form["Content"][0]
+	// make sure that the postID is available in AllPostData map
+	oldData, ok1 := zdata.AllPostData[postID]
+	if ok1 == true {
+		tmp := zdata.PostStruct{
+			PostID:         postID,
+			PostTitle:      postTitle,
+			PostProfile:    postProfile,
+			PostDate:       oldData.PostDate,
+			PostContent:    postContent,
+			PostReadNum:    oldData.PostReadNum,
+			PostCommentNum: oldData.PostCommentNum,
+			PostComments:   oldData.PostComments,
+		}
+		zdata.AllPostData[postID] = tmp
+		//fmt.Println(tmp)
+	}
+	oldIndex, ok2 := zdata.AllIndexData[postID]
+	if ok2 == true {
+		tmp := zdata.IndexStruct{
+			PostID:    postID,
+			PostPath:  config.GConfig.PostPath + "?name=" + postID + "/" + postID + ".md",
+			PostTitle: "### " + postTitle,
+			PostTitleHref: "### " + "[" + postTitle + "]" +
+				"(" + "./showpost?name=" + postID + "/" + postID + ".md" + ")",
+			PostProfile:    ">" + postProfile,
+			PostDate:       ztime.GetCurTime(ztime.DAT_MILL),
+			PostReadNum:    oldIndex.PostReadNum,
+			PostCommentNum: oldIndex.PostCommentNum,
+		}
+		zdata.AllIndexData[postID] = tmp
+		zdata.RefreshIndexShow()
+	}
+	if ok1 && ok2 {
+		file.RemoveFolder(config.GConfig.PostPath + "/" + postID)
+		file.CreateFolder(config.GConfig.PostPath + "/" + postID)
+		file.SaveFile(config.GConfig.PostPath+"/"+postID+"/"+postID+".md", postContent)
+		t.Execute(w, "Save Succeed!")
+	} else {
+		t.Execute(w, "Save Error!")
+	}
+}
+
 func modifyPost(w http.ResponseWriter, r *http.Request) {
 	if CheckCookieRedirect(w, r) == false {
 		return
@@ -230,11 +280,13 @@ func modifyPost(w http.ResponseWriter, r *http.Request) {
 	postID := r.Form["PostID"][0]
 	postData := zdata.AllPostData[postID]
 	a := struct {
+		PostID      string
 		PostTitle   string
 		PostProfile string
 		PostContent string
 		BlogVersion string
 	}{
+		PostID:      postID,
 		PostContent: postData.PostContent,
 		PostTitle:   postData.PostTitle[4:],
 		PostProfile: postData.PostProfile[1:],
@@ -298,6 +350,7 @@ func InitRouter() error {
 	http.HandleFunc("/modify", modifyPost)
 	http.HandleFunc("/login", loginPage)
 	http.HandleFunc("/logout", logoutPage)
+	http.HandleFunc("/savemodify", saveModifyPost)
 
 	// init static file service
 	files := http.FileServer(http.Dir("./public/"))
