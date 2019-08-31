@@ -41,31 +41,31 @@ func loadFiles() (map[string]string, map[string][]zdata.CommentStruct, error) {
 	retMapFileComment := make(map[string][]zdata.CommentStruct)
 	//readPath(postPath, &retMapFileContent, &retMapFileComment)
 	for k := range zdata.AllIndexData {
-		loadPost(k,&retMapFileContent)
-		loadComment(k,&retMapFileComment)
+		initPost(k, &retMapFileContent)
+		initComment(k, &retMapFileComment)
 	}
 	fmt.Println("Load Files ok...")
 	return retMapFileContent, retMapFileComment, nil
 }
 
-func loadPost(postID string,retMapFileContent *map[string]string){
+func initPost(postID string, retMapFileContent *map[string]string) {
 	fileFullPath := zdata.GetPostPathFromID(postID)
 	if retContent, err := ReadFile(fileFullPath); err == nil {
 		(*retMapFileContent)[postID] = retContent
 		return
-	}else{
-		errLog := "[loadPost]"+err.Error()
+	} else {
+		errLog := "[loadPost]" + err.Error()
 		log.Warning(errLog)
 	}
 	return
 }
 
-func loadComment(postID string,retMapFileComment *map[string][]zdata.CommentStruct){
+func initComment(postID string, retMapFileComment *map[string][]zdata.CommentStruct) {
 	fileFullPath := zdata.GetCommentPathFromID(postID)
-	if retSlice, err := analyseComments(fileFullPath);err==nil{
+	if retSlice, err := analyseComments(fileFullPath); err == nil {
 		(*retMapFileComment)[postID] = append((*retMapFileComment)[postID], retSlice...)
-	}else{
-		errLog := "[loadComment]"+err.Error()
+	} else {
+		errLog := "[loadComment]" + err.Error()
 		log.Warning(errLog)
 	}
 	return

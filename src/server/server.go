@@ -56,7 +56,7 @@ func NewServer() error {
 		return err
 	}
 
-	zdata.RefreshAllPostData(mapFiles, mapComments)
+	zdata.LoadAllPostData(&mapFiles, &mapComments)
 
 	zdata.RefreshIndexShow()
 	// new gorountine for scanning folder that we could refresh page
