@@ -2,6 +2,7 @@ package file
 
 import (
 	"GoBlog/src/config"
+	"GoBlog/src/log"
 	"GoBlog/src/zdata"
 	"GoBlog/src/zversion"
 	"bufio"
@@ -52,8 +53,10 @@ func loadPost(postID string,retMapFileContent *map[string]string){
 	if retContent, err := ReadFile(fileFullPath); err == nil {
 		(*retMapFileContent)[postID] = retContent
 		return
+	}else{
+		errLog := "[loadPost]"+err.Error()
+		log.Warning(errLog)
 	}
-	// TODO: error log
 	return
 }
 
@@ -62,7 +65,8 @@ func loadComment(postID string,retMapFileComment *map[string][]zdata.CommentStru
 	if retSlice, err := analyseComments(fileFullPath);err==nil{
 		(*retMapFileComment)[postID] = append((*retMapFileComment)[postID], retSlice...)
 	}else{
-		// TODO: error log
+		errLog := "[loadComment]"+err.Error()
+		log.Warning(errLog)
 	}
 	return
 }
