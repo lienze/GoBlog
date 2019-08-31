@@ -25,24 +25,50 @@ type SliceMock struct {
 	cap  int
 }
 
-func InitFiles(postPath string) (map[string]string, map[string][]zdata.CommentStruct, error) {
+func InitFiles() (map[string]string, map[string][]zdata.CommentStruct, error) {
 	//fmt.Println("InitFiles...")
 	// init options
 	bUseFilePool = config.GConfig.FileCfg.UseFilePool
 	mapFilePool = make(map[string]*os.File)
 	loadIndexData()
-	return LoadFiles(postPath)
+	return loadFiles()
 }
 
-func LoadFiles(postPath string) (map[string]string, map[string][]zdata.CommentStruct, error) {
+func loadFiles() (map[string]string, map[string][]zdata.CommentStruct, error) {
 	fmt.Println("Start Loading Files...")
 	retMapFileContent := make(map[string]string)
 	retMapFileComment := make(map[string][]zdata.CommentStruct)
-	readPath(postPath, &retMapFileContent, &retMapFileComment)
+	//readPath(postPath, &retMapFileContent, &retMapFileComment)
+	for k := range zdata.AllIndexData {
+		loadPost(k,&retMapFileContent)
+		loadComment(k,&retMapFileComment)
+	}
 	fmt.Println("Load Files ok...")
 	return retMapFileContent, retMapFileComment, nil
 }
 
+func loadPost(postID string,retMapFileContent *map[string]string){
+	fileFullPath := zdata.GetPostPathFromID(postID)
+	if retContent, err := ReadFile(fileFullPath); err == nil {
+		(*retMapFileContent)[postID] = retContent
+		return
+	}
+	// TODO: error log
+	return
+}
+
+func loadComment(postID string,retMapFileComment *map[string][]zdata.CommentStruct){
+	fileFullPath := zdata.GetCommentPathFromID(postID)
+	if retSlice, err := analyseComments(fileFullPath);err==nil{
+		(*retMapFileComment)[postID] = append((*retMapFileComment)[postID], retSlice...)
+	}else{
+		// TODO: error log
+	}
+	return
+}
+
+// deprecate function
+// It is now read posts by the data of index which loaded at zdata.AllIndexData
 func readPath(postRootPath string,
 	retMapFileContent *map[string]string,
 	retMapFileComment *map[string][]zdata.CommentStruct) error {
@@ -244,6 +270,7 @@ func loadIndexData() error {
 			if errconv != nil {
 				postCommentNum = -1
 			}
+			// XXX: there needs a new way the load data which load raw data directly to the struct
 			tmp := zdata.IndexStruct{
 				PostID:    sList[0],
 				PostPath:  config.GConfig.PostPath + "?name=" + sList[0] + "/" + sList[0] + ".md",

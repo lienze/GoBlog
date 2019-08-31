@@ -51,7 +51,7 @@ func NewServer() error {
 
 	var mapFiles map[string]string
 	var mapComments map[string][]zdata.CommentStruct
-	mapFiles, mapComments, err = file.InitFiles(config.GConfig.PostPath + "/")
+	mapFiles, mapComments, err = file.InitFiles()
 	if err != nil {
 		return err
 	}

@@ -25,7 +25,7 @@ func ScanFolder(postPath string) {
 				//        a file at the same time, files have been changed but
 				//        the process could not find the difference, so no refresh
 				//        happened.We may use MD5 to compare.
-				mapFiles, mapComments, err := LoadFiles(config.GConfig.PostPath + "/")
+				mapFiles, mapComments, err := loadFiles()
 				if err == nil {
 					fmt.Println("Finished LoadFiles")
 					zdata.RefreshIndexShow()
