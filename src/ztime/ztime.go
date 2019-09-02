@@ -5,7 +5,7 @@ import "time"
 // DAT means Date And Time
 // T mean Time
 const (
-	DAT      = iota + 1    // start from 1
+	DAT = iota + 1 // start from 1
 	DAT_MILL
 	DAT_NANO
 	DAT_FULL
@@ -17,7 +17,9 @@ const (
 	T_NANO
 )
 const (
-	STYLE1 = 1
+	STYLE1 = iota + 1 // start from 1
+	STYLE2
+	STYLE3
 )
 
 func GetCurTime(iType int8) string {
@@ -52,6 +54,10 @@ func GetCurDate(iType int8) string {
 	switch iType {
 	case STYLE1:
 		return time.Now().Format("20060102")
+	case STYLE2:
+		return time.Now().Format("2006-1-2")
+	case STYLE3:
+		return time.Now().Format("2006-01-02")
 	default:
 		return time.Now().Format("20060102")
 	}
