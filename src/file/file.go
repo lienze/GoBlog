@@ -10,6 +10,7 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -182,9 +183,15 @@ func SaveComment(filename string, content []zdata.CommentStruct) {
 }
 
 func SaveIndexFile(filePath string, content map[string]zdata.IndexStruct) {
+	var mapkeys []string
+	for k := range zdata.AllIndexData {
+		mapkeys = append(mapkeys, k)
+	}
+	sort.Sort(sort.Reverse(sort.StringSlice(mapkeys)))
+
 	var writeData string
-	for _, v := range content {
-		//fmt.Println("SaveIndexFile:", k, "!!!!!!", v)
+	for _, val := range mapkeys {
+		v := content[val]
 		writeData += v.PostID + "@" + v.PostTitle[4:] + "@" +
 			v.PostProfile[1:] + "@" + v.PostDate + "@" +
 			strconv.Itoa(v.PostReadNum) + "@" +

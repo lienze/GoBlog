@@ -58,19 +58,19 @@ func Listen4Log() {
 			if bShowInConsole {
 				if arrLogType[iType] == "error" {
 					sLog := fmt.Sprintf("[%s][%s] %s",
-						ztime.GetCurTime(ztime.DAT_MILL), arrLogType[iType], rawContent)
+						ztime.GetCurTime(ztime.D2AT_MILL), arrLogType[iType], rawContent)
 					zconsole.PrintRedText(sLog)
 				} else if arrLogType[iType] == "warning" {
 					sLog := fmt.Sprintf("[%s][%s] %s",
-						ztime.GetCurTime(ztime.DAT_MILL), arrLogType[iType], rawContent)
+						ztime.GetCurTime(ztime.D2AT_MILL), arrLogType[iType], rawContent)
 					zconsole.PrintYellowText(sLog)
 				} else if arrLogType[iType] == "normal" {
 					sLog := fmt.Sprintf("[%s][%s] %s",
-						ztime.GetCurTime(ztime.DAT_MILL), arrLogType[iType], rawContent)
+						ztime.GetCurTime(ztime.D2AT_MILL), arrLogType[iType], rawContent)
 					zconsole.PrintGreenText(sLog)
 				} else {
 					fmt.Printf("[%s][%s] %s\n",
-						ztime.GetCurTime(ztime.DAT_MILL), arrLogType[iType], rawContent)
+						ztime.GetCurTime(ztime.D2AT_MILL), arrLogType[iType], rawContent)
 				}
 			}
 			filePath := mapLogPath[iType] + ztime.GetCurDate(ztime.STYLE1)
