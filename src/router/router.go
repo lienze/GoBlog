@@ -189,7 +189,7 @@ func savePost(w http.ResponseWriter, r *http.Request) {
 			PostID:         postID,
 			PostTitle:      postTitle,
 			PostProfile:    postProfile,
-			PostDate:       ztime.GetCurTime(ztime.DAT_MILL),
+			PostDate:       ztime.GetCurTime(ztime.D2AT_MILL),
 			PostContent:    postContent,
 			PostReadNum:    0,
 			PostCommentNum: 0,
@@ -207,7 +207,7 @@ func savePost(w http.ResponseWriter, r *http.Request) {
 			PostTitleHref: "### " + "[" + postTitle + "]" +
 				"(" + "./showpost?name=" + postID + "/" + postID + ".md" + ")",
 			PostProfile:    ">" + postProfile,
-			PostDate:       ztime.GetCurTime(ztime.DAT_MILL),
+			PostDate:       ztime.GetCurTime(ztime.D2AT_MILL),
 			PostReadNum:    0,
 			PostCommentNum: 0,
 		}
@@ -254,7 +254,7 @@ func saveModifyPost(w http.ResponseWriter, r *http.Request) {
 			PostTitleHref: "### " + "[" + postTitle + "]" +
 				"(" + "./showpost?name=" + postID + "/" + postID + ".md" + ")",
 			PostProfile:    ">" + postProfile,
-			PostDate:       ztime.GetCurTime(ztime.DAT_MILL),
+			PostDate:       oldIndex.PostDate,
 			PostReadNum:    oldIndex.PostReadNum,
 			PostCommentNum: oldIndex.PostCommentNum,
 		}
