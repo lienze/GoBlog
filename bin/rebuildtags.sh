@@ -5,7 +5,7 @@ echo "rebuild path:"$path
 files=$(ls $path)
 for filename in $files
 do
-	if [[ ${filename:0:6} -eq "cscope" ]];then
+	if [[ ${filename:0:6} == "cscope" ]];then
 		rm cscope*
 		break
 	fi
