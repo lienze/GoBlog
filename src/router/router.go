@@ -306,7 +306,7 @@ func loginPage(w http.ResponseWriter, r *http.Request) {
 	if passwordID == config.GConfig.WebSite.PassWord && userName == "admin" {
 		showInfo = "Login Succeed!"
 		loginSuccess = true
-		zsession.GetSessionMng().AddSession(w)
+		zsession.GetSessionMng().AddSession(w, r)
 		//fmt.Println("loginPage:", zsession.GetSessionMng())
 	} else {
 		showInfo = "Login Failed!"
