@@ -8,6 +8,7 @@ github.com/gogf/gf v1.8.2 h1:SVHCXOZVHz2cFwNpQ9JrZYRPcXYT5+oaCTAw8uyjHUQ=
 github.com/gogf/gf v1.8.2/go.mod h1:qJRcq0s3RskjJIZKsSHjZkpxw91rd0EAh+4CUbawbXQ=
 github.com/golang/snappy v0.0.1 h1:Qgr9rKW7uDUkrbSmQeiDsGa8SjGyCOGtuasMWwvp2P4=
 github.com/golang/snappy v0.0.1/go.mod h1:/XxbfmMg8lxefKM7IXC3fBNl/7bRcc72aCRzEWrmP2Q=
+github.com/gomodule/redigo v2.0.0+incompatible/go.mod h1:B4C85qUVwatsJoIUNIfCRsp7qO0iAmpGFZ4EELWSbC4=
 github.com/google/go-cmp v0.3.0 h1:crn/baboCvb5fXaQ0IJ1SGTsTVrWpDsCWC8EGETZijY=
 github.com/google/go-cmp v0.3.0/go.mod h1:8QqcDgzrUqlUb/G2PQTWiueGozuR1884gddMywk6iLU=
 github.com/lienze/go2db v0.0.0-20190720052107-fe99624cdeb3 h1:9A1J6NTnYq9kpkhdTEjwYXBHUNb53k4l89uSpQNcCW8=
