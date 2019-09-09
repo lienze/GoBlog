@@ -6,8 +6,12 @@ port = 8080
 
 [db]
 enable = false
-dbtype = "mongodb"
+dbtype = "mongodb"          # only mongodb for now
 dbname = "mytest"
+
+[cache]
+enable = true
+cachetype = "redis"
 
 [filecfg]
 autorefresh = true
