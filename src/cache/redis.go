@@ -20,6 +20,13 @@ func InitRedis() error {
 	return nil
 }
 
+func DisConnRedis() {
+	if gRedis != nil {
+		gRedis.Close()
+	}
+}
+
+//------------------------------------------------------------------------string
 func AddKeyValue(key string, val string) error {
 	if gRedis != nil {
 		gRedis.Do("set", key, val)
@@ -37,8 +44,37 @@ func GetValue(key string) (string, error) {
 	}
 	return "", errors.New("gRedis error, may not init...")
 }
-func DisConnRedis() {
+
+//--------------------------------------------------------------------------set
+func AddSetKeyValue(key string, val string) error {
 	if gRedis != nil {
-		gRedis.Close()
+		_, err := redis.String(gRedis.Do("sadd", key, val))
+		if err != nil {
+			return err
+		}
+		return nil
+	}
+	return errors.New("gRedis error, may not init...")
+}
+
+func GetSetSize(key string) (int, error) {
+	if gRedis != nil {
+		setsize, err := redis.Int(gRedis.Do("scard", key))
+		if err != nil {
+			return -1, err
+		}
+		return setsize, nil
+	}
+	return -1, errors.New("gRedis error, may not init...")
+}
+
+func PrintSet(key string) {
+	if gRedis != nil {
+		ret, err := redis.Strings(gRedis.Do("smembers", key))
+		if err != nil {
+			fmt.Println("PrintSet Error:", err)
+			return
+		}
+		fmt.Println(ret)
 	}
 }

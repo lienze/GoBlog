@@ -1,6 +1,7 @@
 package router
 
 import (
+	"GoBlog/src/cache"
 	"GoBlog/src/config"
 	"GoBlog/src/file"
 	"GoBlog/src/log"
@@ -11,6 +12,7 @@ import (
 	"html/template"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 func rootPage(w http.ResponseWriter, r *http.Request) {
@@ -49,7 +51,21 @@ func showpost(w http.ResponseWriter, r *http.Request) {
 	filePath := config.GConfig.PostPath + "/" + r.Form["name"][0]
 	postID := zdata.GetPostIDFromPath(filePath)
 	indexInfo := zdata.AllPostData[postID]
-	indexInfo.PostReadNum += 1
+	// NOTE: if using cache system, we are now going to record the user ip and count the number of element
+	// in the cache,otherwise we just add the PostReadNum value.
+	if config.GConfig.Cache.Enable == true {
+		//cache.AddKeyValue()
+		rIdx := strings.LastIndex(r.RemoteAddr, ":")
+		cache.AddSetKeyValue(postID, r.RemoteAddr[:rIdx])
+		var err error
+		indexInfo.PostReadNum, err = cache.GetSetSize(postID)
+		//cache.PrintSet(postID)
+		if err != nil {
+			log.Error("cache error, see GetSetSize")
+		}
+	} else {
+		indexInfo.PostReadNum += 1
+	}
 	zdata.PageShow.PageTitle = indexInfo.PostTitle
 	zdata.PageShow.PageDate = indexInfo.PostDate
 	zdata.PageShow.PageContent = indexInfo.PostContent
