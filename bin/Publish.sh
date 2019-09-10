@@ -37,6 +37,7 @@ cp -rf "$this_dir/html" $dist_dir
 cp -rf "$this_dir/post" $dist_dir
 cp -rf "$this_dir/config" $dist_dir
 cp -rf "$this_dir/public" $dist_dir
+cp -rf "$this_dir/cache" $dist_dir
 source "$this_dir/build.sh"
 cp -rf "$src_dir/version" $dist_dir
 if [ -f "$this_dir/main" ];then
@@ -48,6 +49,16 @@ fi
 echo "publish success!"
 delete_dir $dist_dir/html/js
 delete_dir $dist_dir/html/css
+delete_file $dist_dir/cache/dump.rdb
+
+# ---------------------------------------------third party
+mkdir -p $dist_dir/the3party/
+cp "$this_dir/the3party/redis-server" "$dist_dir/the3party/"
+
+# ----------------------------------------------copy script
+cp "$this_dir/startcache.sh" $dist_dir
+
+# -----------------------------------------------pack dist
 tar -czf dist.tar.gz ./dist
 if [ -f "$this_dir/dist.tar.gz" ];then
 	echo "pack success!"
