@@ -25,4 +25,5 @@ tags
 /bin/public/result
 /bin/public/stats
 /bin/log
+/bin/cache/dump.rdb
 .idea/

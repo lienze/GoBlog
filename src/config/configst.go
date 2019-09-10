@@ -4,6 +4,7 @@ type tomlConfig struct {
 	PostPath  string
 	Host      hostsvr
 	DB        database
+	Cache     cache
 	FileCfg   filecfg
 	LogCfg    logcfg
 	PageCfg   pagecfg
@@ -20,6 +21,11 @@ type database struct {
 	Enable bool
 	DBType string
 	DBName string
+}
+
+type cache struct {
+	Enable    bool
+	CacheType string
 }
 
 type filecfg struct {

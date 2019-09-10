@@ -1,6 +1,7 @@
 package server
 
 import (
+	"GoBlog/src/cache"
 	"GoBlog/src/config"
 	"GoBlog/src/db"
 	"GoBlog/src/file"
@@ -41,6 +42,14 @@ func NewServer() error {
 
 	if config.GConfig.DB.Enable == true {
 		if err := db.InitDB(); err != nil {
+			log.Error(err.Error())
+			panic(err)
+		}
+	}
+
+	if config.GConfig.Cache.Enable == true {
+		if err := cache.InitCache(config.GConfig.Cache.CacheType); err != nil {
+			log.Error(err.Error())
 			panic(err)
 		}
 	}

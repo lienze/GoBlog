@@ -11,8 +11,6 @@ func InitDB() error {
 	switch dbtype {
 	case "mongodb":
 		return InitMongo()
-	case "redis":
-		return InitRedis()
 	default:
 		return fmt.Errorf("Can not init DB Type %s", dbtype)
 	}

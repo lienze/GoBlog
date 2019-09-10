@@ -2,6 +2,7 @@ package zsession
 
 import (
 	"GoBlog/src/config"
+	"GoBlog/src/log"
 	"net/http"
 )
 
@@ -27,7 +28,7 @@ func initSessionMng() *SessionMng {
 	return sessionMng
 }
 
-func (sMng *SessionMng) AddSession(w http.ResponseWriter) string {
+func (sMng *SessionMng) AddSession(w http.ResponseWriter, r *http.Request) string {
 	newSessionID := "123456"
 	sMng.SessionMap[newSessionID] = newSessionID
 	cookie := http.Cookie{
@@ -35,6 +36,7 @@ func (sMng *SessionMng) AddSession(w http.ResponseWriter) string {
 		Value:  newSessionID,
 		MaxAge: config.GConfig.CookieCfg.MaxAge, // seconds
 	}
+	log.Normal("AddNewSession ip:" + r.RemoteAddr)
 	http.SetCookie(w, &cookie)
 	return newSessionID
 }
