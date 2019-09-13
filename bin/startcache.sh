@@ -4,5 +4,9 @@ if [ ! -d "./cache/log/" ];then
 	mkdir -p "./cache/log"
 fi
 echo $logname
-./the3party/redis-server ./config/redis.conf > ./cache/log/$logname 2>&1 &
+if [ `uname` = "Darwin" ];then
+	./the3party/redis/mac/redis-server ./config/redis.conf > ./cache/log/$logname 2>&1 &
+else
+	./the3party/redis/linux/redis-server ./config/redis.conf > ./cache/log/$logname 2>&1 &
+fi
 
