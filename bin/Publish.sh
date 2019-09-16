@@ -53,7 +53,7 @@ delete_file $dist_dir/cache/dump.rdb
 
 # ---------------------------------------------third party
 mkdir -p $dist_dir/the3party/
-cp "$this_dir/the3party/redis-server" "$dist_dir/the3party/"
+cp -rf "$this_dir/the3party/redis" "$dist_dir/the3party/"
 
 # ----------------------------------------------copy script
 cp "$this_dir/startcache.sh" $dist_dir
