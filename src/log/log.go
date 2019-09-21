@@ -2,7 +2,6 @@ package log
 
 import (
 	"GoBlog/src/config"
-	"GoBlog/src/file"
 	"GoBlog/src/zconsole"
 	"GoBlog/src/ztime"
 	"fmt"
@@ -32,8 +31,8 @@ func InitLog() {
 }
 
 func checkAndCreateFolder(path string, pos int) {
-	if err := file.FolderExists(path); err != nil {
-		if err = file.CreateFolder(path); err != nil {
+	if err := FolderExists(path); err != nil {
+		if err = CreateFolder(path); err != nil {
 			panic(err)
 		}
 	}
@@ -76,7 +75,7 @@ func Listen4Log() {
 			}
 			filePath := mapLogPath[iType] + ztime.GetCurDate(ztime.STYLE1)
 			fileContent := fmt.Sprintf("[%s]%s\n", ztime.GetCurTime(ztime.T_MILL), rawContent)
-			file.AddContent2File(filePath, fileContent)
+			AddContent2File(filePath, fileContent)
 		}
 	}
 }

@@ -51,6 +51,8 @@ func SetCurIndexPageShow(iCurPage int) {
 	}
 }
 
+// deprecate function
+// It is now loading data depends on AllIndexData, use InitAllPostData
 // collect post data through IndexPage and MapFile struct
 func RefreshAllPostData(mapFiles map[string]string, mapComments map[string][]CommentStruct) {
 	AllPostData = make(map[string]PostStruct)
@@ -74,9 +76,31 @@ func RefreshAllPostData(mapFiles map[string]string, mapComments map[string][]Com
 			PostCommentNum: indexData.PostCommentNum,
 			PostComments:   comms,
 		}
-		//commentPath := GetCommentPathFromID(k)
-		//fmt.Println("[RefreshAllPostData]commentPath:", commentPath)
 		AllPostData[k] = tmp
+	}
+}
+
+func InitAllPostData(pMapFiles *map[string]string, pMapComments *map[string][]CommentStruct) {
+	AllPostData = make(map[string]PostStruct)
+	for k, v := range AllIndexData {
+		// update the comment number of AllIndexData
+		comms := (*pMapComments)[k]
+		v.PostCommentNum = len(comms)
+		AllIndexData[k] = v
+		// load data into AllPostData
+		if postContent, ok := (*pMapFiles)[k]; ok {
+			tmp := PostStruct{
+				PostID:         k,
+				PostTitle:      v.PostTitle,
+				PostProfile:    v.PostProfile,
+				PostDate:       v.PostDate,
+				PostContent:    postContent,
+				PostReadNum:    v.PostReadNum,
+				PostCommentNum: v.PostCommentNum,
+				PostComments:   comms,
+			}
+			AllPostData[k] = tmp
+		}
 	}
 }
 

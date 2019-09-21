@@ -169,7 +169,7 @@ func deletePage(w http.ResponseWriter, r *http.Request) {
 		zdata.RefreshIndexShow()
 	}
 	// try to delete the folder whatever delete data succeed
-	postPath := zdata.GetPostPathFromID(postID)
+	postPath := zdata.GetPostRootPathFromID(postID)
 	//fmt.Println("deletePage:", postID)
 	if err := file.RemoveFolder(postPath); err != nil {
 		log.Error("delete Folder error:" + err.Error())
