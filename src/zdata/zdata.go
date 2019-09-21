@@ -52,7 +52,7 @@ func SetCurIndexPageShow(iCurPage int) {
 }
 
 // deprecate function
-// It is now loading data depends on AllIndexData, use LoadAllPostData
+// It is now loading data depends on AllIndexData, use InitAllPostData
 // collect post data through IndexPage and MapFile struct
 func RefreshAllPostData(mapFiles map[string]string, mapComments map[string][]CommentStruct) {
 	AllPostData = make(map[string]PostStruct)
@@ -80,7 +80,7 @@ func RefreshAllPostData(mapFiles map[string]string, mapComments map[string][]Com
 	}
 }
 
-func LoadAllPostData(pMapFiles *map[string]string, pMapComments *map[string][]CommentStruct) {
+func InitAllPostData(pMapFiles *map[string]string, pMapComments *map[string][]CommentStruct) {
 	AllPostData = make(map[string]PostStruct)
 	for k, v := range AllIndexData {
 		// update the comment number of AllIndexData
