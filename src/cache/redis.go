@@ -75,6 +75,6 @@ func PrintSet(key string) {
 			fmt.Println("PrintSet Error:", err)
 			return
 		}
-		fmt.Println(ret)
+		fmt.Println("PrintSet:", key, ret)
 	}
 }

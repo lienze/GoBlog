@@ -9,6 +9,7 @@ import (
 	"GoBlog/src/zsession"
 	"GoBlog/src/ztime"
 	"GoBlog/src/zversion"
+	"fmt"
 	"html/template"
 	"net/http"
 	"strconv"
@@ -51,8 +52,9 @@ func showpost(w http.ResponseWriter, r *http.Request) {
 	filePath := config.GConfig.PostPath + "/" + r.Form["name"][0]
 	postID := zdata.GetPostIDFromPath(filePath)
 	indexInfo := zdata.AllPostData[postID]
-	// NOTE: if using cache system, we are now going to record the user ip and count the number of element
-	// in the cache,otherwise we just add the PostReadNum value.
+	// NOTE: if using cache system, we are now going to record the user ip and
+	// count the number of element in the cache,otherwise we just add the
+	// PostReadNum value.
 	if config.GConfig.Cache.Enable == true {
 		//cache.AddKeyValue()
 		rIdx := strings.LastIndex(r.RemoteAddr, ":")
@@ -295,6 +297,7 @@ func modifyPost(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	postID := r.Form["PostID"][0]
 	postData := zdata.AllPostData[postID]
+	fmt.Println(postData)
 	a := struct {
 		PostID      string
 		PostTitle   string
