@@ -10,7 +10,7 @@ dbtype = "mongodb"          # only mongodb for now
 dbname = "mytest"
 
 [cache]
-enable = true
+enable = false
 cachetype = "redis"
 
 [filecfg]
