@@ -40,6 +40,7 @@ cp -rf "$this_dir/public" $dist_dir
 cp -rf "$this_dir/cache" $dist_dir
 source "$this_dir/build.sh"
 cp -rf "$this_dir/run.sh" $dist_dir
+cp -rf "$this_dir/stop.sh" $dist_dir
 cp -rf "$src_dir/version" $dist_dir
 if [ -f "$this_dir/main" ];then
 	cp -f "$this_dir/main" $dist_dir
