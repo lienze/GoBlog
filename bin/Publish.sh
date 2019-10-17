@@ -58,7 +58,7 @@ mkdir -p $dist_dir/the3party/
 cp -rf "$this_dir/the3party/redis" "$dist_dir/the3party/"
 
 # ----------------------------------------------copy script
-cp "$this_dir/startcache.sh" $dist_dir
+cp "$this_dir/runcache.sh" $dist_dir
 
 # -----------------------------------------------pack dist
 tar -czf dist.tar.gz ./dist
