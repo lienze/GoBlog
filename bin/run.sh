@@ -11,6 +11,6 @@ if [ $1x = "--debug"x ];then
 	go run ../main.go
 else
 	echo "release mode"
-	./main > ./log/$logname 2>&1 &
+	./GoBlog > ./log/$logname 2>&1 &
 fi
 

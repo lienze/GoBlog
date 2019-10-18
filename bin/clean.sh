@@ -24,6 +24,6 @@ function delete_file()
 
 # -----------------------------------------------main logic
 delete_dir $dist_dir
-delete_file $this_dir/main
+delete_file $this_dir/GoBlog
 delete_file $this_dir/dist.tar.gz
 echo "Finished clean!"

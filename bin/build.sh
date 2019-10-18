@@ -13,8 +13,8 @@ java -jar ./the3party/yuicompressor-2.4.8.jar --type css --charset utf-8 -o '.cs
 mv ./html/css/*.min.css ./public/css/
 
 # start making main binary
-go build -gcflags "-N -l" -i -o ./main ../main.go
+go build -gcflags "-N -l" -i -o ./GoBlog ../main.go
 
-if [ -f "./main" ];then
+if [ -f "./GoBlog" ];then
 	echo "build succeed!"
 fi

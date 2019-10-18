@@ -30,7 +30,7 @@ function delete_file()
 
 # -----------------------------------------------main logic
 delete_dir $dist_dir
-delete_file $this_dir/main
+delete_file $this_dir/GoBlog
 delete_file $this_dir/dist.tar.gz
 mkdir $dist_dir
 cp -rf "$this_dir/html" $dist_dir
@@ -42,10 +42,10 @@ source "$this_dir/build.sh"
 cp -rf "$this_dir/run.sh" $dist_dir
 cp -rf "$this_dir/stop.sh" $dist_dir
 cp -rf "$src_dir/version" $dist_dir
-if [ -f "$this_dir/main" ];then
-	cp -f "$this_dir/main" $dist_dir
+if [ -f "$this_dir/GoBlog" ];then
+	cp -f "$this_dir/GoBlog" $dist_dir
 else
-	echo "ERROR:do not exist main"
+	echo "ERROR:do not exist GoBlog"
 	build_err
 fi
 echo "publish success!"
