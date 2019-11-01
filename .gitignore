@@ -21,7 +21,7 @@ tags
 # ignore files and folders
 /bin/dist
 /bin/dist.tar.gz
-/bin/main
+/bin/GoBlog
 /bin/public/result
 /bin/public/stats
 /bin/log
