@@ -6,10 +6,11 @@ import (
 )
 
 type CommentStruct struct {
-	CommentDate     string
-	CommentUserID   int64
-	CommentUserName string
-	CommentContent  string
+	CommentDate      string
+	CommentUserID    int64
+	CommentUserName  string
+	CommentUserEmail string
+	CommentContent   string
 }
 
 type PostStruct struct {

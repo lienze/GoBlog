@@ -167,7 +167,7 @@ func SaveComment(filename string, content []zdata.CommentStruct) {
 	for _, v := range content {
 		//fmt.Println(k, " ", v)
 		writeData += v.CommentDate + "@" + strconv.FormatInt(v.CommentUserID, 10) + "@" +
-			v.CommentUserName + "@" + v.CommentContent + "\n"
+			v.CommentUserName + "@" + v.CommentUserEmail + "@" + v.CommentContent + "\n"
 		// convert CommentStruct to string
 		/*
 			iLen := unsafe.Sizeof(v)
@@ -326,7 +326,7 @@ func analyseComments(commentPath string) ([]zdata.CommentStruct, error) {
 		line, err := buf.ReadString('\n')
 		line = strings.TrimSpace(line)
 		if line != "" {
-			sList := strings.Split(line, "@")
+			sList := strings.Split(line, "/")
 			/*parseTime, parseErr := time.Parse("2006-01-02 15:04:05.000", sList[0])
 			if parseErr == nil {
 				fmt.Println("parseTime:", parseTime)
@@ -336,10 +336,11 @@ func analyseComments(commentPath string) ([]zdata.CommentStruct, error) {
 				commentUserID = -1
 			}
 			tmp := zdata.CommentStruct{
-				CommentDate:     sList[0],
-				CommentUserID:   commentUserID,
-				CommentUserName: sList[2],
-				CommentContent:  sList[3],
+				CommentDate:      sList[0],
+				CommentUserID:    commentUserID,
+				CommentUserName:  sList[2],
+				CommentUserEmail: sList[3],
+				CommentContent:   sList[4],
 			}
 			//fmt.Println(tmp)
 			ret = append(ret, tmp)

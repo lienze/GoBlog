@@ -11,8 +11,9 @@ function clickcomment()
 	var name = document.getElementById("FormName");
 	var comment = document.getElementById("FormComment");
 	var postname = getquerystring("name");
-	//alert(postname);
-	var pageAddr = "upcomment?name="+name.value+"&comment="+comment.value+"&postname="+postname;
+	var email = document.getElementById("FormEmail");
+	//alert(email.value);
+	var pageAddr = "upcomment?name="+name.value+"&email="+email.value+"&comment="+comment.value+"&postname="+postname;
 	window.location.href = pageAddr;
 }
 

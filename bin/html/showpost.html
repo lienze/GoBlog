@@ -13,11 +13,12 @@
 		<span>{{ .PageDate }}&nbsp;|&nbsp;Viewed:{{ .PageReadNum }}&nbsp;|&nbsp;Comments:{{ .PageCommentNum }}</span>
 		<span name="markdownContent">{{ .PageContent }}</span>
 		<hr>
-		评论({{ .PageCommentNum }}):
+		Comments({{ .PageCommentNum }}):
 		<ul>
 			<hr>
 			{{ range .PageComments }}
-				[{{ .CommentUserName }}]{{ .CommentContent }}
+				{{ .CommentUserName }} <span class="CommentEmail"> [{{ .CommentUserEmail }}]</span><br>
+				{{ .CommentContent }}
 				<br>
 				<span class="CommentDate">{{ .CommentDate }}</span>
 				<hr>
@@ -25,9 +26,11 @@
 		</ul>
 		<div name="commentform">
 			Name:
-			<input type="text" size="10" name="name" value="" id="FormName">
+			<input type="text" size="10" name="name" value="" id="FormName"/>
+			E-mail(Optional):
+			<input type="text" size="20" name="email" value="" id="FormEmail"/><br>
 			Comment:
-			<input type="text" size="78" name="comment" value="" id="FormComment">
+			<input type="text" size="103" name="comment" value="" id="FormComment"/>
 			<button onclick="clickcomment()">submit</button>
 		</div>
 	</body>

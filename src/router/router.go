@@ -88,14 +88,18 @@ func upcomment(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	name := r.Form["name"][0]
 	comment := r.Form["comment"][0]
+	email := r.Form["email"][0]
 	postPath := config.GConfig.PostPath + "/" + r.Form["postname"][0]
 	postID := zdata.GetPostIDFromPath(postPath)
 	dataInfo := zdata.AllPostData[postID]
+	// XXX:There seems to have a random id generator for CommentUserID
+	// parametor.
 	newComment := zdata.CommentStruct{
-		CommentDate:     ztime.GetCurTime(ztime.D2AT_MILL),
-		CommentUserID:   134562,
-		CommentUserName: name,
-		CommentContent:  comment,
+		CommentDate:      ztime.GetCurTime(ztime.D2AT_MILL),
+		CommentUserID:    134562,
+		CommentUserName:  name,
+		CommentUserEmail: email,
+		CommentContent:   comment,
 	}
 	dataInfo.PostComments = append(dataInfo.PostComments, newComment)
 	dataInfo.PostCommentNum = len(dataInfo.PostComments)
