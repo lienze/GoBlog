@@ -28,7 +28,7 @@ logpath       = "./log/"
 maxitemperpage = 5          # the max number of each page show
 
 [website]
-webtitle = "Welcome"
+webtitle = "GoBlog"
 password = "123"
 
 [cookiecfg]
