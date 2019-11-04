@@ -1,12 +1,12 @@
 #!/bin/sh
 
-logname=$(date+%Y%m%d%k%M%S)
 if [ ! -d "./log/"  ];then
 	mkdir -p "./log"
 fi
 
 #echo $1
 if [ $1x = "--release"x ];then
+	logname=$(date +%Y%m%d%k%M%S)
 	echo "release mode"
 	./GoBlog > ./log/$logname 2>&1 &
 else
