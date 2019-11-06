@@ -41,9 +41,11 @@ func loadFiles() (map[string]string, map[string][]zdata.CommentStruct, error) {
 	retMapFileContent := make(map[string]string)
 	retMapFileComment := make(map[string][]zdata.CommentStruct)
 	//readPath(postPath, &retMapFileContent, &retMapFileComment)
-	for k := range zdata.AllIndexData {
+	for k, v := range zdata.AllIndexData {
 		initPost(k, &retMapFileContent)
-		initComment(k, &retMapFileComment)
+		if v.PostCommentNum > 0 {
+			initComment(k, &retMapFileComment)
+		}
 	}
 	fmt.Println("Load Files ok...")
 	return retMapFileContent, retMapFileComment, nil
@@ -166,8 +168,8 @@ func SaveComment(filename string, content []zdata.CommentStruct) {
 	var writeData string
 	for _, v := range content {
 		//fmt.Println(k, " ", v)
-		writeData += v.CommentDate + "@" + strconv.FormatInt(v.CommentUserID, 10) + "@" +
-			v.CommentUserName + "@" + v.CommentUserEmail + "@" + v.CommentContent + "\n"
+		writeData += v.CommentDate + "/" + strconv.FormatInt(v.CommentUserID, 10) + "/" +
+			v.CommentUserName + "/" + v.CommentUserEmail + "/" + v.CommentContent + "\n"
 		// convert CommentStruct to string
 		/*
 			iLen := unsafe.Sizeof(v)
@@ -259,6 +261,8 @@ func getFileExt(filename string) string {
 }
 
 func loadIndexData() error {
+	// TODO We may load index data from db which could added into the project
+	// in the future
 	fmt.Println("loadIndexData begin...")
 	fileObj, err := os.OpenFile(config.GConfig.PostPath+"/"+"idx.dat", os.O_RDWR, 0666)
 	if err != nil {
@@ -281,7 +285,8 @@ func loadIndexData() error {
 			if errconv != nil {
 				postCommentNum = -1
 			}
-			// XXX: there needs a new way the load data which load raw data directly to the struct
+			// XXX: there needs a new way the load data which load raw data
+			// directly to the struct
 			tmp := zdata.IndexStruct{
 				PostID:    sList[0],
 				PostPath:  config.GConfig.PostPath + "?name=" + sList[0] + "/" + sList[0] + ".md",
