@@ -18,8 +18,6 @@
 
 a simple blog system
 
-demo address:http://www.265lab.com
-
 github address:https://github.com/lienze/GoBlog
 
-gitee  address:https://gitee.com/dqlez/GoBlog (Only for update)
+gitee  address:https://gitee.com/ezli/GoBlog (Only for update)
